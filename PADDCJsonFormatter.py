@@ -11,7 +11,7 @@ def monsterListToFirebase():
 	
 	#all except last character to fix fencepost
 	firebaseStr = firebaseStr[:-1] + " } }"
-		
+		 
 	outFile = open("firebaseJson.json", "w", encoding="utf-8")
 	outFile.write(firebaseStr)
 
