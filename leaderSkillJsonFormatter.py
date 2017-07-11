@@ -20,13 +20,14 @@ def main():
     basicRePattern = r'''
         ((((
         fire|water|wood|light|dark      #attributes
-        |god|balance|attacker           #types
-        |physical|devil|healer) 
+        |god|balanced|attacker           #types
+        |physical|devil|healer
+        |dragon|machine) 
         \W+ (attribute\W+|type\W+)?)+   #repeat for all attributes and types
    
         cards\W+
         
-        ((hp|atk|rcv|all[ ]stats)[ ]x\d([.]\d)?,?[ ]?)+)[.][ ]?)+ #followed by multipliers
+        ((hp|atk|rcv|all[ ]stats)[ ]x\d([.]\d)?(,[ ])?)+)[.]?$) #followed by multipliers
 
     '''
     basicRe = re.compile(basicRePattern, re.IGNORECASE|re.VERBOSE)
@@ -40,26 +41,33 @@ def main():
     for skillJson in leaderJson:
         name = skillJson["name"]
         des = skillJson["effect"]
-        m = basicRe.search(des)
+        leaderSkillParts = des.split(". ")
         result += "{"
         result += "\"name\":\"" + name + "\","
         result += "\"description\":\"" + des + "\","
         result += "\"skill\":["
         
-        if m:
-            basicStr = m.group().strip(" ")
-            attributeM = attributeRe.search(basicStr)
-            result += "{\"skilltype\":\"basic\","
-            result += "\"attribute\":["
-            if attributeM:
-                for attribute in attributeM.groups():
-                    result += "\"" + attribute + "\","
-            result = result.strip(",")
-            result += "],"
-            result += "\"type\":[],"
-            result += "\"effect\":{},"
-            result += "\"description\":\"" + basicStr + "\""
-            result += "},"
+        i = 0
+        while i < len(leaderSkillParts):
+            part = leaderSkillParts[i]
+            m = basicRe.search(part)
+            print(part)
+            if m:
+                print("yes")
+                basicStr = m.group().strip(" ")
+                attributeM = attributeRe.findall(basicStr)
+                result += "{\"skilltype\":\"basic\","
+                result += "\"attribute\":["
+                if attributeM:
+                    for attribute in attributeM:
+                        result += "\"" + attribute + "\","
+                result = result.strip(",")
+                result += "],"
+                result += "\"type\":[],"
+                result += "\"effect\":{},"
+                result += "\"description\":\"" + basicStr + "\""
+                result += "},"
+            i += 1
         result = result.strip(",") # fencepost problem
         result += "]},"
     result = result.strip(",")
