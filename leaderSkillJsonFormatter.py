@@ -22,7 +22,7 @@ def main():
         fire|water|wood|light|dark      #attributes
         |god|balance|attacker           #types
         |physical|devil|healer) 
-        \W+ (attribute|type)\s cards?)+   #repeat for all attributes and types
+        \W+ (attribute\W+|type\W+)?)+   #repeat for all attributes and types
    
         cards\W+
         
