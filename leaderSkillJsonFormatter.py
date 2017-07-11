@@ -37,6 +37,15 @@ def main():
     
     '''
     attributeRe = re.compile(attributeRePattern, re.IGNORECASE|re.VERBOSE)
+    typeRePattern = r'''
+        (
+        god|balanced|attacker|physical
+        |devil|healer|dragon|machine
+        |evo material|awaken material
+        |enhance material|redeemable material
+        )
+    '''
+    
     result = "["
     for skillJson in leaderJson:
         name = skillJson["name"]
