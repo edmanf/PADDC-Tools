@@ -48,13 +48,13 @@ basicMultiRe = re.compile(basicMultiPattern, re.IGNORECASE|re.VERBOSE)
 
 genericComboBasePattern = r'''
     atk[ ]x(\d(?:\.\d)?)        #capture atk multiplier
-    [ ]at[ ](\d)[ ]combos       #capture base combo
+    [ ]at[ ](\d)[ ]combos       #capture base start combo
 '''
 genericComboScalePattern = r'''
-    atk[ ]x(\d(?:\.\d)?)                             #capture scaling mutliplier
+    atk[ ]x(\d(?:\.\d)?)                                #capture scaling mutliplier
     [ ]for[ ]each[ ]additional[ ]combo,
-    [ ]up[ ]to[ ]atk[ ]x(\d+(?:\.\d)?)[ ]at[ ]       #capture multiplier limit
-    (\d+)[ ]                                   #capture combo limit
+    [ ]up[ ]to[ ]atk[ ]x(\d+(?:\.\d)?)[ ]at[ ]          #capture multiplier limit
+    (\d+)[ ]combos                                      #capture combo limit
 '''
 
 def getBasicSkill(regexMatches):
@@ -103,9 +103,17 @@ def getGenericComboSkill(baseMatches, scaleMatches):
     print("DEBUG")
     print(baseMatches)
     print(scaleMatches)
+    baseAtkMulti = baseMatches[1]
+    baseComboStart = baseMatches[2]
+    atkScale = scaleMatches[1]
+    atkMax = scaleMatches[2]
+    comboMax = scaleMatches[3]
     result = "{\"skilltype\":\"combo\","
+    result += "\"effect\":{"
+    result += "\"atk_scale_multi_type\":\"additive\","
+    result += "\"atk_scale\":" + atkScale
+    result += "},"
     result += "\"description\":\"" + baseMatches[0] + ". " + scaleMatches[0] + "\""
-    # TODO: 
     result += "}"
     return result
 
