@@ -51,10 +51,10 @@ genericComboBasePattern = r'''
     [ ]at[ ](\d)[ ]combos       #capture base combo
 '''
 genericComboScalePattern = r'''
-    atk[ ]x(\d)                             #capture scaling mutliplier
+    atk[ ]x(\d(?:\.\d)?)                             #capture scaling mutliplier
     [ ]for[ ]each[ ]additional[ ]combo,
-    [ ]up[ ]to[ ]atk[ ]x(\d+)[ ]at[ ]       #capture multiplier limit
-    (\d+)[ ]combos                          #capture combo limit
+    [ ]up[ ]to[ ]atk[ ]x(\d+(?:\.\d)?)[ ]at[ ]       #capture multiplier limit
+    (\d+)[ ]                                   #capture combo limit
 '''
 
 def getBasicSkill(regexMatches):
@@ -100,6 +100,14 @@ def getBasicSkill(regexMatches):
     return result
     
 def getGenericComboSkill(baseMatches, scaleMatches):
+    print("DEBUG")
+    print(baseMatches)
+    print(scaleMatches)
+    result = "{\"skilltype\":\"combo\","
+    result += "\"description\":\"" + baseMatches[0] + ". " + scaleMatches[0] + "\""
+    # TODO: 
+    result += "}"
+    return result
 
 def main():
     file = open("sampleLeaderSkills.json")
@@ -123,19 +131,28 @@ def main():
         i = 0
         while i < len(leaderSkillParts):
             part = leaderSkillParts[i]
+            print(part)
             i += 1
             basicM = basicRe.search(part)
             if basicM:
                 result += getBasicSkill(basicM)
-                break
+                continue
             
             genericComboBaseRe = re.compile(genericComboBasePattern, re.IGNORECASE|re.VERBOSE)
             genericComboBaseM = genericComboBaseRe.search(part)
             if genericComboBaseM:
-                scalePart = leaderSkillParts[i + 1]     #i already incremented
-                result += getGenericComboSkill(genericComboBaseM)
+                scalePart = leaderSkillParts[i]     #i already incremented
+                print(scalePart)
+                genericComboScaleRe = re.compile(genericComboScalePattern, re.IGNORECASE|re.VERBOSE)
+                genericComboScaleM = genericComboScaleRe.search(scalePart)
+                result += getGenericComboSkill(genericComboBaseM, genericComboScaleM)
+                i += 1
+                continue
+                
+            print("NOT DONE: " + part)
         result = result.strip(",") # fencepost problem
         result += "]},"
+        print()
     result = result.strip(",")
     result += "]"
     
