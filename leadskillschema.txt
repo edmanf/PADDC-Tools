@@ -1,0 +1,77 @@
+JSON Schema
+{
+    "name":
+    "description":
+    "skill":[
+        {
+            "condition":[a,b]
+            a:
+            b:
+            attribute:[]
+            type:[]
+            effect:
+        }, 
+        { 
+            ...
+        }]
+}
+
+conditions:
+    other
+        [list of effects]
+            increase time, increase attack, counter, damage reduction
+            board size, game sounds, no skyfall
+        
+    color_cross
+        color_cross:[list of colors that you can make crosses of]
+        effect: {atk_scale_type:multiplicative,
+                 atk_scale:}
+        
+    combo
+        combo: [list of attributes that count]
+        effect:{atk_scale_type:additive,
+                atk_scale:
+                min_atk:
+                max_atk:
+                start_combo:
+                end_combo:}
+    
+    color_match:
+        color_match: [list of colors that apply]
+        effect: {atk_scale_type:additive
+                 atk_scale:
+                 min_atk:
+                 max_atk:
+                 start_color_match:
+                 end_color_match:}
+                 
+    shield:
+        conditions: [requirementtype]
+        requirementtype:value
+        effect:{shield_value:}
+        
+    hp_threshold:
+        hp_threshold: [<, <=, =, >, >=]
+        type:value
+        effect: {atk:
+                 rcv:
+                 }
+    
+    connected_match:
+        connected_match: color
+        effect: {atk_scale_type:additive
+                    min_atk:
+                 max_atk:
+                 atk_scale:
+                 start_count:
+                 end_count:}
+    skill_used:
+        effect: {atk/rcv}
+        
+    5_orb_enhanced:
+        effect: {atk, rcv}
+        attribute:["matched"]
+        
+    heart_tpa:
+        effect:{rcv}
+    

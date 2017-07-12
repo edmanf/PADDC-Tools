@@ -166,6 +166,14 @@
 	"name": "Anryu Hiha"
 },
 {
+	"effect": "Water attribute cards ATK x2, RCV x2. ATK x2 at 5 combos. ATK x1 for each additional combo, up to ATK x5 at 8 combos.",
+	"name": "I was entrusted with his heart!"
+},
+{
+	"effect": "ATK x3 at 4 combos. ATK x0.5 for each additional combo, up to ATK x5 at 8 combos. All attribute cards ATK x2.5, RCV x1.5 on the turn a skill is used. ( Multiple skills will not stack )",
+	"name": "Spirit of the Feline Goddess"
+},
+{
 	"effect": "No skyfall matches. Healer attribute cards HP x1.5, ATK x1.5. ATK x2 at 5 combos. ATK x2 for each additional combo, up to ATK x12 at 10 combos.",
 	"name": "Spirit of the Miko Goddess"
 }]
