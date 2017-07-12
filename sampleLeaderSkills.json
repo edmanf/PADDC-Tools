@@ -1,527 +1,171 @@
 [{
+	"effect": "Healer type cards HP x2, ATK x2. Healer attribute cards RCV x2 on the turn a skill is used. ( Multiple skills will not stack )",
+	"name": "Oracle of the Radiant God"
+},
+{
 	"data": [1,
 	2,
-	2,
+	1,
 	["elem",
-	0]],
-	"effect": "Fire attribute cards ATK x2, RCV x2.",
-	"name": "Spirit of Flame"
-},
-{
-	"data": [1.5,
-	1.5,
-	1.5,
-	["elem",
-	3]],
-	"effect": "Light attribute cards HP x1.5, ATK x1.5, RCV x1.5.",
-	"name": "Spirit of Flash"
-},
-{
-	"data": [1.5,
-	1.5,
-	1.5,
-	["elem",
-	2]],
-	"effect": "Wood attribute cards HP x1.5, ATK x1.5, RCV x1.5.",
-	"name": "Spirit of Gaia"
-},
-{
-	"data": [1.5,
-	1.5,
-	1.5,
-	["elem",
-	2]],
-	"effect": "Attacker type cards ATK x3.5.",
-	"name": "Spirit of Gaia"
-},
-{
-	"data": [1.5,
-	1.5,
-	1.5,
-	["elem",
+	3],
+	["type",
 	4]],
-	"effect": "Dark attribute cards HP x1.5, ATK x1.5, RCV x1.5.",
-	"name": "Spirit of Hell"
+	"effect": "Light attribute & Dragon type cards ATK x2.",
+	"name": "Orange Gleam Petals"
+},
+{
+	"effect": "Devil type cards ATK x1.5, RCV x1.5. Increases time limit of orb movement by 1 seconds.",
+	"name": "Orchestra of Death"
 },
 {
 	"data": [1,
 	2,
-	2,
-	["elem",
-	1]],
-	"effect": "Water attribute cards ATK x2, RCV x2.",
-	"name": "Spirit of Ice"
-},
-{
-	"data": [1,
-	1.5,
-	1.5,
-	["elem",
-	3]],
-	"effect": "Light attribute cards ATK x1.5, RCV x1.5.",
-	"name": "Spirit of Light"
-},
-{
-	"data": [1,
-	2,
-	2,
-	["elem",
-	3]],
-	"effect": "Light attribute cards ATK x2, RCV x2.",
-	"name": "Spirit of Lightning"
-},
-{
-	"effect": "ATK x2 at 4 combos. ATK x0.5 for each additional combo, up to ATK x5 at 10 combos. While your HP is 50% or above, a single hit that normally kills you will instead leave you with 1 HP. For the consecutive hits, this skill will only affect the first hit.",
-	"name": "Spirit of Orochi"
-},
-{
-	"effect": "Healer & Devil type cards HP x2, ATK x2. ATK x3 when simultaneously clearing 6 connected Wood orbs. ATK x0.5 for each additional orb, up to ATK x4 at 8 connected orb.",
-	"name": "Spirit of the Archdemon"
-},
-{
-	"effect": "Physical & Devil type cards HP x1.5, ATK x1.5. All attribute cards ATK x6 when attacking with Fire, Wood & Light orb types at the same time.",
-	"name": "Spirit of the Art Goddess"
-},
-{
-	"data": [1,
-	2,
-	2,
-	["elem",
-	2]],
-	"effect": "Wood attribute cards ATK x2, RCV x2.",
-	"name": "Spirit of the Big Tree"
-},
-{
-	"effect": "All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light & Dark. ATK x1 for each additional orb type, up to ATK x5 for all 5 matches. All attribute cards ATK x2, RCV x2 on the turn a skill is used. ( Multiple skills will not stack )",
-	"name": "Spirit of the Blazing Falcon God"
-},
-{
-	"effect": "Fire attribute cards ATK x2.5, RCV x2.5. Fire attribute cards ATK x2.5 on the turn a skill is used. ( Multiple skills will not stack )",
-	"name": "Spirit of the Blazing Swordsman"
-},
-{
-	"effect": "Devil type cards HP x1.3, ATK x1.3, RCV x1.3. ATK x2 when simultaneously clearing 4 connected Dark orbs. ATK x0.5 for each additional orb, up to ATK x5 at 10 connected orb.",
-	"name": "Spirit of the Bleak Night Goddess"
-},
-{
-	"effect": "All attribute cards ATK x3, RCV x1.5 when reaching Fire & Dark combos. Deal ATK x40 damage to all enemies after every orbs elimination. Ignores enemy element, but can be reduced by enemy defense down to 0 damage.",
-	"name": "Spirit of the Burning Snake God"
-},
-{
-	"effect": "30% Fire, Water, Wood, Light & Dark damage reduction. All attribute cards ATK x4.5 when attacking with 2 of following orb types: Fire, Water & Dark.",
-	"name": "Spirit of the Byakko"
-},
-{
-	"effect": "Water attribute cards HP x2, ATK x2. All attribute cards ATK x3.5 when reaching Water & Fire combos.",
-	"name": "Spirit of the Commerce Deity"
-},
-{
-	"effect": "ATK x4, reduce damage taken by 50% after matching Heal orbs in a cross formation. Balanced, Dragon & God type cards ATK x2, RCV x2.",
-	"name": "Spirit of the Creator God"
-},
-{
-	"effect": "Healer attribute cards ATK x6 when HP is full. Healer attribute cards ATK x3 when HP is less than 99%. Heal RCV x10 as HP after every orbs elimination.",
-	"name": "Spirit of the Dancing Goddess"
-},
-{
-	"effect": "All attribute cards ATK x4 when reaching Water & Fire combos. Water attribute cards ATK x2.5, RCV x2.5 on the turn a skill is used. ( Multiple skills will not stack )",
-	"name": "Spirit of the Divine General"
-},
-{
-	"effect": "ATK x3 at 4 combos. ATK x0.5 for each additional combo, up to ATK x5 at 8 combos. All attribute cards ATK x2.5, RCV x1.5 on the turn a skill is used. ( Multiple skills will not stack )",
-	"name": "Spirit of the Feline Goddess"
-},
-{
-	"effect": "Wood attribute cards ATK x2.5, RCV x2.5. Wood attribute cards ATK x2.5 on the turn a skill is used. ( Multiple skills will not stack )",
-	"name": "Spirit of the Fertility Goddess"
-},
-{
-	"effect": "30% Fire, Water, Wood, Light & Dark damage reduction. All attribute cards ATK x4.5 when attacking with 2 of following orb types: Wood, Light & Dark.",
-	"name": "Spirit of the Genbu"
-},
-{
-	"effect": "ATK x5 at 8 combos. ATK x2.5 for each additional combo, up to ATK x10 at 10 combos. All attribute cards ATK x3, RCV x1.5 on the turn a skill is used. ( Multiple skills will not stack )",
-	"name": "Spirit of the Hell Deity"
-},
-{
-	"effect": "Dark attribute cards HP x1.5, ATK x1.5, RCV x1.5. All attribute cards ATK x3.5 when reaching Dark & Water combos.",
-	"name": "Spirit of the Hell Queen"
-},
-{
-	"effect": "Wood attribute cards HP x2, ATK x2. All attribute cards ATK x3.5 when reaching Wood & Water combos.",
-	"name": "Spirit of the Hunting Deity"
-},
-{
-	"effect": "All attribute cards ATK x5 when attacking with Fire, Water, Wood & Light orb types at the same time. ATK x1.5 at 5 combos. ATK x0.5 for each additional combo, up to ATK x4 at 10 combos.",
-	"name": "Spirit of the Kirin"
-},
-{
-	"effect": "Light attribute cards ATK x3. 75% Light damage reduction. All attribute cards ATK x2 when reaching Light & Light combos.",
-	"name": "Spirit of the Love Deity"
-},
-{
-	"effect": "No skyfall matches. Healer attribute cards HP x1.5, ATK x1.5. ATK x2 at 5 combos. ATK x2 for each additional combo, up to ATK x12 at 10 combos.",
-	"name": "Spirit of the Miko Goddess"
-},
-{
-	"effect": "Matched attribute ATK x3 when matching exactly 5 connected orbs with at least 1 enhanced orb. ATK x3 at 6 combos. ATK x1.5 for each additional combo, up to ATK x6 at 8 combos.",
-	"name": "Spirit of the Moonlight Princess"
-},
-{
-	"effect": "ATK x2.5 when simultaneously clearing 6 connected Wood orbs. ATK x0.5 for each additional orb, up to ATK x4.5 at 10 connected orb. Wood attribute cards ATK x2, RCV x2 on the turn a skill is used. ( Multiple skills will not stack )",
-	"name": "Spirit of the Moral Commanding Deity"
-},
-{
-	"effect": "ATK x2 when simultaneously clearing 4 connected Water orbs. ATK x0.5 for each additional orb, up to ATK x5 at 10 connected orb.",
-	"name": "Spirit of the Princess"
-},
-{
-	"effect": "30% Fire, Water, Wood, Light & Dark damage reduction. All attribute cards ATK x4.5 when attacking with 2 of following orb types: Water, Wood & Dark.",
-	"name": "Spirit of the Seiryuu"
-},
-{
-	"effect": "Light attribute cards HP x1.5, ATK x1.5, RCV x1.5. All attribute cards ATK x3.5 when reaching Light & Wood combos.",
-	"name": "Spirit of the Solar Deity"
-},
-{
-	"effect": "All attribute cards ATK x3 when reaching Wood & Wood combos. Wood attribute cards ATK x1.5, RCV x1.5. 20% Fire, Water, Wood, Light & Dark damage reduction.",
-	"name": "Spirit of the Storm God"
-},
-{
-	"effect": "All attribute cards ATK x5, RCV x2 when attacking with Fire, Water, Wood, Light & Dark orb types at the same time. God & Devil attribute cards ATK x3 on the turn a skill is used. ( Multiple skills will not stack )",
-	"name": "Spirit of the Sun God"
-},
-{
-	"effect": "30% Fire, Water, Wood, Light & Dark damage reduction. All attribute cards ATK x4.5 when attacking with 2 of following orb types: Fire, Wood & Light.",
-	"name": "Spirit of the Suzaku"
-},
-{
-	"effect": "Dark attribute cards ATK x2.5, RCV x2.5. Dark attribute cards ATK x2.5 on the turn a skill is used. ( Multiple skills will not stack )",
-	"name": "Spirit of the Trickster God"
-},
-{
-	"effect": "Dark attribute cards ATK x3. 75% Dark damage reduction. All attribute cards ATK x2 when reaching Dark & Dark combos.",
-	"name": "Spirit of the Underlord"
-},
-{
-	"effect": "All attribute cards ATK x3 when attacking with 3 of following orb types: Fire, Water, Wood, Light & Dark. ATK x0.5 for each additional orb type, up to ATK x4 for all 5 matches. All attribute cards ATK x2.5, RCV x2.5 on the turn a skill is used. ( Multiple skills will not stack )",
-	"name": "Spirit of the Water Deity"
-},
-{
-	"data": [1,
-	1.5,
-	1.5,
-	["elem",
-	1]],
-	"effect": "Water attribute cards ATK x1.5, RCV x1.5.",
-	"name": "Spirit of Water"
-},
-{
-	"data": [1.5,
-	1.5,
-	1.5,
-	["elem",
-	1]],
-	"effect": "Water attribute cards HP x1.5, ATK x1.5, RCV x1.5.",
-	"name": "Spirit of Water Rapids"
-},
-{
-	"data": [1,
-	1.5,
-	1.5,
-	["elem",
-	2]],
-	"effect": "Wood attribute cards ATK x1.5, RCV x1.5.",
-	"name": "Spirit of Wood"
-},
-{
-	"effect": "All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart. ATK x2.5 when simultaneously clearing 5 connected Water or Light orbs. ATK x0.5 for each additional orb, up to ATK x4 at 8 connected orb.",
-	"name": "Spirits of the Divine Flowers"
-},
-{
-	"data": [1,
-	2.5,
 	1,
 	["elem",
 	2],
 	["type",
-	1]],
-	"effect": "Wood attribute & Balanced type cards ATK x2.5. 50% Wood, Light & Dark damage reduction.",
-	"name": "Spirit Tree's Divine Magic"
-},
-{
-	"data": [1.5,
-	1,
-	1,
-	["elem",
 	4]],
-	"effect": "Dark attribute cards HP x1.5. Devil type cards ATK x3.",
-	"name": "Splitting Watermelons is Fun!"
-},
-{
-	"effect": "Light attribute cards ATK x2.",
-	"name": "Star Fire"
-},
-{
-	"effect": "Machine type cards ATK x1.5, RCV x1.5. All attribute cards ATK x3 when reaching 2 set of Water combos. ATK x1 for each additional combo, up to ATK x4 when reaching 3 combos.",
-	"name": "Star Liquid Energy"
-},
-{
-	"data": [1.25,
-	1,
-	1,
-	["type",
-	3]],
-	"effect": "Healer type cards HP x1.25. All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart.",
-	"name": "Starry Heavens Dance"
-},
-{
-	"data": [1.35,
-	1,
-	1.35,
-	["elem",
-	1]],
-	"effect": "Water attribute cards HP x1.35, RCV x1.35. All attribute cards ATK x3 when reaching 5 combos or above.",
-	"name": "Starry Sky Embrace"
-},
-{
-	"effect": "Water attribute cards HP x1.5, RCV x1.5. ATK x3 at 5 combos. ATK x1 for each additional combo, up to ATK x5 at 7 combos.",
-	"name": "Starry Sky Frontier"
-},
-{
-	"effect": "Machine type cards ATK x1.5, RCV x1.5. ATK x3 when simultaneously clearing 6 connected Wood orbs.",
-	"name": "Star Sonic Energy"
-},
-{
-	"effect": "HP x1.5, ATK x1.5, RCV x1.5 when entire team is from Monster Hunter Collab. All attribute cards ATK x7 when reaching 7 combos or above.",
-	"name": "Status Crit (Att.)"
-},
-{
-	"effect": "All attribute cards ATK x2 when attacking with 3 of following orb types: Fire, Water, Wood, Light & Dark. ATK x2.5 when simultaneously clearing 6 connected Light orbs.",
-	"name": "Stay close to me..."
-},
-{
-	"effect": "Physical type cards HP x1.2, ATK x1.2. 50% Fire, Water, Wood, Light & Dark damage reduction  when HP is greater than 50%.",
-	"name": "Stay with us a bit longer"
-},
-{
-	"effect": "Get x1.2 experience after a battle. Get x2.5 coins after a battle.",
-	"name": "Steal Coins"
-},
-{
-	"effect": "25% chance to deal counter Wood damage of 10x damage taken.",
-	"name": "Stone Counter"
-},
-{
-	"effect": "ATK x2.5 when simultaneously clearing 5 connected Heart orbs. Reduce damage taken by 50% after matching Heal orbs in a cross formation.",
-	"name": "Stoneskin"
-},
-{
-	"effect": "Healer type cards HP x2, ATK x1.5.",
-	"name": "Stop!"
-},
-{
-	"effect": "Balanced type cards HP x1.5, RCV x1.5.",
-	"name": "Stop touching my equipment!"
+	"effect": "Wood attribute & Dragon type cards ATK x2.",
+	"name": "Ouha Binding"
 },
 {
 	"data": [1,
-	4,
+	2,
 	1,
 	["elem",
+	2],
+	["type",
+	4]],
+	"effect": "Physical attribute cards HP x2, ATK x2. Attacker attribute cards ATK x1.2.",
+	"name": "Ouha Binding"
+},
+{
+	"effect": "Light attribute cards HP x1.5, ATK x1.5, RCV x1.5.",
+	"name": "Our name is Orphan."
+},
+{
+	"effect": "ATK x2 at 4 combos. ATK x0.5 for each additional combo, up to ATK x5 at 10 combos. While your HP is 50% or above, a single hit that normally kills you will instead leave you with 1 HP. For the consecutive hits, this skill will only affect the first hit.",
+	"name": "Out of the way!"
+},
+{
+	"effect": "All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light & Dark. ATK x1 for each additional orb type, up to ATK x5 for all 5 matches. ATK x2.5, RCV x2.5 when simultaneously clearing 5 connected Light orbs.",
+	"name": "Overclock Army of One"
+},
+{
+	"data": [2,
+	2,
+	1,
+	["type",
 	2]],
-	"effect": "Wood attribute cards ATK x4 when HP is less than 50%.",
-	"name": "Storm Dragon Emperor's Might"
+	"effect": "Physical type cards HP x2, ATK x2.",
+	"name": "Overheat"
 },
 {
-	"effect": "Physical & Dragon type cards ATK x2, RCV x2. All attribute cards ATK x3 when reaching 2 set of Water combos. ATK x1.5 for each additional combo, up to ATK x6 when reaching 4 combos.",
-	"name": "Storm Incarnation"
+	"effect": "Balanced type cards ATK x2.",
+	"name": "Paladin Ice Spear"
 },
 {
-	"data": [1,
-	2,
-	2,
-	["elem",
-	4],
-	["type",
-	7]],
-	"effect": "Dark attribute & Devil type cards ATK x2, RCV x2.",
-	"name": "Stratagem of the Trickster"
-},
-{
-	"data": [1.3,
-	1,
-	1.3,
-	["elem",
-	0]],
-	"effect": "Fire attribute cards HP x1.3, RCV x1.3.",
-	"name": "Strawberry Candy"
-},
-{
-	"effect": "Dragon & Attacker type cards HP x1.5, ATK x1.5. ATK x8 when simultaneously clearing 8 connected Fire orbs.",
-	"name": "Strong Sword Grinding"
-},
-{
-	"effect": "All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light & Dark. ATK x1 for each additional orb type, up to ATK x5 for all 5 matches. ATK x1.5 when simultaneously clearing 3 connected Jammer orbs. ATK x0.5 for each additional orb, up to ATK x3 at 6 connected orb.",
-	"name": "Stubborn Dragon King's Wrath"
-},
-{
-	"effect": "All attribute cards ATK x3 when attacking with 4 of following orb types: Fire, Water, Wood, Light & Dark. ATK x2 for each additional orb type, up to ATK x5 for all 5 matches. ATK x1.5 when simultaneously clearing 3 connected Jammer orbs.",
-	"name": "Stubborn Dragon's Wrath"
-},
-{
-	"effect": "ATK x2 at 3 combos. ATK x0.5 for each additional combo, up to ATK x3 at 5 combos.",
-	"name": "Stubbornness to Sadness"
+	"effect": "All attribute cards ATK x5 when attacking with Fire, Water, Light & Dark orb types at the same time.",
+	"name": "palm of the four origins"
 },
 {
 	"data": [1,
 	5,
 	1],
-	"effect": "All attribute cards ATK x5 when attacking with Fire, Water, Wood & Light orb types at the same time. God attribute cards ATK x1.5 on the turn a skill is used. ( Multiple skills will not stack )",
-	"name": "Sublime Light - Dance of the Four Origins"
+	"effect": "All attribute cards ATK x5 when attacking with Fire, Water, Light & Dark orb types at the same time.",
+	"name": "Palm of the Four Origins"
 },
 {
-	"effect": "All attribute cards ATK x5 when attacking with Fire, Water, Wood & Light orb types at the same time. ATK x1.2 at 6 combos. ATK x0.2 for each additional combo, up to ATK x2 at 10 combos.",
-	"name": "Sublime Sakura - Dance of the Four Origins"
+	"effect": "Water attribute cards ATK x1.5, RCV x1.5. ATK x2 when simultaneously clearing 4 connected Water orbs.",
+	"name": "Panther Charm"
+},
+{
+	"effect": "Dragon & Devil type cards HP x1.5, ATK x1.5, RCV x1.5. All attribute cards ATK x4 when reaching Water & Wood combos.",
+	"name": "Path of Solitude"
+},
+{
+	"effect": "Can no longer clear 3 connected orbs. Water attribute cards ATK x4. All attribute cards ATK x4, 25% all damage reduction when attacking with Water and Water combos at the same time.",
+	"name": "Paulownia Protective Crest"
+},
+{
+	"effect": "Water attribute cards ATK x2. All attribute cards ATK x2.5 when reaching 2 set of Water combos. ATK x2.5 for each additional combo, up to ATK x5 when reaching 3 combos.",
+	"name": "Peacock of the Holy Lake"
+},
+{
+	"data": [1,
+	5,
+	1],
+	"effect": "All attribute cards ATK x2.5 when reaching 2 set of Water combos. ATK x2.5 for each additional combo, up to ATK x5 when reaching 3 combos. Matched attribute ATK x1.5 when matching exactly 5 connected orbs with at least 1 enhanced orb.",
+	"name": "Peacock of the Sacred Lake"
+},
+{
+	"effect": "Attacker type cards ATK x2. 50% chance to deal counter Light damage of 5x damage taken.",
+	"name": "Peculiar Stance"
+},
+{
+	"effect": "Physical type cards ATK x2.5, RCV x2.5.",
+	"name": "Peerless Hunter"
+},
+{
+	"effect": "Dragon & Devil type cards HP x1.3, ATK x1.3, RCV x1.3. ATK x1.5 when simultaneously clearing 4 connected Fire orbs. ATK x0.5 for each additional orb, up to ATK x10 at 21 connected orb.",
+	"name": "Perfect Revolution Offense"
+},
+{
+	"data": [1,
+	3,
+	1],
+	"effect": "ATK x3 for clearing each Light orbs in a cross formation.",
+	"name": "Perish Along With Your Love!!"
 },
 {
 	"data": [1,
 	2.5,
-	1,
-	["elem",
-	1]],
-	"effect": "Water attribute cards ATK x2.5. 25% Water damage reduction.",
-	"name": "Summer Vacation is Nice"
+	1],
+	"effect": "ATK x2.5 when simultaneously clearing 5 connected Water orbs. All attribute cards ATK x2 when reaching Heart & Heart combos.",
+	"name": "Permafrost Dragon Emperor's Power"
 },
 {
-	"effect": "All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light & Dark. All attribute cards ATK x1.25 when reaching 6 combos or above.",
-	"name": "Summon Bahamut"
-},
-{
-	"data": [1,
-	1.25,
-	1.25,
-	["type",
-	7]],
-	"effect": "Devil type cards ATK x1.25, RCV x1.25. All attribute cards ATK x3 when reaching Dark & Dark or Dark & Water combos.",
-	"name": "Summoning Order"
-},
-{
-	"effect": "All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light & Dark.",
-	"name": "Summon Valefor"
-},
-{
-	"effect": "50% Fire & Light damage reduction.",
-	"name": "Sunlight Barrier"
-},
-{
-	"effect": "Light attribute cards ATK x5. Increases time limit of orb movement by 2 seconds.",
-	"name": "Sunlight Sorcery"
+	"effect": "Attacker type cards HP x1.35, ATK x1.35, RCV x1.35. All attribute cards ATK x3 when reaching 2 set of Fire combos. ATK x3 for each additional combo, up to ATK x6 when reaching 3 combos.",
+	"name": "Piping hot gifts for everyone!"
 },
 {
 	"data": [1,
-	2,
-	1,
-	["type",
-	1]],
-	"effect": "Balanced type cards ATK x2.",
-	"name": "Sunshine Burst"
+	3.5,
+	1],
+	"effect": "All attribute cards ATK x3.5 when reaching 6 combos or above. All attribute cards ATK x1.5 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart.",
+	"name": "Plum Blossom Crest"
 },
 {
-	"effect": "50% all damage reduction when HP is full.",
-	"name": "Super Armor"
+	"effect": "ATK x3.5 at 6 combos. ATK x0.5 for each additional combo, up to ATK x5 at 9 combos. All attribute cards ATK x2 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart.",
+	"name": "Plum Blossom War Crest"
+},
+{
+	"effect": "All attribute cards ATK x2 when reaching 1 set of Water combo. ATK x1 for each additional combo, up to ATK x4 when reaching 3 combos.",
+	"name": "Angelo"
 },
 {
 	"data": [1,
 	2.5,
-	1.5,
-	["type",
-	4]],
-	"effect": "Dragon type cards ATK x2.5, RCV x1.5 when HP is greater than 50%.",
-	"name": "Superior Courage"
+	1],
+	"effect": "All attribute cards ATK x2.5 when attacking with Fire, Water & Wood orb types at the same time.",
+	"name": "Angel's Song"
 },
 {
-	"data": [2.5,
-	1.5,
-	1,
-	["type",
-	2]],
-	"effect": "Physical type cards HP x2.5, ATK x1.5.",
-	"name": "Super Lucky"
-},
-{
-	"effect": "25% chance to deal counter Wood damage of 10x damage taken.",
-	"name": "Super Metallic Body"
-},
-{
-	"effect": "All attribute cards ATK x2 when attacking with 4 of following orb types: Fire, Water, Wood, Light & Dark. ATK x1 for each additional orb type, up to ATK x3 for all 5 matches. Attacker & Devil type cards ATK x3, RCV x1.5.",
-	"name": "Super Nova"
-},
-{
-	"effect": "Dragon & Devil type cards ATK x2.5.",
-	"name": "Supernova of the Malicious Diety"
+	"effect": "Water attribute cards ATK x2. All attribute cards ATK x2 when reaching 2 set of Water combos. ATK x1 for each additional combo, up to ATK x4 when reaching 4 combos.",
+	"name": "Angel Wing"
 },
 {
 	"data": [1,
-	3.5,
-	1,
-	["elem",
-	4]],
-	"effect": "Dark attribute cards ATK x3.5 when HP is greater than 80%.",
-	"name": "Supersonic"
+	3,
+	1],
+	"effect": "All attribute cards ATK x3 when reaching Wood & Wood combos. 20% all damage reduction.",
+	"name": "Annihilating Divine Will"
 },
 {
-	"data": [1,
-	3.5,
-	1,
-	["elem",
-	3]],
-	"effect": "Physical & Attacker type cards HP x1.5, ATK x1.5. Light attribute cards ATK x3.5.",
-	"name": "Super Strength"
+	"effect": "No skyfall matches. Dark attribute cards ATK x5. Deal ATK x30 damage to all enemies after every orbs elimination. Ignores enemy element, but can be reduced by enemy defense down to 0 damage.",
+	"name": "Anryu Hiha"
 },
 {
-	"effect": "Balanced type cards ATK x3, RCV x1.5. Matched attribute ATK x1.5 when matching exactly 5 connected orbs with at least 1 enhanced orb.",
-	"name": "Supreme Meteor Blade"
-},
-{
-	"effect": "Fire attribute cards HP x2, ATK x2.",
-	"name": "Suzuran ain't no walk in the park"
-},
-{
-	"effect": "While your HP is 50% or above, a single hit that normally kills you will instead leave you with 1 HP. For the consecutive hits, this skill will only affect the first hit. All attribute cards ATK x2.5 when Restrained Dragon Hero, Liu Bei in the same team.",
-	"name": "Swallow General's Vow"
-},
-{
-	"effect": "Change the board to 7x6 size. All attribute cards ATK x5, 25% all damage reduction when attacking with Fire, Water, Wood & Dark orb types at the same time.",
-	"name": "Swallowtail Protective Crest"
-},
-{
-	"effect": "Physical type cards ATK x3.5 when HP is less than 50%. Matched attribute ATK x2 when matching exactly 5 connected orbs with at least 1 enhanced orb.",
-	"name": "Sword Combat God's Magatama"
-},
-{
-	"effect": "All attribute cards ATK x2.5 when  combos. All attribute cards ATK x2 when reaching 4 combos or above.",
-	"name": "Sword & Magic"
-},
-{
-	"effect": "Dragon & Attacker type cards ATK x2, RCV x2. ATK x3 for clearing each Fire or Dark orbs in a cross formation.",
-	"name": "Sword of Incandescence"
-},
-{
-	"effect": "Devil type cards HP x1.5, ATK x1.5. ATK x3 when simultaneously clearing 6 connected Dark orbs. ATK x0.5 for each additional orb, up to ATK x5 at 10 connected orb.",
-	"name": "Sword of Wisdom and Pursuit"
-},
-{
-	"effect": "Machine type cards ATK x1.5, RCV x1.5. All attribute cards ATK x2.5 when reaching 2 set of Light combos. ATK x2.5 for each additional combo, up to ATK x7.5 when reaching 4 combos.",
-	"name": "Symphonic Energy"
-},
-{
-	"data": [1.5,
-	2,
-	1,
-	["elem",
-	2,
-	0]],
-	"effect": "Fire & Water attribute cards HP x1.5, ATK x2.",
-	"name": "Planet of Blue Flame"
+	"effect": "No skyfall matches. Healer attribute cards HP x1.5, ATK x1.5. ATK x2 at 5 combos. ATK x2 for each additional combo, up to ATK x12 at 10 combos.",
+	"name": "Spirit of the Miko Goddess"
 }]
