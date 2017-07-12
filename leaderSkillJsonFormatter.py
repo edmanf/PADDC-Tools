@@ -7,36 +7,13 @@ def main():
     
     if len(leaderJson) is 0:
         return
-        
-    ex1 = "Dark attribute cards HP x2.5, ATK x2, RCV x1.5. All attribute cards ATK x3.5 when reaching Dark & Water combos."
-    ex2 = "Attacker & Devil type cards HP x2, ATK x2. All attribute cards ATK x3.5 when reaching Fire & Water combos."
-    ex3 = "Fire attribute & God type cards HP x1.5, ATK x2.5."
-    ex4 = "God, Attacker & Devil type cards HP x1.5, ATK x3.5. All attribute cards ATK x2, RCV x2 when reaching Dark & Water combos."
-    ex5 = "Fire & Water attribute cards ATK x2."
-    ex6 = "Wood attribute cards ATK x3.5. Fire attribute cards HP x2."
-    ex7 = "Wood attribute cards ATK x3.5. Fire attribute cards HP x2. ATK x1.5 for clearing each Wood orbs in a cross formation."
-    ex8 = "Devil attribute cards All Stats x1.5. All attribute cards ATK x5 when attacking with Fire, Water, Wood & Dark orb types at the same time."
-    #basic skills are just are type and attribute multipliers
-    basicRePattern = r'''
-        ((((
-        fire|water|wood|light|dark      #attributes
-        |god|balanced|attacker           #types
-        |physical|devil|healer
-        |dragon|machine) 
-        \W+ (attribute\W+|type\W+)?)+   #repeat for all attributes and types
-   
-        cards\W+
-        
-        ((hp|atk|rcv|all[ ]stats)[ ]x\d([.]\d)?(,[ ])?)+)[.]?$) #followed by multipliers
-
-    '''
-    basicRe = re.compile(basicRePattern, re.IGNORECASE|re.VERBOSE)
     
     attributeRePattern = r'''
         (fire|water|wood|light|dark)
     
     '''
     attributeRe = re.compile(attributeRePattern, re.IGNORECASE|re.VERBOSE)
+    
     typeRePattern = r'''
         (
         god|balanced|attacker|physical
@@ -45,6 +22,21 @@ def main():
         |enhance material|redeemable material
         )
     '''
+    typeRe = re.compile(typeRePattern, re.IGNORECASE|re.VERBOSE)
+    
+    #basic skills are just are type and attribute multipliers
+    basicRePattern = r'''
+        ((((
+        ''' + attributeRePattern + "|" + typeRePattern + ''')   #list of attributes and types
+        
+        \W+ (attribute\W+|type\W+)?)+   #repeat for all attributes and types
+   
+        cards\W+
+        
+        ((hp|atk|rcv|all[ ]stats)[ ]x\d([.]\d)?(,[ ])?)+)[.]?$) #followed by multipliers
+
+    '''
+    basicRe = re.compile(basicRePattern, re.IGNORECASE|re.VERBOSE)
     
     result = "["
     for skillJson in leaderJson:
@@ -65,14 +57,20 @@ def main():
                 print("yes")
                 basicStr = m.group().strip(" ")
                 attributeM = attributeRe.findall(basicStr)
+                typeM = typeRe.findall(basicStr)
+                
                 result += "{\"skilltype\":\"basic\","
                 result += "\"attribute\":["
                 if attributeM:
                     for attribute in attributeM:
                         result += "\"" + attribute + "\","
-                result = result.strip(",")
-                result += "],"
-                result += "\"type\":[],"
+                result = result.strip(",") + "],"
+                result += "\"type\":["
+                if typeM:
+                    for type in typeM:
+                        result += "\"" + type + "\","
+                result = result.strip(",") + "],"
+
                 result += "\"effect\":{},"
                 result += "\"description\":\"" + basicStr + "\""
                 result += "},"
