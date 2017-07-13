@@ -92,6 +92,13 @@ crossPattern = r'''
     orbs[ ]in[ ]a[ ]cross[ ]formation
 '''
 
+moveTimePattern = r'''
+    (fixed|increases)[ ]                            #captures fixed or increases
+    (?:\w+[ ])*?orb[ ]movement(?:[ ]\w+)+?[ ]
+    (\d+(?:\.\d+)?)[ ]seconds                       #captures time value    
+'''
+
+
 def getBasicSkill(regexMatches):
     result = ""
     basicStr = regexMatches.group().strip(" ")
@@ -137,20 +144,28 @@ def getBasicSkill(regexMatches):
 def getGenericComboSkill(baseMatches, scaleMatches):
     baseAtkMulti = baseMatches[1]
     baseComboStart = baseMatches[2]
-    atkScale = scaleMatches[1]
-    atkMax = scaleMatches[2]
-    comboMax = scaleMatches[3]
+    atkScale = 0
+    atkMax = baseAtkMulti
+    comboMax = baseComboStart
+    if scaleMatches:
+        atkScale = scaleMatches[1]
+        atkMax = scaleMatches[2]
+        comboMax = scaleMatches[3]
     result = "{\"skilltype\":\"combo\","
     result += "\"effect\":{"
     result += "\"atk_scale_multi_type\":\"additive\","
-    result += "\"atk_scale\":" + atkScale + ","
-    result += "\"min_atk\":" + baseAtkMulti + ","
-    result += "\"max_atk\":" + atkMax + ","
-    result += "\"start_combo\":" + baseComboStart + ","
-    result += "\"end_combo\":" + comboMax
+    result += "\"atk_scale\":" + str(atkScale) + ","
+    result += "\"min_atk\":" + str(baseAtkMulti) + ","
+    result += "\"max_atk\":" + str(atkMax) + ","
+    result += "\"start_combo\":" + str(baseComboStart) + ","
+    result += "\"end_combo\":" + str(comboMax)
     result += "},"
-    result += "\"description\":\"" + baseMatches[0] + ". " + scaleMatches[0] + "\""
+    result += "\"description\":\"" + baseMatches[0] 
+    if scaleMatches:
+        result += ". " + scaleMatches[0]
+    result += "\""
     result += "}"
+    
     return result
 
 def getConnectedCombo(baseMatches, scaleMatches):    
@@ -235,6 +250,16 @@ def getCrossSkill(match):
     result += "}"
     return result
     
+def getMoveTimeSkill(match):
+    result = "{\"skilltype\":\"move_time\","
+    result += "\"move_time\":\"" + match[1] + "\","
+    result += "\"effect\":{"
+    result += "\"time\":" + match[2]
+    result += "},"
+    result += "\"description\":\"" + match[0] + "\""
+    result += "}"
+    return result
+
 def main():
     file = open("sampleLeaderSkills.json")
     leaderJson = json.load(file)
@@ -253,7 +278,6 @@ def main():
         result += "\"name\":\"" + name + "\","
         result += "\"description\":\"" + des + "\","
         result += "\"skill\":["
-        
         i = 0
         while i < len(leaderSkillParts):
             part = leaderSkillParts[i]
@@ -262,15 +286,17 @@ def main():
             if basicM:
                 result += getBasicSkill(basicM)
                 continue
-            
             genericComboBaseRe = re.compile(genericComboBasePattern, re.IGNORECASE|re.VERBOSE)
             genericComboBaseM = genericComboBaseRe.search(part)
             if genericComboBaseM:
-                scalePart = leaderSkillParts[i]     #i already incremented
-                genericComboScaleRe = re.compile(genericComboScalePattern, re.IGNORECASE|re.VERBOSE)
-                genericComboScaleM = genericComboScaleRe.search(scalePart)
-                result += getGenericComboSkill(genericComboBaseM, genericComboScaleM)
-                i += 1
+                if i < len(leaderSkillParts):
+                    scalePart = leaderSkillParts[i]    #i already incremented
+                    genericComboScaleRe = re.compile(genericComboScalePattern, re.IGNORECASE|re.VERBOSE)
+                    genericComboScaleM = genericComboScaleRe.search(scalePart)
+                    result += getGenericComboSkill(genericComboBaseM, genericComboScaleM)
+                    i += 1
+                else:
+                    result += getGenericComboSkill(genericComboBaseM, None)
                 continue
                 
             connectedRe = re.compile(connectedPattern, re.IGNORECASE|re.VERBOSE)
@@ -304,6 +330,11 @@ def main():
                 result += getCrossSkill(crossM)
                 continue
                 
+            moveTimeRe = re.compile(moveTimePattern, re.IGNORECASE|re.VERBOSE)
+            moveTimeM = moveTimeRe.search(part)
+            if moveTimeM:
+                result += getMoveTimeSkill(moveTimeM)
+                continue
             print("NOT DONE: " + part)
         result = result.strip(",") # fencepost problem
         result += "]},"

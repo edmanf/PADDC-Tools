@@ -86,7 +86,14 @@
 {
 	"name": "Eternal Dragon Unity - Torvio",
 	"description": "ATK x7.7, reduce damage taken by 50% after matching Heal orbs in a cross formation. Increases time limit of orb movement by 2 seconds.",
-	"skill": []
+	"skill": [{
+		"skilltype": "move_time",
+		"move_time": "Increases",
+		"effect": {
+			"time": 2
+		},
+		"description": "Increases time limit of orb movement by 2 seconds"
+	}]
 },
 {
 	"name": "Mutsu Enmei-ryu Hidden Art: Ryuha",
@@ -475,6 +482,14 @@
 			"rcv": 1.5
 		},
 		"description": "Devil type cards ATK x1.5, RCV x1.5"
+	},
+	{
+		"skilltype": "move_time",
+		"move_time": "Increases",
+		"effect": {
+			"time": 1
+		},
+		"description": "Increases time limit of orb movement by 1 seconds"
 	}]
 },
 {
@@ -956,5 +971,29 @@
 			"rcv": 1,
 			"description": "ATK x2.5 when simultaneously clearing 5 connected Water or Light orbs. ATK x0.5 for each additional orb, up to ATK x4 at 8 connected orb"
 		}
+	}]
+},
+{
+	"name": "Shoot to kill, Shinso...",
+	"description": "Increases time limit of orb movement by 13 seconds.",
+	"skill": [{
+		"skilltype": "move_time",
+		"move_time": "Increases",
+		"effect": {
+			"time": 13
+		},
+		"description": "Increases time limit of orb movement by 13 seconds"
+	}]
+},
+{
+	"name": "The Ebon Shadow",
+	"description": "Fixed orb movement time at 4 seconds.ATK x2.5, RCV x2.5 to Dragon type cards. All attribute cards ATK x6 when reaching 6 combos or above.",
+	"skill": [{
+		"skilltype": "move_time",
+		"move_time": "Fixed",
+		"effect": {
+			"time": 4
+		},
+		"description": "Fixed orb movement time at 4 seconds"
 	}]
 }]
