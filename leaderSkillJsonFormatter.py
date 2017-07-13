@@ -2,7 +2,7 @@ import json
 import re
 
 attributePattern = r'''
-    (fire|water|wood|light|dark)
+    (fire|water|wood|light|dark|all)
 
 '''
 attributeRe = re.compile(attributePattern, re.IGNORECASE|re.VERBOSE)
@@ -13,6 +13,7 @@ typePattern = r'''
     |devil|healer|dragon|machine
     |evo material|awaken material
     |enhance material|redeemable material
+    |all
     )
 '''
 typeRe = re.compile(typePattern, re.IGNORECASE|re.VERBOSE)
@@ -77,6 +78,20 @@ connectedScalePattern = r'''
     [ ]at[ ](\d+)[ ]connected[ ]orb                     #capture max count
 '''
 
+noSkyfallPattern = r'''
+    no[ ]skyfall[ ]matches
+'''
+
+boardSizePattern = r'''
+    change[ ]the[ ]board[ ]to[ ](\d+)x(\d+)[ ]size        #captures col and row
+'''
+
+crossPattern = r'''
+    atk[ ]x(\d+(?:\.\d+)?)                              #captures atk mutliplier
+    [ ]for[ ]clearing[ ](?:\w+[ ])+?
+    orbs[ ]in[ ]a[ ]cross[ ]formation
+'''
+
 def getBasicSkill(regexMatches):
     result = ""
     basicStr = regexMatches.group().strip(" ")
@@ -138,14 +153,7 @@ def getGenericComboSkill(baseMatches, scaleMatches):
     result += "}"
     return result
 
-def getConnectedCombo(baseMatches, scaleMatches):
-    print("CONNECTED")
-    result = "{\"skilltype\":\"connected\","
-    result += "\"description\":\"" + baseMatches[0]
-    if scaleMatches:
-        result += ". " + scaleMatches[0]
-        
-        
+def getConnectedCombo(baseMatches, scaleMatches):    
     minAtk = baseMatches[1]
     startCount = baseMatches[3]
     rcv = baseMatches[2] if baseMatches[2] else 1
@@ -157,7 +165,16 @@ def getConnectedCombo(baseMatches, scaleMatches):
         maxAtk = scaleMatches[2]
         endCount = scaleMatches[3]
     
-    result += "\","
+    orbTypeRe = re.compile(orbTypePattern, re.IGNORECASE|re.VERBOSE)
+    orbTypeM = orbTypeRe.findall(baseMatches[0])
+        
+    result = "{\"skilltype\":\"connected\","
+    result += "\"connected\":["
+    # dont check for None, there must be an orbType
+    for orbType in orbTypeM:
+        result += "\"" + orbType + "\","
+    result = result.strip(",") + "],"
+
     result += "\"effect\":{"
     result += "\"atk_scale_type\":\"additive\","
     result += "\"atk_scale\":" + str(atkScale) + ","
@@ -165,9 +182,57 @@ def getConnectedCombo(baseMatches, scaleMatches):
     result += "\"max_atk\":" + str(maxAtk) + ","
     result += "\"start_count\":" + str(startCount) + ","
     result += "\"end_count\":" + str(endCount) + ","
-    result += "\"rcv\":" + str(rcv)
+    result += "\"rcv\":" + str(rcv) + ","
+    result += "\"description\":\"" + baseMatches[0]
+    if scaleMatches:
+        result += ". " + scaleMatches[0]
+    result += "\""
     result += "}"
     result += "},"
+    return result
+    
+def getNoSkyfallSkill(match):
+    result = "{\"skilltype\":\"skyfall\","
+    result += "\"skyfall\":[\"no skyfall\"],"
+    result += "\"description\":\"" + match[0] + "\""
+    result += "},"
+    return result
+    
+def getBoardSize(match):
+    rows = match[1]
+    cols = match[2]
+
+    result = "{\"skilltype\":\"boardsize\","
+    result += "\"boardsize\":{"
+    result += "\"rows\":" + str(rows) + ","
+    result += "\"cols\":" + str(cols)
+    result += "},"
+    result += "\"description\":\"" + match[0] + "\""
+    result += "}"
+    return result
+    
+def getCrossSkill(match):
+    atkScale = match[1]
+    description = match[0]
+    
+    orbTypeRe = re.compile(orbTypePattern, re.IGNORECASE|re.VERBOSE)
+    orbTypeM = orbTypeRe.findall(description)
+    
+    
+    result = "{\"skilltype\":\"cross\","
+    result += "\"cross\":["
+    
+    #dont check for none, because there has to be an orb type
+    for orbType in orbTypeM:
+        result += "\"" + orbType + "\","
+    result = result.strip(",") + "],"
+    result += "\"effect\":{"
+    result += "\"atk_scale_type\":\"multiplicative\","
+    result += "\"atk_scale\":" + atkScale
+    result += "},"
+    
+    result += "\"description\":\"" + description + "\""
+    result += "}"
     return result
     
 def main():
@@ -219,6 +284,24 @@ def main():
                 else:
                     result += getConnectedCombo(connectedM, None)
                 i += 1
+                continue
+                
+            noSkyfallRe = re.compile(noSkyfallPattern, re.IGNORECASE|re.VERBOSE)
+            noSkyfallM = noSkyfallRe.search(part)
+            if noSkyfallM:
+                result += getNoSkyfallSkill(noSkyfallM)
+                continue
+                
+            boardSizeRe = re.compile(boardSizePattern, re.IGNORECASE|re.VERBOSE)
+            boardSizeM = boardSizeRe.search(part)
+            if boardSizeM:
+                result += getBoardSize(boardSizeM)
+                continue
+                
+            crossRe = re.compile(crossPattern, re.IGNORECASE|re.VERBOSE)
+            crossM = crossRe.search(part)
+            if crossM:
+                result += getCrossSkill(crossM)
                 continue
                 
             print("NOT DONE: " + part)

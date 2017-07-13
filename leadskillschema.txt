@@ -20,7 +20,9 @@ conditions:
     other
         [list of effects]
             increase time, increase attack, counter, damage reduction
-            board size, game sounds, no skyfall
+            board size, game sounds
+    skyfall
+        skyfall:[attributes, or no skyfall]
         
     color_cross
         color_cross:[list of colors that you can make crosses of]
@@ -64,7 +66,8 @@ conditions:
                  max_atk:
                  atk_scale:
                  start_count:
-                 end_count:}
+                 end_count:
+                 rcv:}
     skill_used:
         effect: {atk/rcv}
         
