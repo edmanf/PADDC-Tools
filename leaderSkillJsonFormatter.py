@@ -17,6 +17,11 @@ typePattern = r'''
 '''
 typeRe = re.compile(typePattern, re.IGNORECASE|re.VERBOSE)
 
+orbTypePattern = r'''
+    (fire|water|wood|light|dark
+    |heal|heart|jammer|moprtal[ ]poison|poison)
+'''
+
 
 #basic skills are just are type and attribute multipliers
 basicRePattern = r'''
@@ -27,7 +32,7 @@ basicRePattern = r'''
 
     cards\W+
     
-    ((hp|atk|rcv|all[ ]stats)[ ]x\d([.]\d)?(,[ ])?)+)[.]?$) #followed by multipliers
+    ((hp|atk|rcv|all[ ]stats)[ ]x\d+([.]\d+)?(,[ ])?)+)[.]?$) #followed by multipliers
 
 '''
 basicRe = re.compile(basicRePattern, re.IGNORECASE|re.VERBOSE)
@@ -36,25 +41,40 @@ basicMultiPattern = r'''
     cards[ ]
     (?:
     (?:all[ ]stats[ ]x(\d(?:[.]\d)?))|
-    (?:HP[ ]x(\d(?:[.]\d)?))?       #captures the HP multiplier
+    (?:HP[ ]x(\d+(?:[.]\d+)?))?       #captures the HP multiplier
     (?:,[ ])?
-    (?:atk[ ]x(\d(?:\.\d)?))?       #captures atk multiplier
+    (?:atk[ ]x(\d+(?:\.\d+)?))?       #captures atk multiplier
     (?:,[ ])?
-    (?:rcv[ ]x(\d(?:\.\d)?))?        #captures rcv multiplier
+    (?:rcv[ ]x(\d+(?:\.\d+)?))?        #captures rcv multiplier
     [.]?
     )
 '''
 basicMultiRe = re.compile(basicMultiPattern, re.IGNORECASE|re.VERBOSE)
 
 genericComboBasePattern = r'''
-    atk[ ]x(\d(?:\.\d)?)        #capture atk multiplier
-    [ ]at[ ](\d)[ ]combos       #capture base start combo
+    atk[ ]x(\d+(?:\.\d+)?)                              #capture atk multiplier
+    [ ]at[ ](\d+)[ ]combos                              #capture base start combo
 '''
 genericComboScalePattern = r'''
-    atk[ ]x(\d(?:\.\d)?)                                #capture scaling mutliplier
+    atk[ ]x(\d+(?:\.\d+)?)                              #capture scaling mutliplier
     [ ]for[ ]each[ ]additional[ ]combo,
-    [ ]up[ ]to[ ]atk[ ]x(\d+(?:\.\d)?)[ ]at[ ]          #capture multiplier limit
+    [ ]up[ ]to[ ]atk[ ]x(\d+(?:\.\d+)?)[ ]at[ ]         #capture multiplier limit
     (\d+)[ ]combos                                      #capture combo limit
+'''
+
+connectedPattern = r'''
+    (?:atk[ ]x(\d+(?:\.\d+)?))?                         #capture atk multi
+    (?:,[ ])?                                               
+    (?:rcv[ ]x(\d+(?:\.\d+)?))?                         #capture rcv multi
+    [ ]when[ ]simultaneously[ ]clearing[ ]
+    (\d+)[ ]connected[ ]\w+(?:[ ]or[ ]\w+)?[ ]orbs      #capture beginning count
+'''
+
+connectedScalePattern = r'''
+    atk[ ]x(\d+(?:\.\d+)?)                              #capture atk scale
+    [ ]for[ ]each[ ]additional[ ]orb,
+    [ ]up[ ]to[ ]atk[ ]x (\d+(?:\.\d+)?)                #capture max atk
+    [ ]at[ ](\d+)[ ]connected[ ]orb                     #capture max count
 '''
 
 def getBasicSkill(regexMatches):
@@ -100,9 +120,6 @@ def getBasicSkill(regexMatches):
     return result
     
 def getGenericComboSkill(baseMatches, scaleMatches):
-    print("DEBUG")
-    print(baseMatches)
-    print(scaleMatches)
     baseAtkMulti = baseMatches[1]
     baseComboStart = baseMatches[2]
     atkScale = scaleMatches[1]
@@ -111,12 +128,26 @@ def getGenericComboSkill(baseMatches, scaleMatches):
     result = "{\"skilltype\":\"combo\","
     result += "\"effect\":{"
     result += "\"atk_scale_multi_type\":\"additive\","
-    result += "\"atk_scale\":" + atkScale
+    result += "\"atk_scale\":" + atkScale + ","
+    result += "\"min_atk\":" + baseAtkMulti + ","
+    result += "\"max_atk\":" + atkMax + ","
+    result += "\"start_combo\":" + baseComboStart + ","
+    result += "\"end_combo\":" + comboMax
     result += "},"
     result += "\"description\":\"" + baseMatches[0] + ". " + scaleMatches[0] + "\""
     result += "}"
     return result
 
+def getConnectedCombo(baseMatches, scaleMatches):
+    print("CONNECTED")
+    result = "{\"skilltype\":\"connected\","
+    result += "\"description\":\"" + baseMatches[0]
+    if scaleMatches:
+        result += ". " + scaleMatches[0]
+    result += "\""
+    result += "},"
+    return result
+    
 def main():
     file = open("sampleLeaderSkills.json")
     leaderJson = json.load(file)
@@ -139,7 +170,6 @@ def main():
         i = 0
         while i < len(leaderSkillParts):
             part = leaderSkillParts[i]
-            print(part)
             i += 1
             basicM = basicRe.search(part)
             if basicM:
@@ -150,10 +180,22 @@ def main():
             genericComboBaseM = genericComboBaseRe.search(part)
             if genericComboBaseM:
                 scalePart = leaderSkillParts[i]     #i already incremented
-                print(scalePart)
                 genericComboScaleRe = re.compile(genericComboScalePattern, re.IGNORECASE|re.VERBOSE)
                 genericComboScaleM = genericComboScaleRe.search(scalePart)
                 result += getGenericComboSkill(genericComboBaseM, genericComboScaleM)
+                i += 1
+                continue
+                
+            connectedRe = re.compile(connectedPattern, re.IGNORECASE|re.VERBOSE)
+            connectedM = connectedRe.search(part)
+            if connectedM:
+                scalePart = leaderSkillParts[i] if i < len(leaderSkillParts) else None    #i already incremented
+                if scalePart:
+                    connectedScaleRe = re.compile(connectedScalePattern, re.IGNORECASE|re.VERBOSE)
+                    connectedScaleM = connectedScaleRe.search(scalePart)
+                    result += getConnectedCombo(connectedM, connectedScaleM)
+                else:
+                    result += getConnectedCombo(connectedM, None)
                 i += 1
                 continue
                 

@@ -1,4 +1,101 @@
-[{
+[
+{
+	"effect": "No skyfall matches. Dark attribute cards ATK x2, RCV x2. ATK x2 when simultaneously clearing 6 connected Dark orbs. ATK x1 for each additional orb, up to ATK x8 at 12 connected orb.",
+	"name": "Fool!"
+},
+{
+	"effect": "Balanced, God & Devil attribute cards ATK x2 on the turn a skill is used. ( Multiple skills will not stack ) ATK x6, reduce damage taken by 35% after matching Heal orbs in a cross formation.",
+	"name": "Treasure Hunting Demonic Curse"
+},
+{
+	"effect": "All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light & Dark. ATK x1 for each additional orb type, up to ATK x5 for all 5 matches. Attacker & Machine type cards HP x1.3, ATK x1.3, RCV x1.3.",
+	"name": "I'll slice it up"
+},
+{
+	"effect": "Balanced & Devil type cards HP x1.5, ATK x3.5. ATK x2 when simultaneously clearing 4 connected Heart orbs. ATK x0.5 for each additional orb, up to ATK x3 at 6 connected orb.",
+	"name": "Bakusaiga"
+},
+{
+	"effect": "ATK x7.7, reduce damage taken by 50% after matching Heal orbs in a cross formation. Increases time limit of orb movement by 2 seconds.",
+	"name": "Eternal Dragon Unity - Torvio"
+},
+{
+	"effect": "All attribute cards ATK x6, 25% all damage reduction when attacking with 4 of Fire, Water, Wood, Light & Dark orb types at the same time. Deal ATK x100 damage to all enemies after every orbs elimination. Ignores enemy element, but can be reduced by enemy defense down to 0 damage.",
+	"name": "Mutsu Enmei-ryu Hidden Art: Ryuha"
+},
+{
+	"effect": "All attribute cards ATK x4.5, 25% all damage reduction when attacking with Light and Fire combos at the same time. Change the board to 7x6 size.",
+	"name": "Hidden Sorcery"
+},
+{
+	"effect": "No skyfall matches. Wood attribute cards All Stats x1.5. ATK x3 for clearing each Wood or Fire orbs in a cross formation.",
+	"name": "Axiom of Salvation"
+},
+{
+	"effect": "No skyfall matches. Water attribute cards ATK x2.5, RCV x2.5. ATK x3 when simultaneously clearing 6 connected Water orbs. ATK x0.5 for each additional orb, up to ATK x4.5 at 9 connected orb.",
+	"name": "Aqua Steel Star of Sagittarius"
+},
+{
+	"effect": "All attribute cards ATK x2, RCV x2 when reaching 5 or more combos. ATK x4, reduce damage taken by 50% after matching Heal orbs in a cross formation.",
+	"name": "Eternal Dragon Unity - Torvio Koh"
+},
+{
+	"effect": "Matched attribute ATK x4.5 when matching exactly 5 connected orbs with at least 1 enhanced orb. God & Devil type cards HP x2, ATK x2.",
+	"name": "Longing Breath"
+},
+{
+	"effect": "All attribute cards ATK x2 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart. ATK x3 for each additional orb type, up to ATK x8 for all 6 matches. God type cards HP x1.5, ATK x1.5, RCV x1.5.",
+	"name": "Solar Barrage"
+},
+{
+	"effect": "Change the board to 7x6 size. All attribute cards ATK x5, 25% all damage reduction when attacking with Fire, Water, Wood & Light orb types at the same time.",
+	"name": "Tachibana Protective Crest"
+},
+{
+	"effect": "Healer & Devil type cards HP x2, ATK x2. ATK x3 when simultaneously clearing 6 connected Wood orbs. ATK x0.5 for each additional orb, up to ATK x4 at 8 connected orb.",
+	"name": "Spirit of the Archdemon"
+},
+{
+	"effect": "Water & Wood attribute cards HP x1.5, ATK x1.5. All attribute cards ATK x5, 25% all damage reduction when attacking with Water and Wood combos at the same time.",
+	"name": "Hermit Cycle"
+},
+{
+	"effect": "Change the board to 7x6 size. All attribute cards ATK x6, 25% all damage reduction when attacking with Fire, Water, Wood, Dark & Heart orb types at the same time.",
+	"name": "Dance of the Dark Heavens"
+},
+{
+	"effect": "Dark attribute cards ATK x6. Water attribute cards RCV x2. ATK x2 for clearing each Dark orbs in a cross formation.",
+	"name": "From now on... I alone will stand at the top."
+},
+{
+	"effect": "Light attribute cards ATK x6. Water attribute cards RCV x2. ATK x1.5 when simultaneously clearing 5 connected Light orbs. ATK x0.5 for each additional orb, up to ATK x2.5 at 7 connected orb.",
+	"name": "In the Beginning"
+},
+{
+	"effect": "ATK x3 at 4 combos. ATK x1 for each additional combo, up to ATK x9 at 10 combos. HP x1.5, ATK x1.5, RCV x1.5 in cooperation mode.",
+	"name": "Bubbly Dance"
+},
+{
+	"effect": "ATK x5 at 8 combos. ATK x2.5 for each additional combo, up to ATK x10 at 10 combos. All attribute cards ATK x3, RCV x1.5 on the turn a skill is used. ( Multiple skills will not stack )",
+	"name": "Spirit of the Hell Deity"
+},
+{
+	"effect": "God, Attacker & Devil type cards HP x1.5, ATK x3.5. All attribute cards ATK x2, RCV x2 when reaching Dark & Water combos.",
+	"name": "Victoria's Victory Song"
+},
+{
+	"effect": "All attribute cards ATK x6 when HP is greater than 80%. ATK x2.5 when HP is less than 80%. All attribute cards ATK x3, 25% all damage reduction when attacking with Light and Light combos at the same time.",
+	"name": "Mysterious Dazzling Shine"
+},
+{
+	"effect": "Dark attribute cards ATK x2.5, RCV x1.5. All attribute cards ATK x4, 25% all damage reduction when attacking with Fire, Water & Dark orb types at the same time.",
+	"name": "Demonic Apotheosis"
+},
+{
+	"effect": "Change the board to 7x6 size. All attribute cards ATK x8.5, 25% all damage reduction when reaching 8 combos.",
+	"name": "The Brutal Tyrant"
+},
+{
 	"effect": "Healer type cards HP x2, ATK x2. Healer attribute cards RCV x2 on the turn a skill is used. ( Multiple skills will not stack )",
 	"name": "Oracle of the Radiant God"
 },
@@ -42,10 +139,6 @@
 {
 	"effect": "Light attribute cards HP x1.5, ATK x1.5, RCV x1.5.",
 	"name": "Our name is Orphan."
-},
-{
-	"effect": "ATK x2 at 4 combos. ATK x0.5 for each additional combo, up to ATK x5 at 10 combos. While your HP is 50% or above, a single hit that normally kills you will instead leave you with 1 HP. For the consecutive hits, this skill will only affect the first hit.",
-	"name": "Out of the way!"
 },
 {
 	"effect": "All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light & Dark. ATK x1 for each additional orb type, up to ATK x5 for all 5 matches. ATK x2.5, RCV x2.5 when simultaneously clearing 5 connected Light orbs.",
@@ -176,4 +269,12 @@
 {
 	"effect": "No skyfall matches. Healer attribute cards HP x1.5, ATK x1.5. ATK x2 at 5 combos. ATK x2 for each additional combo, up to ATK x12 at 10 combos.",
 	"name": "Spirit of the Miko Goddess"
+},
+{
+	"effect": "ATK x2 at 4 combos. ATK x0.5 for each additional combo, up to ATK x5 at 10 combos. While your HP is 50% or above, a single hit that normally kills you will instead leave you with 1 HP. For the consecutive hits, this skill will only affect the first hit.",
+	"name": "Out of the way!"
+},
+{
+	"effect": "All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart. ATK x2.5 when simultaneously clearing 5 connected Water or Light orbs. ATK x0.5 for each additional orb, up to ATK x4 at 8 connected orb.",
+	"name": "Spirits of the Divine Flowers"
 }]
