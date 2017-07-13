@@ -41,11 +41,11 @@ basicMultiPattern = r'''
     cards[ ]
     (?:
     (?:all[ ]stats[ ]x(\d(?:[.]\d)?))|
-    (?:HP[ ]x(\d+(?:[.]\d+)?))?       #captures the HP multiplier
+    (?:HP[ ]x(\d+(?:[.]\d+)?))?                         #captures the HP multiplier
     (?:,[ ])?
-    (?:atk[ ]x(\d+(?:\.\d+)?))?       #captures atk multiplier
+    (?:atk[ ]x(\d+(?:\.\d+)?))?                         #captures atk multiplier
     (?:,[ ])?
-    (?:rcv[ ]x(\d+(?:\.\d+)?))?        #captures rcv multiplier
+    (?:rcv[ ]x(\d+(?:\.\d+)?))?                         #captures rcv multiplier
     [.]?
     )
 '''
@@ -144,7 +144,29 @@ def getConnectedCombo(baseMatches, scaleMatches):
     result += "\"description\":\"" + baseMatches[0]
     if scaleMatches:
         result += ". " + scaleMatches[0]
-    result += "\""
+        
+        
+    minAtk = baseMatches[1]
+    startCount = baseMatches[3]
+    rcv = baseMatches[2] if baseMatches[2] else 1
+    atkScale = 0
+    maxAtk = minAtk
+    endCount = startCount  
+    if scaleMatches:
+        atkScale = scaleMatches[1]
+        maxAtk = scaleMatches[2]
+        endCount = scaleMatches[3]
+    
+    result += "\","
+    result += "\"effect\":{"
+    result += "\"atk_scale_type\":\"additive\","
+    result += "\"atk_scale\":" + str(atkScale) + ","
+    result += "\"min_atk\":" + str(minAtk) + ","
+    result += "\"max_atk\":" + str(maxAtk) + ","
+    result += "\"start_count\":" + str(startCount) + ","
+    result += "\"end_count\":" + str(endCount) + ","
+    result += "\"rcv\":" + str(rcv)
+    result += "}"
     result += "},"
     return result
     
