@@ -52,11 +52,11 @@ basicMultiPattern = r'''
 '''
 basicMultiRe = re.compile(basicMultiPattern, re.IGNORECASE|re.VERBOSE)
 
-genericComboBasePattern = r'''
+scalingComboBasePattern = r'''
     atk[ ]x(\d+(?:\.\d+)?)                              #capture atk multiplier
     [ ]at[ ](\d+)[ ]combos                              #capture base start combo
 '''
-genericComboScalePattern = r'''
+scalingComboScalePattern = r'''
     atk[ ]x(\d+(?:\.\d+)?)                              #capture scaling mutliplier
     [ ]for[ ]each[ ]additional[ ]combo,
     [ ]up[ ]to[ ]atk[ ]x(\d+(?:\.\d+)?)[ ]at[ ]         #capture multiplier limit
@@ -251,8 +251,10 @@ def getCrossSkill(match):
     return result
     
 def getMoveTimeSkill(match):
+    moveTimeType = "fixed" if match[1] == "Fixed" else "increase"
+
     result = "{\"skilltype\":\"move_time\","
-    result += "\"move_time\":\"" + match[1] + "\","
+    result += "\"move_time\":\"" + moveTimeType + "\","
     result += "\"effect\":{"
     result += "\"time\":" + match[2]
     result += "},"
@@ -286,17 +288,17 @@ def main():
             if basicM:
                 result += getBasicSkill(basicM)
                 continue
-            genericComboBaseRe = re.compile(genericComboBasePattern, re.IGNORECASE|re.VERBOSE)
-            genericComboBaseM = genericComboBaseRe.search(part)
-            if genericComboBaseM:
+            scalingComboBaseRe = re.compile(scalingComboBasePattern, re.IGNORECASE|re.VERBOSE)
+            scalingComboBaseM = scalingComboBaseRe.search(part)
+            if scalingComboBaseM:
                 if i < len(leaderSkillParts):
                     scalePart = leaderSkillParts[i]    #i already incremented
-                    genericComboScaleRe = re.compile(genericComboScalePattern, re.IGNORECASE|re.VERBOSE)
-                    genericComboScaleM = genericComboScaleRe.search(scalePart)
-                    result += getGenericComboSkill(genericComboBaseM, genericComboScaleM)
+                    scalingComboScaleRe = re.compile(scalingComboScalePattern, re.IGNORECASE|re.VERBOSE)
+                    scalingComboScaleM = scalingComboScaleRe.search(scalePart)
+                    result += getGenericComboSkill(scalingComboBaseM, scalingComboScaleM)
                     i += 1
                 else:
-                    result += getGenericComboSkill(genericComboBaseM, None)
+                    result += getGenericComboSkill(scalingComboBaseM, None)
                 continue
                 
             connectedRe = re.compile(connectedPattern, re.IGNORECASE|re.VERBOSE)
