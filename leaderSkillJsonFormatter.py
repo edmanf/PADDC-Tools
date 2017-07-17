@@ -98,6 +98,18 @@ moveTimePattern = r'''
     (\d+(?:\.\d+)?)[ ]seconds                       #captures time value    
 '''
 
+basicComboPattern = r'''
+    all[ ]attribute[ ]cards[ ](?:atk[ ]x(\d+(?:\.\d+)?).)?
+    (?:rcv[ ]x(\d+(?:\.\d+)?).)?
+    when[ ]reaching[ ](\d+)[ ](?:combos|or).*
+'''
+
+
+
+# some descriptions have a type where a period is not followed by a space
+periodTypePattern = r'''seconds\.([a-zA-Z])'''
+periodFixPattern = r'''seconds. \1'''
+
 
 def getBasicSkill(regexMatches):
     result = ""
@@ -167,6 +179,36 @@ def getGenericComboSkill(baseMatches, scaleMatches):
     result += "}"
     
     return result
+    
+def getBasicComboSkill(match):
+    des = match[0]
+    baseAtkMulti = match[1] if match[1] else 1
+    rcvMulti = match[2] if match[2] else 1
+    combo = match[3]
+    
+    atkScale = 0
+    atkMax = baseAtkMulti
+    baseComboStart = combo
+    scaleMatches = None
+    comboMax = combo
+    
+    result = "{\"skilltype\":\"combo\","
+    result += "\"effect\":{"
+    result += "\"atk_scale_multi_type\":\"additive\","
+    result += "\"atk_scale\":" + str(atkScale) + ","
+    result += "\"min_atk\":" + str(baseAtkMulti) + ","
+    result += "\"max_atk\":" + str(atkMax) + ","
+    result += "\"start_combo\":" + str(baseComboStart) + ","
+    result += "\"end_combo\":" + str(comboMax)
+    result += "},"
+    result += "\"description\":\"" + match[0] 
+    if scaleMatches:
+        result += ". " + scaleMatches[0]
+    result += "\""
+    result += "}"
+    
+    return result
+    
 
 def getConnectedCombo(baseMatches, scaleMatches):    
     minAtk = baseMatches[1]
@@ -269,12 +311,14 @@ def main():
     if len(leaderJson) is 0:
         return
     
-    
-    
+    unfinished = 0
+    count = 0
+    periodTypoRe = re.compile(periodTypePattern, re.IGNORECASE|re.VERBOSE)
     result = "["
     for skillJson in leaderJson:
+        
         name = skillJson["name"]
-        des = skillJson["effect"]
+        des = periodTypoRe.sub(periodFixPattern, skillJson["effect"])
         leaderSkillParts = des.split(". ")
         result += "{"
         result += "\"name\":\"" + name + "\","
@@ -282,7 +326,9 @@ def main():
         result += "\"skill\":["
         i = 0
         while i < len(leaderSkillParts):
+            count += 1
             part = leaderSkillParts[i]
+            #print(part)
             i += 1
             basicM = basicRe.search(part)
             if basicM:
@@ -337,12 +383,31 @@ def main():
             if moveTimeM:
                 result += getMoveTimeSkill(moveTimeM)
                 continue
+                
+            basicComboRe = re.compile(basicComboPattern, re.IGNORECASE|re.VERBOSE)
+            basicComboM = basicComboRe.search(part)
+            if basicComboM:
+                result += getBasicComboSkill(basicComboM)
+                #print(part)
+                #print()
+                continue
+                
+            fiveOE = re.compile(r'''
+                matched[ ]attribute.*
+            ''', re.IGNORECASE|re.VERBOSE)
+            m = fiveOE.search(part)
+            if False:
+                print(part)
+                print()
             print("NOT DONE: " + part)
+            unfinished += 1
         result = result.strip(",") # fencepost problem
         result += "]},"
         print()
     result = result.strip(",")
     result += "]"
+    
+    print("UNFINISHED: " + str(unfinished) + "/" + str(count))
     
     outFile = open("formattedLeaderSkills.json", "w", encoding="utf-8")
     outFile.write(result)

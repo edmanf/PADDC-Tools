@@ -285,5 +285,16 @@
 {
 	"effect": "Fixed orb movement time at 4 seconds.ATK x2.5, RCV x2.5 to Dragon type cards. All attribute cards ATK x6 when reaching 6 combos or above.",
 	"name": "The Ebon Shadow"
+},
+{
+	"effect": "ATK x2, RCV x2 when simultaneously clearing 6 connected Fire or Light orbs. ATK x3, RCV x3 for each additional orb, up to ATK x5, RCV x5 at 7 connected orb. Change the board to 7x6 size.",
+	"name": "Final Heaven"
+},
+{
+	"data": [1,
+	5,
+	1],
+	"effect": "All attribute cards ATK x5 when attacking with Fire, Water, Light & Dark orb types at the same time. All attribute cards ATK x1.5 when reaching 6 combos or above.",
+	"name": "Six Flower Palm of the Four Origins"
 }
 ]
