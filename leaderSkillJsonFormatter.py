@@ -122,6 +122,14 @@ orbTypeComboScalePattern = r'''
     (\d+)[ ]combos
 '''
 
+enhancedMatchPattern = r'''
+    matched[ ]attribute[ ]
+    atk[ ]x(\d+(?:\.\d+)?)
+    [ ]when[ ]matching[ ]exactly[ ]
+    (\d+)[ ]connected[ ]orbs
+    [ ]with[ ]at[ ]least[ ]
+    (\d+)[ ]enhanced[ ](?:orbs|orb)
+'''
 
 # some descriptions have a type where a period is not followed by a space
 periodTypePattern = r'''seconds\.([a-zA-Z])'''
@@ -129,8 +137,13 @@ periodFixPattern = r'''seconds. \1'''
 
 def formatComboSkills(description, minAtk, maxAtk, atkScale,
                 minCombo, maxCombo, rcv, attributes):
+                
+    attributeStr = "["
+    for attribute in attributes:
+        attributeStr += "\"" + attribute + "\","
+    attributeStr = attributeStr[:-1] + "]" #because of this, there must be at least 1 attribute
     result = "{\"skilltype\":\"combo\","
-    result += "\"combo\":" + str(attributes) + ","
+    result += "\"combo\":" + attributeStr + ","
     result += "\"effect\":{"
     result += "\"atk_scale_multi_type\":\"additive\","
     result += "\"atk_scale\":" + str(atkScale) + ","
@@ -141,7 +154,7 @@ def formatComboSkills(description, minAtk, maxAtk, atkScale,
     result += "\"rcv\":" + str(rcv)
     result += "},"
     result += "\"description\":\"" + description + "\""
-    result += "}"
+    result += "},"
     
     return result
 
@@ -336,9 +349,24 @@ def getMoveTimeSkill(match):
     result += "\"time\":" + match[2]
     result += "},"
     result += "\"description\":\"" + match[0] + "\""
-    result += "}"
+    result += "},"
     return result
 
+def getEnhancedMatch(match):
+    des = match[0]
+    atk = match[1]
+    orbCount = match[2]
+    minEnhanced = match[3]
+    
+    result = "{\"skilltype\":\"enhanced_match\","
+    result += "\"effect\":{"
+    result += "\"atk\":" + str(atk) + ","
+    result += "\"orb_count\":" + str(orbCount) + ","
+    result += "\"min_enhanced\":" + str(minEnhanced)
+    result += "},"
+    result += "\"description\":\"" + des + "\"},"
+    return result
+    
 def main():
     file = open("sampleLeaderSkills.json")
     leaderJson = json.load(file)
@@ -441,6 +469,12 @@ def main():
                         i += 1
                     
                 result += getOrbTypeComboSkill(orbTypeComboM, orbTypeComboScaleM)
+                continue
+            
+            enhancedMatchRe = re.compile(enhancedMatchPattern, re.IGNORECASE|re.VERBOSE)
+            enhancedMatchM = enhancedMatchRe.search(part)
+            if enhancedMatchM:
+                result += getEnhancedMatch(enhancedMatchM)
                 continue
             
             print("NOT DONE: " + part)
