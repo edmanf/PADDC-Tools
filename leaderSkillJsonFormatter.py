@@ -99,16 +99,51 @@ moveTimePattern = r'''
 '''
 
 basicComboPattern = r'''
-    all[ ]attribute[ ]cards[ ](?:atk[ ]x(\d+(?:\.\d+)?).)?
+    all[ ]attribute[ ]cards[ ]
+    (?:atk[ ]x(\d+(?:\.\d+)?).)?
     (?:rcv[ ]x(\d+(?:\.\d+)?).)?
     when[ ]reaching[ ](\d+)[ ](?:combos|or).*
 '''
 
+orbTypeComboPattern = r'''
+    all[ ]attribute[ ]cards
+    (?:[ ]atk[ ]x(\d+(?:\.\d+)?))?
+    [ ]when[ ]reaching[ ]
+    (\d+)[ ]set[ ]of[ ]
+    ''' + orbTypePattern + '''
+    [ ](?:combo|combos)
+'''
+
+orbTypeComboScalePattern = r'''
+    atk[ ]x(\d+(?:\.\d+)?)
+    [ ]for[ ]each[ ]additional[ ]combo,[ ]up[ ]to[ ]
+    atk[ ]x(\d+(?:\.\d+)?)
+    [ ]when[ ]reaching[ ]
+    (\d+)[ ]combos
+'''
 
 
 # some descriptions have a type where a period is not followed by a space
 periodTypePattern = r'''seconds\.([a-zA-Z])'''
 periodFixPattern = r'''seconds. \1'''
+
+def formatComboSkills(description, minAtk, maxAtk, atkScale,
+                minCombo, maxCombo, rcv, attributes):
+    result = "{\"skilltype\":\"combo\","
+    result += "\"combo\":" + str(attributes) + ","
+    result += "\"effect\":{"
+    result += "\"atk_scale_multi_type\":\"additive\","
+    result += "\"atk_scale\":" + str(atkScale) + ","
+    result += "\"min_atk\":" + str(minAtk) + ","
+    result += "\"max_atk\":" + str(maxAtk) + ","
+    result += "\"start_combo\":" + str(minCombo) + ","
+    result += "\"end_combo\":" + str(maxCombo) + ","
+    result += "\"rcv\":" + str(rcv)
+    result += "},"
+    result += "\"description\":\"" + description + "\""
+    result += "}"
+    
+    return result
 
 
 def getBasicSkill(regexMatches):
@@ -153,63 +188,63 @@ def getBasicSkill(regexMatches):
     result += "},"
     return result
     
-def getGenericComboSkill(baseMatches, scaleMatches):
-    baseAtkMulti = baseMatches[1]
-    baseComboStart = baseMatches[2]
+def getComboSkill(baseMatches, scaleMatches):
+    description = baseMatches[0]
+    minAtk = baseMatches[1]
+    minCombo = baseMatches[2]
     atkScale = 0
-    atkMax = baseAtkMulti
-    comboMax = baseComboStart
+    maxAtk = minAtk
+    maxCombo = minCombo
+    rcv = 1
+    
     if scaleMatches:
+        description += ". " + scaleMatches[0]
         atkScale = scaleMatches[1]
         atkMax = scaleMatches[2]
         comboMax = scaleMatches[3]
-    result = "{\"skilltype\":\"combo\","
-    result += "\"effect\":{"
-    result += "\"atk_scale_multi_type\":\"additive\","
-    result += "\"atk_scale\":" + str(atkScale) + ","
-    result += "\"min_atk\":" + str(baseAtkMulti) + ","
-    result += "\"max_atk\":" + str(atkMax) + ","
-    result += "\"start_combo\":" + str(baseComboStart) + ","
-    result += "\"end_combo\":" + str(comboMax)
-    result += "},"
-    result += "\"description\":\"" + baseMatches[0] 
-    if scaleMatches:
-        result += ". " + scaleMatches[0]
-    result += "\""
-    result += "}"
+        
+    attributes = ["all"]
+        
     
-    return result
+    return formatComboSkills(description, minAtk, maxAtk, atkScale,
+                minCombo, maxCombo, rcv, attributes)
     
 def getBasicComboSkill(match):
     des = match[0]
-    baseAtkMulti = match[1] if match[1] else 1
-    rcvMulti = match[2] if match[2] else 1
-    combo = match[3]
+    minAtk = match[1] if match[1] else 1
+    rcv = match[2] if match[2] else 1
+    minCombo = match[3]
     
     atkScale = 0
-    atkMax = baseAtkMulti
-    baseComboStart = combo
-    scaleMatches = None
-    comboMax = combo
+    maxAtk = minAtk
+    maxCombo = minCombo
+    attributes = ["all"]
     
-    result = "{\"skilltype\":\"combo\","
-    result += "\"effect\":{"
-    result += "\"atk_scale_multi_type\":\"additive\","
-    result += "\"atk_scale\":" + str(atkScale) + ","
-    result += "\"min_atk\":" + str(baseAtkMulti) + ","
-    result += "\"max_atk\":" + str(atkMax) + ","
-    result += "\"start_combo\":" + str(baseComboStart) + ","
-    result += "\"end_combo\":" + str(comboMax)
-    result += "},"
-    result += "\"description\":\"" + match[0] 
-    if scaleMatches:
-        result += ". " + scaleMatches[0]
-    result += "\""
-    result += "}"
+    return formatComboSkills(des, minAtk, maxAtk, atkScale,
+                minCombo, maxCombo, rcv, attributes)
     
-    return result
-    
+def getOrbTypeComboSkill(match, scaleMatch):
+    des = match[0]
+    minAtk = match[1]
+    minCombo = match[2]
+    attribute = match[3]
 
+    atkScale = 0
+    maxAtk = minAtk
+    maxCombo = minCombo
+    
+    if scaleMatch:
+        des += ". " + scaleMatch[0]
+        atkScale = scaleMatch[1] if scaleMatch[1] else 0
+        maxAtk = scaleMatch[2] if scaleMatch[2] else minAtk
+        maxCombo = scaleMatch[3] if scaleMatch[3] else minCombo
+        
+        
+    attributes = [attribute]
+    rcv = 1
+    return formatComboSkills(des, minAtk, maxAtk, atkScale,
+                             minCombo, maxCombo, rcv, attributes)
+    
 def getConnectedCombo(baseMatches, scaleMatches):    
     minAtk = baseMatches[1]
     startCount = baseMatches[3]
@@ -341,10 +376,10 @@ def main():
                     scalePart = leaderSkillParts[i]    #i already incremented
                     scalingComboScaleRe = re.compile(scalingComboScalePattern, re.IGNORECASE|re.VERBOSE)
                     scalingComboScaleM = scalingComboScaleRe.search(scalePart)
-                    result += getGenericComboSkill(scalingComboBaseM, scalingComboScaleM)
+                    result += getComboSkill(scalingComboBaseM, scalingComboScaleM)
                     i += 1
                 else:
-                    result += getGenericComboSkill(scalingComboBaseM, None)
+                    result += getComboSkill(scalingComboBaseM, None)
                 continue
                 
             connectedRe = re.compile(connectedPattern, re.IGNORECASE|re.VERBOSE)
@@ -388,22 +423,31 @@ def main():
             basicComboM = basicComboRe.search(part)
             if basicComboM:
                 result += getBasicComboSkill(basicComboM)
-                #print(part)
-                #print()
                 continue
                 
-            fiveOE = re.compile(r'''
-                matched[ ]attribute.*
-            ''', re.IGNORECASE|re.VERBOSE)
-            m = fiveOE.search(part)
-            if False:
-                print(part)
-                print()
+            orbTypeComboRe = re.compile(orbTypeComboPattern, re.IGNORECASE|re.VERBOSE)
+            orbTypeComboM = orbTypeComboRe.search(part)
+            orbTypeComboScaleM = None
+            if orbTypeComboM:
+                
+                if i < len(leaderSkillParts):
+                
+                    orbTypeComboScaleRe = re.compile(orbTypeComboScalePattern, re.IGNORECASE|re.VERBOSE)
+                
+                
+                    scalePart = leaderSkillParts[i]
+                    orbTypeComboScaleM = orbTypeComboScaleRe.search(scalePart)
+                    if orbTypeComboScaleM:
+                        i += 1
+                    
+                result += getOrbTypeComboSkill(orbTypeComboM, orbTypeComboScaleM)
+                continue
+            
             print("NOT DONE: " + part)
+            print()
             unfinished += 1
         result = result.strip(",") # fencepost problem
         result += "]},"
-        print()
     result = result.strip(",")
     result += "]"
     
