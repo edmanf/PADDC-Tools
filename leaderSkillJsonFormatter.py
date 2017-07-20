@@ -101,6 +101,13 @@ crossPattern = r'''
     [ ]for[ ]clearing[ ](?:\w+[ ])+?
     orbs[ ]in[ ]a[ ]cross[ ]formation
 '''
+heartCrossPattern = r'''
+    (?:atk[ ]x(\d+(?:\.\d+)?))?
+    (?:,[ ])?
+    (?:reduce[ ]damage[ ]taken[ ]by[ ](\d+)%)?
+    [ ]after[ ]matching[ ](?:heal|heart)[ ]orbs[ ]in[ ]a[ ]cross[ ]formation
+
+'''
 
 moveTimePattern = r'''
     (fixed|increases)[ ]                            #captures fixed or increases
@@ -150,6 +157,8 @@ colorMatchPattern = r'''
     (.*?)orb[ ]types
     [ ]at[ ]the[ ]same[ ]time
 '''
+
+
 
 # some descriptions have a type where a period is not followed by a space
 periodTypePattern = r'''seconds\.([a-zA-Z])'''
@@ -427,6 +436,20 @@ def getColorMatchSkills(match):
     orbTypes = orbTypeRe.findall(orbString)
     return formatColorMatchSkills(des, atk, rcv, orbTypes)
 
+def getHeartCrossSkill(match):
+    des = match[0]
+    atk = match[1] if match[1] else 1
+    shield = match[2] if match[2] else 0
+    
+    result = "{\"skilltype\":\"heart_cross\","
+    result += "\"effect\":{"
+    result += "\"atk\":" + str(atk) + ","
+    result += "\"shield\":" + str(shield)
+    result += "},"
+    result += "\"description\":\"" + des + "\""
+    result += "},"
+    return result
+    
 def main():
     file = open("sampleLeaderSkills.json")
     leaderJson = json.load(file)
@@ -548,6 +571,12 @@ def main():
             colorMatchM = colorMatchRe.search(part)
             if colorMatchM:
                 result += getColorMatchSkills(colorMatchM)
+                continue
+                
+            heartCrossRe = re.compile(heartCrossPattern, re.IGNORECASE|re.VERBOSE)
+            heartCrossM = heartCrossRe.search(part)
+            if heartCrossM:
+                result += getHeartCrossSkill(heartCrossM)
                 continue
             
             print("NOT DONE: " + part)
