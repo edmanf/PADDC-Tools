@@ -43,9 +43,9 @@ basicPattern2 = r'''
     (?:,[ ])?
     (?:atk[ ]x(\d+(?:\.\d+)?))?
     (?:,[ ])?
-    (?:rcv[ ]x(\d+(?:\.\d+)?))
-    ?[ ]to[ ] ''' + typePattern + '''
-    type[ ]cards
+    (?:rcv[ ]x(\d+(?:\.\d+)?))?
+    [ ]to[ ] ''' + typePattern + '''
+    [ ]type[ ]cards
 '''
 
 basicMultiPattern = r'''
@@ -169,6 +169,9 @@ def formatComboSkills(description, minAtk, maxAtk, atkScale,
     return result
 
 def formatBasicSkills(description, hp, atk, rcv, attributes, types):
+    hp = hp if hp else 1
+    atk = atk if atk else 1
+    rcv = rcv if rcv else 1
     result = "{\"skilltype\":\"basic\","
     result += "\"attribute\":["
     if attributes:
@@ -213,7 +216,15 @@ def getBasicSkill(regexMatches):
             atk = multiplierM[3] if multiplierM[3] else 1
             rcv = multiplierM[4] if multiplierM[4] else 1
     return formatBasicSkills(description, hp, atk, rcv, attributes, types)
-   
+
+def getBasicSkill2(match):
+        des = match[0]
+        hp = match[1]
+        atk = match[2]
+        rcv = match[3]
+        type = [match[4]]
+        return formatBasicSkills(des, hp, atk, rcv, None, type)
+  
 def getComboSkill(baseMatches, scaleMatches):
     description = baseMatches[0]
     minAtk = baseMatches[1]
@@ -410,6 +421,13 @@ def main():
             if basicM:
                 result += getBasicSkill(basicM)
                 continue
+            
+            basic2Re = re.compile(basicPattern2, re.IGNORECASE|re.VERBOSE)
+            basic2M = basic2Re.search(part)
+            if basic2M:
+                result += getBasicSkill2(basic2M)
+                continue
+            
             scalingComboBaseRe = re.compile(scalingComboBasePattern, re.IGNORECASE|re.VERBOSE)
             scalingComboBaseM = scalingComboBaseRe.search(part)
             if scalingComboBaseM:
@@ -489,6 +507,7 @@ def main():
             if enhancedMatchM:
                 result += getEnhancedMatch(enhancedMatchM)
                 continue
+            
             
             print("NOT DONE: " + part)
             print()
