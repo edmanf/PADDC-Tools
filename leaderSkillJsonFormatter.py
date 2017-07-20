@@ -158,6 +158,17 @@ colorMatchPattern = r'''
     [ ]at[ ]the[ ]same[ ]time
 '''
 
+resolvePattern = r'''
+    while[ ]your[ ]hp[ ]is[ ](\d+)%
+    [ ]or[ ]above,[ ]a[ ]single[ ]hit[ ]that[ ]normally[ ]kills[ ]you[ ]
+    will[ ]instead[ ]leave[ ]you[ ]with[ ]1[ ]hp
+'''
+
+resolveExtraPattern = r'''
+    for[ ]the[ ]consecutive[ ]hits,[ ]this[ ]
+    skill[ ]will[ ]only[ ]affect[ ]the[ ]first[ ]hit
+'''
+
 
 
 # some descriptions have a type where a period is not followed by a space
@@ -450,8 +461,21 @@ def getHeartCrossSkill(match):
     result += "},"
     return result
     
+    
+def getResolveSkill(resolveM, extraM):
+    des = resolveM[0] + ". " + extraM[0]
+    hpThresh = resolveM[1]
+    
+    result = "{\"skilltype\":\"resolve\","
+    result += "\"effect\":{"
+    result += "\"hp_threshold\":" + str(hpThresh)
+    result += "},"
+    result += "\"description\":\"" + des + "\""
+    result += "},"
+    return result
+
 def main():
-    file = open("sampleLeaderSkills.json")
+    file = open("leaderskills.json")
     leaderJson = json.load(file)
     
     if len(leaderJson) is 0:
@@ -577,6 +601,18 @@ def main():
             heartCrossM = heartCrossRe.search(part)
             if heartCrossM:
                 result += getHeartCrossSkill(heartCrossM)
+                continue
+            
+            resolveRe = re.compile(resolvePattern, re.IGNORECASE|re.VERBOSE)
+            resolveM = resolveRe.search(part)
+            if resolveM:
+                extraPart = None
+                if i < len(leaderSkillParts):
+                    extraPart = leaderSkillParts[i]
+                    extraPartRe = re.compile(resolveExtraPattern, re.IGNORECASE|re.VERBOSE)
+                    extraM = extraPartRe.search(extraPart)
+                    if extraM:
+                        result += getResolveSkill(resolveM, extraM)
                 continue
             
             print("NOT DONE: " + part)
