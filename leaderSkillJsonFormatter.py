@@ -20,7 +20,7 @@ typeRe = re.compile(typePattern, re.IGNORECASE|re.VERBOSE)
 
 orbTypePattern = r'''
     (fire|water|wood|light|dark
-    |heal|heart|jammer|moprtal[ ]poison|poison)
+    |heal|heart|jammer|mortal[ ]poison|poison)
 '''
 
 
@@ -78,7 +78,7 @@ connectedPattern = r'''
     (?:,[ ])?                                               
     (?:rcv[ ]x(\d+(?:\.\d+)?))?                         #capture rcv multi
     [ ]when[ ]simultaneously[ ]clearing[ ]
-    (\d+)[ ]connected[ ]\w+(?:[ ]or[ ]\w+)?[ ]orbs      #capture beginning count
+    (\d+)[ ]connected[ ]\w+(?:[ ]or[ ].+?)?[ ]orbs      #capture beginning count
 '''
 
 connectedScalePattern = r'''
@@ -475,7 +475,7 @@ def getResolveSkill(resolveM, extraM):
     return result
 
 def main():
-    file = open("leaderskills.json")
+    file = open("sampleLeaderSkills.json")
     leaderJson = json.load(file)
     
     if len(leaderJson) is 0:

@@ -304,5 +304,9 @@
 {
 	"effect": "Fixed orb movement time at 4 seconds.HP x2, ATK x2 to Dragon type cards. All attribute cards ATK x10 when attacking with Fire, Water, Wood, Light & Dark orb types at the same time.",
 	"name": "The Silver Comet"
+},
+{
+	"effect": "Dark attribute cards ATK x1.5. ATK x2 when simultaneously clearing 6 connected Poison or Mortal Poison orbs.",
+	"name": "I can't answer to your request..."
 }
 ]
