@@ -1168,4 +1168,31 @@
 		},
 		"description": "All attribute cards ATK x1.5 when reaching 6 combos or above."
 	}]
+},
+{
+	"name": "Famitsu App Guidance",
+	"description": "Enhance Material type cards ATK x4, RCV x3.",
+	"skill": [{
+		"skilltype": "basic",
+		"attribute": [],
+		"type": ["Enhance Material"],
+		"effect": {
+			"hp": 1,
+			"atk": 4,
+			"rcv": 3
+		},
+		"description": "Enhance Material type cards ATK x4, RCV x3."
+	}]
+},
+{
+	"name": "The Silver Comet",
+	"description": "Fixed orb movement time at 4 seconds. HP x2, ATK x2 to Dragon type cards. All attribute cards ATK x10 when attacking with Fire, Water, Wood, Light & Dark orb types at the same time.",
+	"skill": [{
+		"skilltype": "move_time",
+		"move_time": "fixed",
+		"effect": {
+			"time": 4
+		},
+		"description": "Fixed orb movement time at 4 seconds"
+	}]
 }]

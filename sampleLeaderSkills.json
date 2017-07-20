@@ -296,5 +296,13 @@
 	1],
 	"effect": "All attribute cards ATK x5 when attacking with Fire, Water, Light & Dark orb types at the same time. All attribute cards ATK x1.5 when reaching 6 combos or above.",
 	"name": "Six Flower Palm of the Four Origins"
+},
+{
+	"effect": "Enhance Material type cards ATK x4, RCV x3.",
+	"name": "Famitsu App Guidance"
+},
+{
+	"effect": "Fixed orb movement time at 4 seconds.HP x2, ATK x2 to Dragon type cards. All attribute cards ATK x10 when attacking with Fire, Water, Wood, Light & Dark orb types at the same time.",
+	"name": "The Silver Comet"
 }
 ]

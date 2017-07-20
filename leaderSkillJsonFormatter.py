@@ -11,8 +11,8 @@ typePattern = r'''
     (
     god|balanced|attacker|physical
     |devil|healer|dragon|machine
-    |evo material|awaken material
-    |enhance material|redeemable material
+    |evo[ ]material|awaken[ ]material
+    |enhance[ ]material|redeemable[ ]material
     |all
     )
 '''
@@ -37,6 +37,16 @@ basicRePattern = r'''
 
 '''
 basicRe = re.compile(basicRePattern, re.IGNORECASE|re.VERBOSE)
+
+basicPattern2 = r'''
+    (?:hp[ ]x(\d+(?:\.\d+)?))?
+    (?:,[ ])?
+    (?:atk[ ]x(\d+(?:\.\d+)?))?
+    (?:,[ ])?
+    (?:rcv[ ]x(\d+(?:\.\d+)?))
+    ?[ ]to[ ] ''' + typePattern + '''
+    type[ ]cards
+'''
 
 basicMultiPattern = r'''
     cards[ ]
@@ -158,32 +168,43 @@ def formatComboSkills(description, minAtk, maxAtk, atkScale,
     
     return result
 
-
-def getBasicSkill(regexMatches):
-    result = ""
-    basicStr = regexMatches.group().strip(" ")
-    attributeM = attributeRe.findall(basicStr)
-    typeM = typeRe.findall(basicStr)
-
-    result += "{\"skilltype\":\"basic\","
+def formatBasicSkills(description, hp, atk, rcv, attributes, types):
+    result = "{\"skilltype\":\"basic\","
     result += "\"attribute\":["
-    if attributeM:
-        for attribute in attributeM:
+    if attributes:
+        for attribute in attributes:
             result += "\"" + attribute + "\","
-    result = result.strip(",") + "],"
-
+        result = result[:-1]
+    result += "],"
+        
     result += "\"type\":["
-    if typeM:
-        for type in typeM:
+    if types:
+        for type in types:
             result += "\"" + type + "\","
-    result = result.strip(",") + "],"
+        result = result[:-1]
+    result += "],"
+    result += "\"effect\":{"
+    result += "\"hp\":" + str(hp) + ","
+    result += "\"atk\":" + str(atk) + ","
+    result += "\"rcv\":" + str(rcv)
+    result += "},"
+    result += "\"description\":\"" + description + "\""
+    result += "},"
+    return result
+    
+def getBasicSkill(regexMatches):
+    basicStr = regexMatches.group().strip(" ")
+    description = basicStr
+    
+    attributes = attributeRe.findall(basicStr)
+    types = typeRe.findall(basicStr)
 
     multiplierM = basicMultiRe.search(basicStr)
     hp = 1
     atk = 1
     rcv = 1
     if multiplierM:
-        if multiplierM[1]:
+        if multiplierM[1]: # all stats
             hp = multiplierM[1]
             atk = multiplierM[1]
             rcv = multiplierM[1]
@@ -191,16 +212,8 @@ def getBasicSkill(regexMatches):
             hp = multiplierM[2] if multiplierM[2] else 1
             atk = multiplierM[3] if multiplierM[3] else 1
             rcv = multiplierM[4] if multiplierM[4] else 1
-    result += "\"effect\":{"
-    result += "\"hp\":" + str(hp) + ","
-    result += "\"atk\":" + str(atk) + ","
-    result += "\"rcv\":" + str(rcv)
-
-    result += "},"
-    result += "\"description\":\"" + basicStr + "\""
-    result += "},"
-    return result
-    
+    return formatBasicSkills(description, hp, atk, rcv, attributes, types)
+   
 def getComboSkill(baseMatches, scaleMatches):
     description = baseMatches[0]
     minAtk = baseMatches[1]
