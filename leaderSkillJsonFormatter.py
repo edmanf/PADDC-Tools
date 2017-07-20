@@ -141,6 +141,16 @@ enhancedMatchPattern = r'''
     (\d+)[ ]enhanced[ ](?:orbs|orb)
 '''
 
+colorMatchPattern = r'''
+    all[ ]attribute[ ]cards[ ]
+    (?:atk[ ]x(\d+(?:\.\d+)?))?
+    ,?[ ]?
+    (?:rcv[ ]x(\d+(?:\.\d+)?))?
+    [ ]when[ ]attacking[ ]with
+    (.*?)orb[ ]types
+    [ ]at[ ]the[ ]same[ ]time
+'''
+
 # some descriptions have a type where a period is not followed by a space
 periodTypePattern = r'''seconds\.([a-zA-Z])'''
 periodFixPattern = r'''seconds. \1'''
@@ -188,6 +198,23 @@ def formatBasicSkills(description, hp, atk, rcv, attributes, types):
     result += "],"
     result += "\"effect\":{"
     result += "\"hp\":" + str(hp) + ","
+    result += "\"atk\":" + str(atk) + ","
+    result += "\"rcv\":" + str(rcv)
+    result += "},"
+    result += "\"description\":\"" + description + "\""
+    result += "},"
+    return result
+    
+def formatColorMatchSkills(description, atk, rcv, orbTypes):
+    atk = atk if atk else 1
+    rcv = rcv if rcv else 1
+    result = "{\"skilltype\":\"color_match\","
+    result += "\"color_match\":["
+    for orbType in orbTypes:
+        result += "\"" + orbType + "\","
+    result = result[:-1] + "],"
+    
+    result += "\"effect\":{"
     result += "\"atk\":" + str(atk) + ","
     result += "\"rcv\":" + str(rcv)
     result += "},"
@@ -391,6 +418,15 @@ def getEnhancedMatch(match):
     result += "\"description\":\"" + des + "\"},"
     return result
     
+def getColorMatchSkills(match):
+    des = match[0]
+    atk = match[1]
+    rcv = match[2]
+    orbString = match[3]
+    orbTypeRe = re.compile(orbTypePattern, re.IGNORECASE|re.VERBOSE)
+    orbTypes = orbTypeRe.findall(orbString)
+    return formatColorMatchSkills(des, atk, rcv, orbTypes)
+
 def main():
     file = open("sampleLeaderSkills.json")
     leaderJson = json.load(file)
@@ -508,6 +544,11 @@ def main():
                 result += getEnhancedMatch(enhancedMatchM)
                 continue
             
+            colorMatchRe = re.compile(colorMatchPattern, re.IGNORECASE|re.VERBOSE)
+            colorMatchM = colorMatchRe.search(part)
+            if colorMatchM:
+                result += getColorMatchSkills(colorMatchM)
+                continue
             
             print("NOT DONE: " + part)
             print()
