@@ -19,8 +19,8 @@ typePattern = r'''
 typeRe = re.compile(typePattern, re.IGNORECASE|re.VERBOSE)
 
 orbTypePattern = r'''
-    (fire|water|wood|light|dark
-    |heal|heart|jammer|mortal[ ]poison|poison)
+    (fire|water|wood|light|dark|heal
+    |heart|jammer|mortal[ ]poison|poison|all)
 '''
 
 
@@ -212,7 +212,19 @@ onSkillUsedPattern = r'''
     [ ]on[ ]the[ ]turn[ ]a[ ]skill[ ]is[ ]used
 '''
 
+basicDamageReductionPattern = r'''
+    (\d+)%[ ](.*?)[ ]damage[ ]reduction
+'''
 
+hpConditionalPattern = r'''
+    (.*?)[ ]cards[ ]
+    (?:atk[ ]x(\d+(?:\.\d+)?))?
+    (?:,[ ])?
+    (?:rcv[ ]x(\d+(?:\.\d+)?))?
+    (?:,[ ])?[ ]when[ ]hp[ ]is[ ]
+    (less[ ]than[ ]|greater[ ]than[ ]|full)
+    (?:(\d+)%)?
+'''
 
 # some descriptions have a type where a period is not followed by a space
 periodTypePattern = r'''seconds\.([a-zA-Z])'''
@@ -220,6 +232,10 @@ periodFixPattern = r'''seconds. \1'''
 
 parenOrigPattern = r'''will not stack \) '''
 parenFixPattern = r'''will not stack \). '''
+
+# fix for some bikkuriman collab skills
+hpParenOrigPattern = r'''%[ ]\('''
+hpParenFixPattern = r'''%. ('''
 
 def formatComboSkills(description, minAtk, maxAtk, atkScale,
                 minCombo, maxCombo, rcv, attributes, shield=None):
@@ -603,9 +619,36 @@ def getSkillUsedSkill(match, extra):
     result += "\"description\":\"" + match[0] + "\""
     result += "},"
     return result
+  
+def getBasicDamageReduction(match):
+    des = match[0]
+    value = match[1]
+    attributeRe = re.compile(attributePattern, re.I|re.VERBOSE)
+    attributes = attributeRe.findall(match[2])
     
+    result = "\"skilltype\":\"shield\","
+    result += "\"effect\":{"
+    result += "\"attribute\":["
+    if attributes:
+        for attribute in attributes:
+            result += "\"" + attribute + "\","
+        result = result[:-1]
+    result += "],"
+    result += "\"shield\":" + str(value)
+    result += "},"
+    result += "\"description\":\"" + des + "\""
+    result += "},"
+    return result
+  
+def getHpCondSkill(match):
+    des = match[0]
+    print(des)
+    print(match[1])
+    print()
+    return ""
+
 def main():
-    file = open("sampleLeaderSkills.json")
+    file = open("leaderskills.json")
     leaderJson = json.load(file)
     
     if len(leaderJson) is 0:
@@ -614,14 +657,16 @@ def main():
     unfinished = 0
     count = 0
     parenFixRe = re.compile(parenOrigPattern, re.I|re.VERBOSE)
-    
     periodTypoRe = re.compile(periodTypePattern, re.IGNORECASE|re.VERBOSE)
+    hpParenTypoRe = re.compile(hpParenOrigPattern, re.I|re.VERBOSE)
+    
     result = "["
     for skillJson in leaderJson:
         
         name = skillJson["name"]
         des = periodTypoRe.sub(periodFixPattern, skillJson["effect"])
         des = parenFixRe.sub(parenFixPattern, des)
+        des = hpParenTypoRe.sub(hpParenFixPattern, des)
         leaderSkillParts = des.split(". ")
         result += "{"
         result += "\"name\":\"" + name + "\","
@@ -778,8 +823,21 @@ def main():
                     result += getSkillUsedSkill(skillUsedMatch, extra)
                     i += 1
                 continue
-            print("NOT DONE: " + part)
-            print()
+            
+            basicDamageReductionRe = re.compile(basicDamageReductionPattern, re.I|re.VERBOSE)
+            basicDamageReductionM = basicDamageReductionRe.search(part)
+            if basicDamageReductionM:
+                result += getBasicDamageReduction(basicDamageReductionM)
+                continue
+            
+            hpCondRe = re.compile(hpConditionalPattern, re.I|re.VERBOSE)
+            hpCondM = hpCondRe.search(part)
+            if hpCondM:
+                result += getHpCondSkill(hpCondM)
+                continue
+            
+            #print("NOT DONE: " + part)
+            #print()
             unfinished += 1
         result = result.strip(",") # fencepost problem
         result += "]},"
