@@ -196,11 +196,22 @@ resolveExtraPattern = r'''
     skill[ ]will[ ]only[ ]affect[ ]the[ ]first[ ]hit
 '''
 
+onSkillUsedPattern = r'''
+    (.*?)(?:attribute|type)[ ]cards[ ]
+    (?:atk[ ]x(\d+(?:\.\d+)?))?
+    (?:,[ ])?
+    (?:rcv[ ]x(\d+(?:\.\d+)?))?
+    [ ]on[ ]the[ ]turn[ ]a[ ]skill[ ]is[ ]used
+'''
+
 
 
 # some descriptions have a type where a period is not followed by a space
 periodTypePattern = r'''seconds\.([a-zA-Z])'''
 periodFixPattern = r'''seconds. \1'''
+
+parenOrigPattern = r'''will not stack \) '''
+parenFixPattern = r'''will not stack \). '''
 
 def formatComboSkills(description, minAtk, maxAtk, atkScale,
                 minCombo, maxCombo, rcv, attributes):
@@ -541,8 +552,45 @@ def getResolveSkill(resolveM, extraM):
     result += "},"
     return result
 
+def getSkillUsedSkill(match, extra):
+    des = match[0]
+    if extra:
+        des += ". " + extra[0]
+    condition = match[1]
+    atk = match[2] if match[2] else 1
+    rcv = match[3] if match[3] else 1
+    
+    attributeRe = re.compile(attributePattern, re.I|re.VERBOSE)
+    attributes = attributeRe.findall(condition)
+    typeRe = re.compile(typePattern, re.I|re.VERBOSE)
+    types = typeRe.findall(condition)
+        
+
+    result = "{\"skilltype\":\"skill_used\","
+    result += "\"attribute\":["
+    if attributes:
+        for attribute in attributes:
+            result += "\"" + attribute + "\","
+        result = result[:-1]
+    result += "],"
+        
+    result += "\"type\":["
+    if types:
+        for type in types:
+            result += "\"" + type + "\","
+        result = result[:-1]
+    result += "],"
+        
+    result += "\"effect\":{"
+    result += "\"atk\":" + str(atk) + ","
+    result += "\"rcv\":" + str(rcv)
+    result += "},"
+    result += "\"description\":\"" + match[0] + "\""
+    result += "},"
+    return result
+    
 def main():
-    file = open("sampleLeaderSkills.json")
+    file = open("leaderskills.json")
     leaderJson = json.load(file)
     
     if len(leaderJson) is 0:
@@ -550,12 +598,15 @@ def main():
     
     unfinished = 0
     count = 0
+    parenFixRe = re.compile(parenOrigPattern, re.I|re.VERBOSE)
+    
     periodTypoRe = re.compile(periodTypePattern, re.IGNORECASE|re.VERBOSE)
     result = "["
     for skillJson in leaderJson:
         
         name = skillJson["name"]
         des = periodTypoRe.sub(periodFixPattern, skillJson["effect"])
+        des = parenFixRe.sub(parenFixPattern, des)
         leaderSkillParts = des.split(". ")
         result += "{"
         result += "\"name\":\"" + name + "\","
@@ -704,6 +755,14 @@ def main():
                         i += 1
                 continue
             
+            skillUsedRe = re.compile(onSkillUsedPattern, re.IGNORECASE|re.VERBOSE)
+            skillUsedMatch = skillUsedRe.search(part)
+            if skillUsedMatch:
+                if i < len(leaderSkillParts):
+                    extra = leaderSkillParts[i]
+                    result += getSkillUsedSkill(skillUsedMatch, extra)
+                    i += 1
+                continue
             print("NOT DONE: " + part)
             print()
             unfinished += 1
