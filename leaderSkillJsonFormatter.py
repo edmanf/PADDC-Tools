@@ -117,9 +117,12 @@ moveTimePattern = r'''
 
 basicComboPattern = r'''
     all[ ]attribute[ ]cards[ ]
-    (?:atk[ ]x(\d+(?:\.\d+)?).)?
-    (?:rcv[ ]x(\d+(?:\.\d+)?).)?
-    when[ ]reaching[ ](\d+)[ ](?:combos|or).*
+    (?:atk[ ]x(\d+(?:\.\d+)?))?
+    (?:,[ ])?
+    (?:rcv[ ]x(\d+(?:\.\d+)?))?
+    (?:,[ ])?
+    (?:(\d+)%[ ]all[ ]damage[ ]reduction)?
+    [ ]when[ ]reaching[ ](\d+)[ ](?:combos|or).*
 '''
 
 orbTypeComboPattern = r'''
@@ -168,8 +171,7 @@ scalingColorMatchPattern = r'''
     (?:,[ ])?
     (?:(\d+)%[ ]all[ ]damage[ ]reduction)?
     [ ]when[ ]attacking[ ]with[ ]
-    (\d+)[ ]of(.*?)
-    (?:[ ]at[ ]the[ ]same[ ]time)?
+    (\d+)[ ]of(.*)
 '''
 
 colorMatchScalePattern = r'''
@@ -220,8 +222,8 @@ parenOrigPattern = r'''will not stack \) '''
 parenFixPattern = r'''will not stack \). '''
 
 def formatComboSkills(description, minAtk, maxAtk, atkScale,
-                minCombo, maxCombo, rcv, attributes):
-                
+                minCombo, maxCombo, rcv, attributes, shield=None):
+    shield = shield if shield else 0
     attributeStr = "["
     for attribute in attributes:
         attributeStr += "\"" + attribute + "\","
@@ -235,7 +237,8 @@ def formatComboSkills(description, minAtk, maxAtk, atkScale,
     result += "\"max_atk\":" + str(maxAtk) + ","
     result += "\"start_combo\":" + str(minCombo) + ","
     result += "\"end_combo\":" + str(maxCombo) + ","
-    result += "\"rcv\":" + str(rcv)
+    result += "\"rcv\":" + str(rcv) + ","
+    result += "\"shield\":" + str(shield)
     result += "},"
     result += "\"description\":\"" + description + "\""
     result += "},"
@@ -356,7 +359,8 @@ def getBasicComboSkill(match):
     des = match[0]
     minAtk = match[1] if match[1] else 1
     rcv = match[2] if match[2] else 1
-    minCombo = match[3]
+    shield = match[3]
+    minCombo = match[4]
     
     atkScale = 0
     maxAtk = minAtk
@@ -364,7 +368,7 @@ def getBasicComboSkill(match):
     attributes = ["all"]
     
     return formatComboSkills(des, minAtk, maxAtk, atkScale,
-                minCombo, maxCombo, rcv, attributes)
+                minCombo, maxCombo, rcv, attributes, shield=shield)
     
 def getOrbTypeComboSkill(match, scaleMatch):
     des = match[0]
