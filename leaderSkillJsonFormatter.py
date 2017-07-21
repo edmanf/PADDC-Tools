@@ -443,7 +443,7 @@ def getBoardSize(match):
     result += "\"cols\":" + str(cols)
     result += "},"
     result += "\"description\":\"" + match[0] + "\""
-    result += "}"
+    result += "},"
     return result
     
 def getCrossSkill(match):
@@ -601,7 +601,7 @@ def getSkillUsedSkill(match, extra):
     return result
     
 def main():
-    file = open("leaderskills.json")
+    file = open("sampleLeaderSkills.json")
     leaderJson = json.load(file)
     
     if len(leaderJson) is 0:
