@@ -158,6 +158,33 @@ colorMatchPattern = r'''
     [ ]at[ ]the[ ]same[ ]time
 '''
 
+scalingColorMatchPattern = r'''
+    all[ ]attribute[ ]cards[ ]
+    (?:atk[ ]x(\d+(?:\.\d+)?))?
+    ,?[ ]?
+    (?:rcv[ ]x(\d+(?:\.\d+)?))?
+    [ ]when[ ]attacking[ ]with[ ]
+    (\d+)[ ]of[ ]following[ ]orb[ ]types:
+    (.*)
+'''
+
+colorMatchScalePattern = r'''
+    atk[ ]x(\d+(?:\.\d+)?)
+    [ ]for[ ]each[ ]additional[ ]orb[ ]type,[ ]up[ ]to[ ]
+    atk[ ]x(\d+(?:\.\d+)?)
+    [ ]for[ ]all[ ](\d+)[ ]matches
+'''
+
+twoColorMatchPattern = r'''
+    all[ ]attribute[ ]cards[ ]
+    (?:atk[ ]x(\d+(?:\.\d+)?))?
+    (?:,[ ])?
+    (?:rcv[ ]x(\d+(?:\.\d+)?))?
+    [ ]when[ ]reaching[ ]
+    ([a-zA-Z]+)[ ]&[ ]
+    ([a-zA-Z]+)[ ]combos
+'''
+
 resolvePattern = r'''
     while[ ]your[ ]hp[ ]is[ ](\d+)%
     [ ]or[ ]above,[ ]a[ ]single[ ]hit[ ]that[ ]normally[ ]kills[ ]you[ ]
@@ -225,9 +252,17 @@ def formatBasicSkills(description, hp, atk, rcv, attributes, types):
     result += "},"
     return result
     
-def formatColorMatchSkills(description, atk, rcv, orbTypes):
-    atk = atk if atk else 1
+def formatColorMatchSkills(description, orbTypes, minAtk, 
+                           maxAtk=None, minCount=None, maxCount=None,
+                           atkScale=None, rcv=None):
+    minAtk = minAtk if minAtk else 1
+    maxAtk = maxAtk if maxAtk else minAtk
     rcv = rcv if rcv else 1
+    
+    minCount = minCount if minCount else len(orbTypes)
+    maxCount = maxCount if maxCount else minCount
+    atkScale = atkScale if atkScale else 0
+    
     result = "{\"skilltype\":\"color_match\","
     result += "\"color_match\":["
     for orbType in orbTypes:
@@ -235,7 +270,12 @@ def formatColorMatchSkills(description, atk, rcv, orbTypes):
     result = result[:-1] + "],"
     
     result += "\"effect\":{"
-    result += "\"atk\":" + str(atk) + ","
+    result += "\"atk_scale_type\":\"additive\","
+    result += "\"min_atk\":" + str(minAtk) + ","
+    result += "\"max_atk\":" + str(maxAtk) + ","
+    result += "\"atk_scale\":" + str(atkScale) + ","
+    result += "\"min_count\":" + str(minCount) + ","
+    result += "\"max_count\":" + str(maxCount) + ","
     result += "\"rcv\":" + str(rcv)
     result += "},"
     result += "\"description\":\"" + description + "\""
@@ -445,7 +485,34 @@ def getColorMatchSkills(match):
     orbString = match[3]
     orbTypeRe = re.compile(orbTypePattern, re.IGNORECASE|re.VERBOSE)
     orbTypes = orbTypeRe.findall(orbString)
-    return formatColorMatchSkills(des, atk, rcv, orbTypes)
+    return formatColorMatchSkills(des, orbTypes, atk, rcv=rcv)
+
+def getScalingColorMatchSkills(match, scaleMatch):
+    des = match[0]
+    minAtk = match[1]
+    rcv = match[2]
+    minCount = match[3]
+    atkScale = 0
+    maxCount = minCount
+    maxAtk = minAtk
+    orbTypeRe = re.compile(orbTypePattern, re.IGNORECASE|re.VERBOSE)
+    orbTypes = orbTypeRe.findall(match[4])
+    if scaleMatch:
+        des += ". " + scaleMatch[0]
+        atkScale = scaleMatch[1]
+        maxAtk = scaleMatch[2]
+        maxCount = scaleMatch[3]
+    
+    return formatColorMatchSkills(des, orbTypes, minAtk, maxAtk=maxAtk,
+                                  minCount=minCount, maxCount=maxCount,
+                                  atkScale=atkScale, rcv=rcv)
+  
+def getTwoColorMatchSkills(match):
+    des = match[0]
+    atk = match[1]
+    rcv = match[2]
+    orbTypes = [match[3], match[4]]
+    return formatColorMatchSkills(des, orbTypes, atk, rcv=rcv)
 
 def getHeartCrossSkill(match):
     des = match[0]
@@ -597,6 +664,27 @@ def main():
                 result += getColorMatchSkills(colorMatchM)
                 continue
                 
+            scalingColorMatchRe = re.compile(scalingColorMatchPattern, re.IGNORECASE|re.VERBOSE)
+            scalingColorMatchM = scalingColorMatchRe.search(part)
+            if scalingColorMatchM:
+                if i < len(leaderSkillParts):
+                    scalePart = leaderSkillParts[i]
+                    scaleRe = re.compile(colorMatchScalePattern, re.IGNORECASE|re.VERBOSE)
+                    scaleM = scaleRe.search(scalePart)
+                    result += getScalingColorMatchSkills(scalingColorMatchM, scaleM)
+                    if scaleM:
+                        i += 1
+                else:
+                    result += getScalingColorMatchSkills(scalingColorMatchM, None)
+                continue
+                        
+            twoColorMatchRe = re.compile(twoColorMatchPattern, re.IGNORECASE|re.VERBOSE)
+            twoColorMatchM = twoColorMatchRe.search(part)
+            if twoColorMatchM:
+                result += getTwoColorMatchSkills(twoColorMatchM)
+                continue
+            
+            
             heartCrossRe = re.compile(heartCrossPattern, re.IGNORECASE|re.VERBOSE)
             heartCrossM = heartCrossRe.search(part)
             if heartCrossM:
@@ -613,6 +701,7 @@ def main():
                     extraM = extraPartRe.search(extraPart)
                     if extraM:
                         result += getResolveSkill(resolveM, extraM)
+                        i += 1
                 continue
             
             print("NOT DONE: " + part)
