@@ -151,8 +151,10 @@ enhancedMatchPattern = r'''
 colorMatchPattern = r'''
     all[ ]attribute[ ]cards[ ]
     (?:atk[ ]x(\d+(?:\.\d+)?))?
-    ,?[ ]?
+    (?:,[ ])?
     (?:rcv[ ]x(\d+(?:\.\d+)?))?
+    (?:,[ ])?
+    (?:(\d+)%[ ]all[ ]damage[ ]reduction)?
     [ ]when[ ]attacking[ ]with
     (.*?)orb[ ]types
     [ ]at[ ]the[ ]same[ ]time
@@ -163,6 +165,8 @@ scalingColorMatchPattern = r'''
     (?:atk[ ]x(\d+(?:\.\d+)?))?
     ,?[ ]?
     (?:rcv[ ]x(\d+(?:\.\d+)?))?
+    (?:,[ ])?
+    (?:(\d+)%[ ]all[ ]damage[ ]reduction)?
     [ ]when[ ]attacking[ ]with[ ]
     (\d+)[ ]of[ ]following[ ]orb[ ]types:
     (.*)
@@ -180,9 +184,11 @@ twoColorMatchPattern = r'''
     (?:atk[ ]x(\d+(?:\.\d+)?))?
     (?:,[ ])?
     (?:rcv[ ]x(\d+(?:\.\d+)?))?
-    [ ]when[ ]reaching[ ]
-    ([a-zA-Z]+)[ ]&[ ]
-    ([a-zA-Z]+)[ ]combos
+    (?:,[ ])?
+    (?:(\d+)%[ ]all[ ]damage[ ]reduction)?
+    [ ]when[ ](?:reaching|attacking[ ]with)[ ]
+    ([a-zA-Z]+)[ ](?:&|and)[ ]
+    ([a-zA-Z]+)[ ]combos(?:[ ]at[ ]the[ ]same[ ]time)?
 '''
 
 resolvePattern = r'''
@@ -265,7 +271,7 @@ def formatBasicSkills(description, hp, atk, rcv, attributes, types):
     
 def formatColorMatchSkills(description, orbTypes, minAtk, 
                            maxAtk=None, minCount=None, maxCount=None,
-                           atkScale=None, rcv=None):
+                           atkScale=None, rcv=None, shield=None):
     minAtk = minAtk if minAtk else 1
     maxAtk = maxAtk if maxAtk else minAtk
     rcv = rcv if rcv else 1
@@ -273,6 +279,7 @@ def formatColorMatchSkills(description, orbTypes, minAtk,
     minCount = minCount if minCount else len(orbTypes)
     maxCount = maxCount if maxCount else minCount
     atkScale = atkScale if atkScale else 0
+    shield = shield if shield else 0
     
     result = "{\"skilltype\":\"color_match\","
     result += "\"color_match\":["
@@ -287,7 +294,8 @@ def formatColorMatchSkills(description, orbTypes, minAtk,
     result += "\"atk_scale\":" + str(atkScale) + ","
     result += "\"min_count\":" + str(minCount) + ","
     result += "\"max_count\":" + str(maxCount) + ","
-    result += "\"rcv\":" + str(rcv)
+    result += "\"rcv\":" + str(rcv) + ","
+    result += "\"shield\":" + str(shield)
     result += "},"
     result += "\"description\":\"" + description + "\""
     result += "},"
@@ -493,21 +501,23 @@ def getColorMatchSkills(match):
     des = match[0]
     atk = match[1]
     rcv = match[2]
-    orbString = match[3]
+    shield = match[3]
+    orbString = match[4]
     orbTypeRe = re.compile(orbTypePattern, re.IGNORECASE|re.VERBOSE)
     orbTypes = orbTypeRe.findall(orbString)
-    return formatColorMatchSkills(des, orbTypes, atk, rcv=rcv)
+    return formatColorMatchSkills(des, orbTypes, atk, rcv=rcv, shield=shield)
 
 def getScalingColorMatchSkills(match, scaleMatch):
     des = match[0]
     minAtk = match[1]
     rcv = match[2]
     minCount = match[3]
+    shield = match[4]
     atkScale = 0
     maxCount = minCount
     maxAtk = minAtk
     orbTypeRe = re.compile(orbTypePattern, re.IGNORECASE|re.VERBOSE)
-    orbTypes = orbTypeRe.findall(match[4])
+    orbTypes = orbTypeRe.findall(match[5])
     if scaleMatch:
         des += ". " + scaleMatch[0]
         atkScale = scaleMatch[1]
@@ -516,14 +526,15 @@ def getScalingColorMatchSkills(match, scaleMatch):
     
     return formatColorMatchSkills(des, orbTypes, minAtk, maxAtk=maxAtk,
                                   minCount=minCount, maxCount=maxCount,
-                                  atkScale=atkScale, rcv=rcv)
+                                  atkScale=atkScale, rcv=rcv, shield=shield)
   
 def getTwoColorMatchSkills(match):
     des = match[0]
     atk = match[1]
     rcv = match[2]
-    orbTypes = [match[3], match[4]]
-    return formatColorMatchSkills(des, orbTypes, atk, rcv=rcv)
+    shield = match[3]
+    orbTypes = [match[4], match[5]]
+    return formatColorMatchSkills(des, orbTypes, atk, rcv=rcv, shield=shield)
 
 def getHeartCrossSkill(match):
     des = match[0]
