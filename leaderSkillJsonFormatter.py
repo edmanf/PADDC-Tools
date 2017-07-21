@@ -168,8 +168,8 @@ scalingColorMatchPattern = r'''
     (?:,[ ])?
     (?:(\d+)%[ ]all[ ]damage[ ]reduction)?
     [ ]when[ ]attacking[ ]with[ ]
-    (\d+)[ ]of[ ]following[ ]orb[ ]types:
-    (.*)
+    (\d+)[ ]of(.*?)
+    (?:[ ]at[ ]the[ ]same[ ]time)?
 '''
 
 colorMatchScalePattern = r'''
