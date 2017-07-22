@@ -217,13 +217,14 @@ basicDamageReductionPattern = r'''
 '''
 
 hpConditionalPattern = r'''
-    (.*?)[ ]cards[ ]
+    (.*?[ ]cards[ ])? 
     (?:atk[ ]x(\d+(?:\.\d+)?))?
     (?:,[ ])?
     (?:rcv[ ]x(\d+(?:\.\d+)?))?
-    (?:,[ ])?[ ]when[ ]hp[ ]is[ ]
-    (less[ ]than[ ]|greater[ ]than[ ]|full)
-    (?:(\d+)%)?
+    (?:,[ ])?
+    [ ]when[ ]hp[ ]is[ ]
+    (less[ ]than|greater[ ]than|full)
+    (?:[ ](\d+)%)?
 '''
 
 # some descriptions have a type where a period is not followed by a space
@@ -236,6 +237,10 @@ parenFixPattern = r'''will not stack \). '''
 # fix for some bikkuriman collab skills
 hpParenOrigPattern = r'''%[ ]\('''
 hpParenFixPattern = r'''%. ('''
+
+hpRepeatTypoPattern = r'''
+    \.[ ][ ]when[ ]hp[ ]is[ ]less[ ]than[ ]50%\.
+'''
 
 def formatComboSkills(description, minAtk, maxAtk, atkScale,
                 minCombo, maxCombo, rcv, attributes, shield=None):
@@ -626,7 +631,7 @@ def getBasicDamageReduction(match):
     attributeRe = re.compile(attributePattern, re.I|re.VERBOSE)
     attributes = attributeRe.findall(match[2])
     
-    result = "\"skilltype\":\"shield\","
+    result = "{\"skilltype\":\"shield\","
     result += "\"effect\":{"
     result += "\"attribute\":["
     if attributes:
@@ -642,13 +647,25 @@ def getBasicDamageReduction(match):
   
 def getHpCondSkill(match):
     des = match[0]
-    print(des)
-    print(match[1])
-    print()
-    return ""
+    attributeStr = match[1]
+    atk = match[2] if match[2] else 1
+    rcv = match[3] if match[3] else 1
+    hpType = match[4]
+    thresh = match[5] if match[5] else 100
+    
+    result = "{\"skilltype\":\"hp_conditional\","
+    result += "\"hp_conditional\":\"" + hpType + "\","
+    result += "\"value\":" + str(thresh) + ","
+    result += "\"effect\":{"
+    result += "\"atk\":" + str(atk) + ","
+    result += "\"rcv\":" + str(rcv)
+    result += "},"
+    result += "\"description\":\"" + des + "\""
+    result += "},"
+    return result
 
 def main():
-    file = open("leaderskills.json")
+    file = open("sampleLeaderSkills.json")
     leaderJson = json.load(file)
     
     if len(leaderJson) is 0:
@@ -659,6 +676,7 @@ def main():
     parenFixRe = re.compile(parenOrigPattern, re.I|re.VERBOSE)
     periodTypoRe = re.compile(periodTypePattern, re.IGNORECASE|re.VERBOSE)
     hpParenTypoRe = re.compile(hpParenOrigPattern, re.I|re.VERBOSE)
+    hpRepeatTypoRe = re.compile(hpRepeatTypoPattern, re.I|re.VERBOSE)
     
     result = "["
     for skillJson in leaderJson:
@@ -667,6 +685,7 @@ def main():
         des = periodTypoRe.sub(periodFixPattern, skillJson["effect"])
         des = parenFixRe.sub(parenFixPattern, des)
         des = hpParenTypoRe.sub(hpParenFixPattern, des)
+        des = hpRepeatTypoRe.sub("", des)
         leaderSkillParts = des.split(". ")
         result += "{"
         result += "\"name\":\"" + name + "\","
@@ -836,8 +855,8 @@ def main():
                 result += getHpCondSkill(hpCondM)
                 continue
             
-            #print("NOT DONE: " + part)
-            #print()
+            print("NOT DONE: " + part)
+            print()
             unfinished += 1
         result = result.strip(",") # fencepost problem
         result += "]},"

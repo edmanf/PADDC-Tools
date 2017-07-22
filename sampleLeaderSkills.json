@@ -1,5 +1,13 @@
 [
 {
+	"effect": "Water attribute cards ATK x3 when HP is less than 50% ( Water attribute cards ATK x3.3 when HP is full. Water attribute cards ATK x3.15 when HP is greater than 50%. ). Wood attribute cards RCV x2.",
+	"name": "blue-green divine clock"
+},
+{
+	"effect": "All attribute cards ATK x3.5 when HP is less than 20%. ATK x2 when HP is less than 50%.  when HP is less than 50%.",
+	"name": "Spinning Toe Hold"
+},
+{
 	"effect": "No skyfall matches. Dark attribute cards ATK x2, RCV x2. ATK x2 when simultaneously clearing 6 connected Dark orbs. ATK x1 for each additional orb, up to ATK x8 at 12 connected orb.",
 	"name": "Fool!"
 },
