@@ -1,5 +1,9 @@
 [
 {
+	"effect": "No skyfall matches. Fire attribute cards HP x1.5, ATK x2. ATK x6, RCV x6 when reaching 8 combos. ATK x1,  RCV x1 for each additional combo, up to ATK x7, RCV x7 at 9 combos.",
+	"name": "Axiom of Exorcism"
+},
+{
 	"effect": "Water attribute cards ATK x3 when HP is less than 50% ( Water attribute cards ATK x3.3 when HP is full. Water attribute cards ATK x3.15 when HP is greater than 50%. ). Wood attribute cards RCV x2.",
 	"name": "blue-green divine clock"
 },
@@ -10,6 +14,10 @@
 {
 	"effect": "No skyfall matches. Dark attribute cards ATK x2, RCV x2. ATK x2 when simultaneously clearing 6 connected Dark orbs. ATK x1 for each additional orb, up to ATK x8 at 12 connected orb.",
 	"name": "Fool!"
+},
+{
+	"effect": "Heal RCV x2 as HP after every orbs elimination.",
+	"name": "Regenerator"
 },
 {
 	"effect": "Balanced, God & Devil attribute cards ATK x2 on the turn a skill is used. ( Multiple skills will not stack ) ATK x6, reduce damage taken by 35% after matching Heal orbs in a cross formation.",

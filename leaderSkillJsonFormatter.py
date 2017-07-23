@@ -1,12 +1,14 @@
 import json
 import re
 
+#match 1: attribute
 attributePattern = r'''
     (fire|water|wood|light|dark|all)
 
 '''
 attributeRe = re.compile(attributePattern, re.IGNORECASE|re.VERBOSE)
 
+#match 1: type
 typePattern = r'''
     (
     god|balanced|attacker|physical
@@ -18,13 +20,14 @@ typePattern = r'''
 '''
 typeRe = re.compile(typePattern, re.IGNORECASE|re.VERBOSE)
 
+#match 1: orbType
 orbTypePattern = r'''
     (fire|water|wood|light|dark|heal
     |heart|jammer|mortal[ ]poison|poison|all)
 '''
 
 
-#basic skills are just are type and attribute multipliers
+# TODO:Fix using non matching groups
 basicRePattern = r'''
     ((((
     ''' + attributePattern + "|" + typePattern + ''')   #list of attributes and types
@@ -38,6 +41,10 @@ basicRePattern = r'''
 '''
 basicRe = re.compile(basicRePattern, re.IGNORECASE|re.VERBOSE)
 
+# match 1: hp multi
+# match 2: atk multi
+# match 3: rcv multi
+# match 4: type
 basicPattern2 = r'''
     (?:hp[ ]x(\d+(?:\.\d+)?))?
     (?:,[ ])?
@@ -48,6 +55,10 @@ basicPattern2 = r'''
     [ ]type[ ]cards
 '''
 
+# match 1: all stat multi
+# match 2: hp multi
+# match 3: atk multi
+# match 4: rcv multi
 basicMultiPattern = r'''
     cards[ ]
     (?:
@@ -240,6 +251,20 @@ hpParenFixPattern = r'''%. ('''
 
 hpRepeatTypoPattern = r'''
     \.[ ][ ]when[ ]hp[ ]is[ ]less[ ]than[ ]50%\.
+'''
+
+postOrbElimPattern = r'''
+    (?:heal|deal)
+    [ ](atk|rcv)[ ]x
+    (\d+(?:\.\d+)?)
+    (?:[ ]as[ ]hp|[ ]damage[ ]to[ ]all[ ]enemies)
+    [ ]after[ ]every[ ]orbs[ ]elimination
+'''
+
+postOrbElimExtraPattern = r'''
+    ignores[ ]enemy[ ]element,
+    [ ]but[ ]can[ ]be[ ]reduced[ ]
+    by[ ]enemy[ ]defense[ ]down[ ]to[ ]0[ ]damage
 '''
 
 def formatComboSkills(description, minAtk, maxAtk, atkScale,
@@ -664,8 +689,28 @@ def getHpCondSkill(match):
     result += "},"
     return result
 
+def getPostOrbElimSkill(match, extra=None):
+    des = match[0]
+    type = match[1].lower()
+    value = match[2]
+    atk = value if type == "atk" else 0
+    rcv = value if type == "rcv" else 0
+    
+    if extra:
+        des += ". " + extra[0]
+        
+    result = "{\"skilltype\":\"after_match\","
+    result += "\"effect\":{"
+    result += "\"atk\":" + str(atk) + ","
+    result += "\"rcv\":" + str(rcv)
+    result += "},"
+    
+    result += "\"description\":\"" + des + "\""
+    result += "},"
+    return result
+    
 def main():
-    file = open("sampleLeaderSkills.json")
+    file = open("leaderskills.json")
     leaderJson = json.load(file)
     
     if len(leaderJson) is 0:
@@ -853,6 +898,21 @@ def main():
             hpCondM = hpCondRe.search(part)
             if hpCondM:
                 result += getHpCondSkill(hpCondM)
+                continue
+            
+            postOrbElimRe = re.compile(postOrbElimPattern, re.I|re.VERBOSE)
+            postOrbElimM = postOrbElimRe.search(part)
+            if postOrbElimM:
+                postOrbElimExtraRe = re.compile(postOrbElimExtraPattern, re.I|re.VERBOSE)
+                if i < len(leaderSkillParts):
+                    extraPart = leaderSkillParts[i]
+                    extraM = postOrbElimExtraRe.search(extraPart)
+                    if extraM:
+                        result += getPostOrbElimSkill(postOrbElimM, extra=extraM)
+                        i += 1
+                        continue
+                    
+                result += getPostOrbElimSkill(postOrbElimM)
                 continue
             
             print("NOT DONE: " + part)
