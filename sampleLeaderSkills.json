@@ -1,5 +1,67 @@
 [
 {
+	"effect": "Water attribute & God type cards ATK x2.5, RCV x2.5. ATK x2.5 when simultaneously clearing 6+ connected Water orbs.",
+	"name": "Sight of Mimir"
+},
+{
+	"effect": "All attribute cards ATK x2 when Achtros in the same team. Matched attribute ATK x2 when matching exactly 5 connected orbs with at least 1 enhanced orb.",
+	"name": "High Tide Dragon Power"
+},
+{
+	"effect": "All attribute cards ATK x2 when Achtros in the same team. Matched attribute ATK x2 when matching exactly 5 connected orbs with at least 1 enhanced orb.",
+	"name": "High Tide Dragon Power"
+},
+{
+	"effect": "Machine type cards ATK x2. ATK x2, RCV x2 in cooperation mode.",
+	"name": "Hey, what are you doing?"
+},
+{
+	"effect": "Can no longer clear 4 or less connected orbs. Water attribute cards ATK x5. ATK x2 at 3 combos. ATK x1 for each additional combo, up to ATK x3 at 4 combos.",
+	"name": "Everflowing Sunlight"
+},
+{
+	"effect": "Change the board to 7x6 size. All attribute cards ATK x3, RCV x3 when attacking with 3 of following orb types: Fire, Water, Wood, Light & Dark. ATK x0.5,  RCV x0.5 for each additional orb type, up to ATK x4, RCV x4 for all 5 matches.",
+	"name": "Elemental Square"
+},
+{
+	"effect": "Can no longer clear 3 connected orbs. All attribute cards ATK x4. ATK x3, reduce damage taken by 50% after matching Heal orbs in a cross formation.",
+	"name": "Eighth Dragon Awakening - Sky"
+},
+{
+	"effect": "Matched attribute ATK x6 when matching exactly 5 connected orbs with at least 1 enhanced orb. HP x1.5, ATK x1.5, RCV x1.5 in cooperation mode.",
+	"name": "Critical Eye +1"
+},
+{
+	"effect": "Get x1.5 experience after a battle. Get x2 coins after a battle.",
+	"name": "Commercial Science's Teaching"
+},
+{
+	"effect": "ATK x3 at 4 combos. ATK x1 for each additional combo, up to ATK x9 at 10 combos. HP x1.5, ATK x1.5, RCV x1.5 in cooperation mode.",
+	"name": "Bubbly Dance"
+},
+{
+	"data": [1.5,
+	2.5,
+	1.5],
+	"effect": "All attribute cards HP x1.5, ATK x2.5, RCV x1.5 when Restrained Dragon Hero, Liu Bei in the same team.",
+	"name": "Brave General's Noble Heart"
+},
+{
+	"effect": "Wood attribute cards ATK x1.5. RCV x2.5 when matching exactly 4 connected heart orbs.",
+	"name": "All right!! Time for lunch!"
+},
+{
+	"data": [0.5,
+	1,
+	1],
+	"effect": "50% HP reduction. Attacker type cards ATK x3.",
+	"name": "Abomination"
+},
+{
+	"effect": "No skyfall matches. Water attribute cards ATK x1.5, RCV x1.5. All attribute cards ATK x5 when reaching exactly 7 combos.",
+	"name": "Azure Spring Dragon's Fangs"
+},
+{
 	"effect": "No skyfall matches. Fire attribute cards HP x1.5, ATK x2. ATK x6, RCV x6 when reaching 8 combos. ATK x1,  RCV x1 for each additional combo, up to ATK x7, RCV x7 at 9 combos.",
 	"name": "Axiom of Exorcism"
 },

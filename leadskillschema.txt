@@ -72,7 +72,7 @@ conditions:
         effect: {atk/rcv}
         
     5_orb_enhanced:
-        effect: {atk, rcv}
+        effect: {atk, orb_count, min_enhanced}
         attribute:["matched"]
         
     heart_tpa:

@@ -1,5 +1,7 @@
 import json
 import re
+# TODO: Fix issues with ignore case: see mini zhao yun
+
 
 #match 1: attribute
 attributePattern = r'''
@@ -163,7 +165,7 @@ enhancedMatchPattern = r'''
 '''
 
 colorMatchPattern = r'''
-    all[ ]attribute[ ]cards[ ]
+    (?:all[ ]attribute[ ]cards[ ])?
     (?:atk[ ]x(\d+(?:\.\d+)?))?
     (?:,[ ])?
     (?:rcv[ ]x(\d+(?:\.\d+)?))?
@@ -175,7 +177,7 @@ colorMatchPattern = r'''
 '''
 
 scalingColorMatchPattern = r'''
-    all[ ]attribute[ ]cards[ ]
+    (?:all[ ]attribute[ ]cards[ ])?
     (?:atk[ ]x(\d+(?:\.\d+)?))?
     ,?[ ]?
     (?:rcv[ ]x(\d+(?:\.\d+)?))?
@@ -710,7 +712,7 @@ def getPostOrbElimSkill(match, extra=None):
     return result
     
 def main():
-    file = open("leaderskills.json")
+    file = open("sampleLeaderSkills.json")
     leaderJson = json.load(file)
     
     if len(leaderJson) is 0:
@@ -727,6 +729,8 @@ def main():
     for skillJson in leaderJson:
         
         name = skillJson["name"]
+        if name == "N/A":
+            continue
         des = periodTypoRe.sub(periodFixPattern, skillJson["effect"])
         des = parenFixRe.sub(parenFixPattern, des)
         des = hpParenTypoRe.sub(hpParenFixPattern, des)
@@ -916,6 +920,7 @@ def main():
                 continue
             
             print("NOT DONE: " + part)
+            print(name)
             print()
             unfinished += 1
         result = result.strip(",") # fencepost problem
