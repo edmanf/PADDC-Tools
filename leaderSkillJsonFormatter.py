@@ -269,6 +269,23 @@ postOrbElimExtraPattern = r'''
     by[ ]enemy[ ]defense[ ]down[ ]to[ ]0[ ]damage
 '''
 
+# match 1: all stat multi
+# match 2: hp multi
+# match 3: atk multi
+# match 4: rcv multi
+coopModePattern = r'''
+    (?:all[ ]stats[ ]x(\d+(?:\.\d+)?))?
+    (?:,[ ])?
+    (?:hp[ ]x(\d+(?:\.\d+)?))?
+    (?:,[ ])?
+    (?:atk[ ]x(\d+(?:\.\d+)?))?
+    (?:,[ ])?
+    (?:rcv[ ]x(\d+(?:\.\d+)?))?
+    [ ]in[ ]cooperation[ ]mode
+'''
+
+
+
 def formatComboSkills(description, minAtk, maxAtk, atkScale,
                 minCombo, maxCombo, rcv, attributes, shield=None):
     shield = shield if shield else 0
@@ -711,6 +728,32 @@ def getPostOrbElimSkill(match, extra=None):
     result += "},"
     return result
     
+    
+def getCoopSkills(match):
+    des = match[0]
+    hp = 1
+    atk = 1
+    rcv = 1
+    
+    if match[1]:
+        hp = match[1]
+        atk = match[1]
+        rcv = match[1]
+        
+    hp = match[2] if match[2] else hp
+    atk = match[3] if match[3] else atk
+    rcv = match[4] if match[4] else rcv
+    
+    result = "{\"skilltype\":\"co-op\","
+    result += "\"effect\":{"
+    result += "\"hp\":" + str(hp) + ","
+    result += "\"atk\":" + str(atk) + ","
+    result += "\"rcv\":" + str(rcv)
+    result += "},"
+    result += "\"description\":\"" + des + "\""
+    result += "},"
+    return result
+    
 def main():
     file = open("sampleLeaderSkills.json")
     leaderJson = json.load(file)
@@ -919,6 +962,12 @@ def main():
                 result += getPostOrbElimSkill(postOrbElimM)
                 continue
             
+            coopRe = re.compile(coopModePattern, re.I|re.VERBOSE)
+            coopM = coopRe.search(part)
+            if coopM:
+                result += getCoopSkills(coopM)
+                continue
+                
             print("NOT DONE: " + part)
             print(name)
             print()
