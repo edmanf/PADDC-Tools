@@ -91,7 +91,7 @@ connectedPattern = r'''
     (?:,[ ])?                                               
     (?:rcv[ ]x(\d+(?:\.\d+)?))?                         #capture rcv multi
     [ ]when[ ]simultaneously[ ]clearing[ ]
-    (\d+)[ ]connected[ ]\w+(?:[ ]or[ ].+?)?[ ]orbs      #capture beginning count
+    (\d+)\+?[ ]connected[ ]\w+(?:[ ]or[ ].+?)?[ ]orbs      #capture beginning count
 '''
 
 connectedScalePattern = r'''
@@ -135,8 +135,10 @@ basicComboPattern = r'''
     (?:rcv[ ]x(\d+(?:\.\d+)?))?
     (?:,[ ])?
     (?:(\d+)%[ ]all[ ]damage[ ]reduction)?
-    [ ]when[ ]reaching[ ](\d+)[ ](?:combos|or).*
+    [ ]when[ ](?:reaching|reaching[ ]exactly)[ ](\d+)[ ](?:combos|or).*
 '''
+
+
 
 orbTypeComboPattern = r'''
     all[ ]attribute[ ]cards
