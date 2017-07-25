@@ -77,12 +77,16 @@ basicMultiRe = re.compile(basicMultiPattern, re.IGNORECASE|re.VERBOSE)
 
 scalingComboBasePattern = r'''
     atk[ ]x(\d+(?:\.\d+)?)                              #capture atk multiplier
+    (?:,[ ]rcv[ ]x(\d+(?:\.\d+)?))?
+    
     [ ]at[ ](\d+)[ ]combos                              #capture base start combo
 '''
 scalingComboScalePattern = r'''
     atk[ ]x(\d+(?:\.\d+)?)                              #capture scaling mutliplier
+    (?:, [ ]rcv[ ]x(\d+(?:\.\d+)?))?
     [ ]for[ ]each[ ]additional[ ]combo,
-    [ ]up[ ]to[ ]atk[ ]x(\d+(?:\.\d+)?)[ ]at[ ]         #capture multiplier limit
+    [ ]up[ ]to[ ]atk[ ]x(\d+(?:\.\d+)?)
+    (?:,[ ]rcv[ ]x(\d+(?:\.\d+)?))?[ ]at[ ]         #capture multiplier limit
     (\d+)[ ]combos                                      #capture combo limit
 '''
 
@@ -298,7 +302,8 @@ counterPattern = r'''
 
 
 def formatComboSkills(description, minAtk, maxAtk, atkScale,
-                minCombo, maxCombo, rcv, attributes, shield=None):
+                minCombo, maxCombo, attributes, shield=None,
+                minRcv=0, maxRcv=0, rcvScale=0):
     shield = shield if shield else 0
     attributeStr = "["
     for attribute in attributes:
@@ -313,7 +318,9 @@ def formatComboSkills(description, minAtk, maxAtk, atkScale,
     result += "\"max_atk\":" + str(maxAtk) + ","
     result += "\"start_combo\":" + str(minCombo) + ","
     result += "\"end_combo\":" + str(maxCombo) + ","
-    result += "\"rcv\":" + str(rcv) + ","
+    result += "\"minRcv\":" + str(minRcv) + ","
+    result += "\"maxRcv\":" + str(maxRcv) + "," 
+    result += "\"rcv_scale\":" + str(rcvScale) + ","
     result += "\"shield\":" + str(shield)
     result += "},"
     result += "\"description\":\"" + description + "\""
@@ -413,28 +420,33 @@ def getBasicSkill2(match):
 def getComboSkill(baseMatches, scaleMatches):
     description = baseMatches[0]
     minAtk = baseMatches[1]
-    minCombo = baseMatches[2]
+    minRcv = baseMatches[2]
+    minCombo = baseMatches[3]
     atkScale = 0
+    rcvScale = 0
     maxAtk = minAtk
+    maxRcv = minRcv
     maxCombo = minCombo
-    rcv = 1
     
     if scaleMatches:
         description += ". " + scaleMatches[0]
         atkScale = scaleMatches[1]
-        atkMax = scaleMatches[2]
-        comboMax = scaleMatches[3]
+        rcvScale = scaleMatches[2]
+        atkMax = scaleMatches[3]
+        rcvMax = scaleMatches[4]
+        comboMax = scaleMatches[5]
         
     attributes = ["all"]
         
     
     return formatComboSkills(description, minAtk, maxAtk, atkScale,
-                minCombo, maxCombo, rcv, attributes)
+                minCombo, maxCombo, attributes, 
+                minRcv=minRcv, maxRcv=maxRcv, rcvScale=rcvScale)
     
 def getBasicComboSkill(match):
     des = match[0]
     minAtk = match[1] if match[1] else 1
-    rcv = match[2] if match[2] else 1
+    minRcv = match[2] if match[2] else 1
     shield = match[3]
     minCombo = match[4]
     
@@ -444,7 +456,7 @@ def getBasicComboSkill(match):
     attributes = ["all"]
     
     return formatComboSkills(des, minAtk, maxAtk, atkScale,
-                minCombo, maxCombo, rcv, attributes, shield=shield)
+                minCombo, maxCombo, attributes, shield=shield, minRcv=minRcv)
     
 def getOrbTypeComboSkill(match, scaleMatch):
     des = match[0]
@@ -782,7 +794,7 @@ def getCounterSkills(match):
     return result
     
 def main():
-    file = open("leaderskills.json")
+    file = open("sampleLeaderSkills.json")
     leaderJson = json.load(file)
     
     if len(leaderJson) is 0:
