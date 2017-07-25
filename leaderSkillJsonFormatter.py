@@ -286,6 +286,15 @@ coopModePattern = r'''
     [ ]in[ ]cooperation[ ]mode
 '''
 
+# match 1: chance
+# match 2: damage attribute
+# match 3: damage multi
+counterPattern = r'''
+    (\d+)%[ ]chance[ ]to[ ]deal[ ]counter[ ]
+    (\w+)[ ]damage[ ]of[ ]
+    (\d+)x[ ]damage[ ]taken
+'''
+
 
 
 def formatComboSkills(description, minAtk, maxAtk, atkScale,
@@ -756,8 +765,24 @@ def getCoopSkills(match):
     result += "},"
     return result
     
+def getCounterSkills(match):
+    des = match[0]
+    chance = match[1]
+    att = match[2]
+    value = match[3]
+    
+    result = "{\"skilltype\":\"counter\","
+    result += "\"effect\":{"
+    result += "\"chance\":" + str(chance) + ","
+    result += "\"attribute\":\"" + att + "\","
+    result += "\"atk_multiplier\":" + str(value)
+    result += "},"
+    result += "\"description\":\"" + des + "\""
+    result += "},"
+    return result
+    
 def main():
-    file = open("sampleLeaderSkills.json")
+    file = open("leaderskills.json")
     leaderJson = json.load(file)
     
     if len(leaderJson) is 0:
@@ -968,6 +993,12 @@ def main():
             coopM = coopRe.search(part)
             if coopM:
                 result += getCoopSkills(coopM)
+                continue
+                
+            counterRe = re.compile(counterPattern, re.I|re.VERBOSE)
+            counterM = counterRe.search(part)
+            if counterM:
+                result += getCounterSkills(counterM)
                 continue
                 
             print("NOT DONE: " + part)
