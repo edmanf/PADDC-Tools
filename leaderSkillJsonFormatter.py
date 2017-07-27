@@ -302,9 +302,8 @@ counterPattern = r'''
 
 
 def formatComboSkills(description, minAtk, maxAtk, atkScale,
-                minCombo, maxCombo, attributes, shield=None,
+                minCombo, maxCombo, attributes, shield=0,
                 minRcv=0, maxRcv=0, rcvScale=0):
-    shield = shield if shield else 0
     attributeStr = "["
     for attribute in attributes:
         attributeStr += "\"" + attribute + "\","
