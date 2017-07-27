@@ -90,6 +90,16 @@ scalingComboScalePattern = r'''
     (\d+)[ ]combos                                      #capture combo limit
 '''
 
+
+# match 1: atk
+# match 2: combos
+exactComboPattern = r'''
+    all[ ]attribute[ ]cards[ ]
+    (?:atk[ ]x(\d+(?:\.\d+)?))
+    [ ]when[ ]reaching[ ]exactly[ ]
+    (\d+)[ ]combos
+'''
+
 connectedPattern = r'''
     (?:atk[ ]x(\d+(?:\.\d+)?))?                         #capture atk multi
     (?:,[ ])?                                               
@@ -139,7 +149,7 @@ basicComboPattern = r'''
     (?:rcv[ ]x(\d+(?:\.\d+)?))?
     (?:,[ ])?
     (?:(\d+)%[ ]all[ ]damage[ ]reduction)?
-    [ ]when[ ](?:reaching|reaching[ ]exactly)[ ](\d+)[ ](?:combos|or).*
+    [ ]when[ ](?:reaching|reaching)[ ](\d+)[ ](?:combos|or).*
 '''
 
 
@@ -301,9 +311,10 @@ counterPattern = r'''
 
 
 
-def formatComboSkills(description, minAtk, maxAtk, atkScale,
-                minCombo, maxCombo, attributes, shield=0,
+def formatComboSkills(description, minAtk=0, maxAtk=0, atkScale=0,
+                minCombo=0, maxCombo=0, attributes=None, shield=0,
                 minRcv=0, maxRcv=0, rcvScale=0):
+    
     attributeStr = "["
     for attribute in attributes:
         attributeStr += "\"" + attribute + "\","
@@ -311,17 +322,32 @@ def formatComboSkills(description, minAtk, maxAtk, atkScale,
     result = "{\"skilltype\":\"combo\","
     result += "\"combo\":" + attributeStr + ","
     result += "\"effect\":{"
-    result += "\"atk_scale_multi_type\":\"additive\","
-    result += "\"atk_scale\":" + str(atkScale) + ","
-    result += "\"min_atk\":" + str(minAtk) + ","
-    result += "\"max_atk\":" + str(maxAtk) + ","
+    if atkScale:
+        result += "\"atk_scale_type\":\"additive\","
+        result += "\"atk_scale\":" + str(atkScale) + ","
+        result += "\"min_atk\":" + str(minAtk) + ","
+        result += "\"max_atk\":" + str(maxAtk) + ","
+    else:
+        result += "\"atk_scale_type\":\"none\","
+        result += "\"atk\":" + str(minAtk) + ","
+        
+    if rcvScale:
+        result += "\"minRcv\":" + str(minRcv) + ","
+        result += "\"maxRcv\":" + str(maxRcv) + "," 
+        result += "\"rcv_scale\":" + str(rcvScale) + ","
+    elif minRcv or maxRcv:
+        result += "\"rcv_scale\":\"none\","
+        result += "\"rcv\":"
+        result += str(minRcv) if minRcv else str(maxRcv)
+        result += ","
+        
     result += "\"start_combo\":" + str(minCombo) + ","
-    result += "\"end_combo\":" + str(maxCombo) + ","
-    result += "\"minRcv\":" + str(minRcv) + ","
-    result += "\"maxRcv\":" + str(maxRcv) + "," 
-    result += "\"rcv_scale\":" + str(rcvScale) + ","
-    result += "\"shield\":" + str(shield)
-    result += "},"
+    if maxCombo:
+        result += "\"end_combo\":" + str(maxCombo) + ","
+    
+    if shield:
+        result += "\"shield\":" + str(shield) + ","
+    result = result[:-1] + "},"
     result += "\"description\":\"" + description + "\""
     result += "},"
     
@@ -421,64 +447,62 @@ def getComboSkill(baseMatches, scaleMatches):
     minAtk = baseMatches[1]
     minRcv = baseMatches[2]
     minCombo = baseMatches[3]
-    atkScale = 0
-    rcvScale = 0
-    maxAtk = minAtk
-    maxRcv = minRcv
-    maxCombo = minCombo
+            
+    attributes = ["all"]
     
     if scaleMatches:
         description += ". " + scaleMatches[0]
         atkScale = scaleMatches[1]
         rcvScale = scaleMatches[2]
-        atkMax = scaleMatches[3]
-        rcvMax = scaleMatches[4]
-        comboMax = scaleMatches[5]
+        maxAtk = scaleMatches[3]
+        maxRcv = scaleMatches[4]
+        maxCombo = scaleMatches[5]
         
-    attributes = ["all"]
-        
-    
-    return formatComboSkills(description, minAtk, maxAtk, atkScale,
-                minCombo, maxCombo, attributes, 
-                minRcv=minRcv, maxRcv=maxRcv, rcvScale=rcvScale)
+        return formatComboSkills(description, attributes=attributes, minAtk=minAtk, maxAtk=maxAtk, 
+                                 atkScale=atkScale, minCombo=minCombo, maxCombo=maxCombo,
+                                 rcvScale=rcvScale, minRcv=minRcv, maxRcv=maxRcv)
+    else:
+        return formatComboSkills(description, attributes=attributes, minAtk=minAtk,
+                                 minRcv=minRcv, minCombo=minCombo)
     
 def getBasicComboSkill(match):
     des = match[0]
-    minAtk = match[1] if match[1] else 1
-    minRcv = match[2] if match[2] else 1
+    minAtk = match[1]
+    minRcv = match[2]
     shield = match[3]
     minCombo = match[4]
-    
-    atkScale = 0
-    maxAtk = minAtk
-    maxCombo = minCombo
+
     attributes = ["all"]
     
-    return formatComboSkills(des, minAtk, maxAtk, atkScale,
-                minCombo, maxCombo, attributes, shield=shield, minRcv=minRcv)
+    return formatComboSkills(des, minAtk=minAtk, minCombo=minCombo,
+                attributes=attributes, shield=shield, minRcv=minRcv)
     
 def getOrbTypeComboSkill(match, scaleMatch):
     des = match[0]
     minAtk = match[1]
     minCombo = match[2]
-    attribute = match[3]
-
-    atkScale = 0
-    maxAtk = minAtk
-    maxCombo = minCombo
+    attributes = [match[3]]
     
     if scaleMatch:
         des += ". " + scaleMatch[0]
         atkScale = scaleMatch[1] if scaleMatch[1] else 0
         maxAtk = scaleMatch[2] if scaleMatch[2] else minAtk
         maxCombo = scaleMatch[3] if scaleMatch[3] else minCombo
-        
-        
-    attributes = [attribute]
-    rcv = 1
-    return formatComboSkills(des, minAtk, maxAtk, atkScale,
-                             minCombo, maxCombo, rcv, attributes)
+        return formatComboSkills(des, minAtk=minAtk, maxAtk=maxAtk, atkScale=atkScale,
+                                 minCombo=minCombo, maxCombo=maxCombo, attributes=attributes)
+    else:
+        return formatComboSkills(des, minAtk=minAtk, minCombo=minCombo, attributes=attributes)
+
+def getExactComboSkill(match):
+    des = match[0]
+    minAtk = match[1]
+    minCombo = match[2]
+    maxCombo = minCombo
+    attributes = ["all"]
     
+    return formatComboSkills(des, minAtk=minAtk, minCombo=minCombo,
+                                  maxCombo=maxCombo, attributes=attributes)
+        
 def getConnectedCombo(baseMatches, scaleMatches):    
     minAtk = baseMatches[1]
     startCount = baseMatches[3]
@@ -1010,6 +1034,12 @@ def main():
             counterM = counterRe.search(part)
             if counterM:
                 result += getCounterSkills(counterM)
+                continue
+                
+            exactComboRe = re.compile(exactComboPattern, re.I|re.VERBOSE)
+            exactComboM = exactComboRe.search(part)
+            if exactComboM:
+                result += getExactComboSkill(exactComboM)
                 continue
                 
             print("NOT DONE: " + part)
