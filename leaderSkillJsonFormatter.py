@@ -76,20 +76,29 @@ basicMultiPattern = r'''
 basicMultiRe = re.compile(basicMultiPattern, re.IGNORECASE|re.VERBOSE)
 
 scalingComboBasePattern = r'''
-    atk[ ]x(\d+(?:\.\d+)?)                              #capture atk multiplier
+    \Aatk[ ]x(\d+(?:\.\d+)?)                              #capture atk multiplier
     (?:,[ ]rcv[ ]x(\d+(?:\.\d+)?))?
     
-    [ ]at[ ](\d+)[ ]combos                              #capture base start combo
+    [ ](?:at|when[ ]reaching)[ ](\d+)[ ]combos                              #capture base start combo
 '''
 scalingComboScalePattern = r'''
     atk[ ]x(\d+(?:\.\d+)?)                              #capture scaling mutliplier
-    (?:, [ ]rcv[ ]x(\d+(?:\.\d+)?))?
+    (?:,[ ]rcv[ ]x(\d+(?:\.\d+)?))?
     [ ]for[ ]each[ ]additional[ ]combo,
     [ ]up[ ]to[ ]atk[ ]x(\d+(?:\.\d+)?)
     (?:,[ ]rcv[ ]x(\d+(?:\.\d+)?))?[ ]at[ ]         #capture multiplier limit
     (\d+)[ ]combos                                      #capture combo limit
 '''
 
+basicComboPattern = r'''
+    all[ ]attribute[ ]cards[ ]
+    (?:atk[ ]x(\d+(?:\.\d+)?))?
+    (?:,[ ])?
+    (?:rcv[ ]x(\d+(?:\.\d+)?))?
+    (?:,[ ])?
+    (?:(\d+)%[ ]all[ ]damage[ ]reduction)?
+    [ ]when[ ](?:reaching|reaching)[ ](\d+)[ ](?:combos|or).*
+'''
 
 # match 1: atk
 # match 2: combos
@@ -142,15 +151,7 @@ moveTimePattern = r'''
     (\d+(?:\.\d+)?)[ ]seconds                       #captures time value    
 '''
 
-basicComboPattern = r'''
-    all[ ]attribute[ ]cards[ ]
-    (?:atk[ ]x(\d+(?:\.\d+)?))?
-    (?:,[ ])?
-    (?:rcv[ ]x(\d+(?:\.\d+)?))?
-    (?:,[ ])?
-    (?:(\d+)%[ ]all[ ]damage[ ]reduction)?
-    [ ]when[ ](?:reaching|reaching)[ ](\d+)[ ](?:combos|or).*
-'''
+
 
 
 
@@ -266,6 +267,9 @@ parenFixPattern = r'''will not stack \). '''
 # fix for some bikkuriman collab skills
 hpParenOrigPattern = r'''%[ ]\('''
 hpParenFixPattern = r'''%. ('''
+
+doubleSpaceOrigPattern = r'''[ ]{2}'''
+doubleSpaceFixPattern = r'''[ ]'''
 
 hpRepeatTypoPattern = r'''
     \.[ ][ ]when[ ]hp[ ]is[ ]less[ ]than[ ]50%\.
