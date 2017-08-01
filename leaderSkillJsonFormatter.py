@@ -324,8 +324,8 @@ def formatComboSkills(description, minAtk=0, maxAtk=0, atkScale=0,
         attributeStr += "\"" + attribute + "\","
     attributeStr = attributeStr[:-1] + "]" #because of this, there must be at least 1 attribute
     result = "{\"skilltype\":\"combo\","
-    result += "\"combo\":" + attributeStr + ","
     result += "\"effect\":{"
+    result += "\"orb_types\":" + attributeStr + ","
     if atkScale:
         result += "\"atk_scale_type\":\"additive\","
         result += "\"atk_scale\":" + str(atkScale) + ","
@@ -362,6 +362,7 @@ def formatBasicSkills(description, hp, atk, rcv, attributes, types):
     atk = atk if atk else 1
     rcv = rcv if rcv else 1
     result = "{\"skilltype\":\"basic\","
+    result += "\"effect\":{"
     result += "\"attribute\":["
     if attributes:
         for attribute in attributes:
@@ -375,10 +376,10 @@ def formatBasicSkills(description, hp, atk, rcv, attributes, types):
             result += "\"" + type + "\","
         result = result[:-1]
     result += "],"
-    result += "\"effect\":{"
     result += "\"hp\":" + str(hp) + ","
     result += "\"atk\":" + str(atk) + ","
     result += "\"rcv\":" + str(rcv)
+    
     result += "},"
     result += "\"description\":\"" + description + "\""
     result += "},"
@@ -396,13 +397,12 @@ def formatColorMatchSkills(description, orbTypes, minAtk,
     atkScale = atkScale if atkScale else 0
     shield = shield if shield else 0
     
-    result = "{\"skilltype\":\"color_match\","
-    result += "\"color_match\":["
+    result = "{\"skilltype\":\"color_match\","    
+    result += "\"effect\":{"
+    result += "\"orb_types\":["
     for orbType in orbTypes:
         result += "\"" + orbType + "\","
     result = result[:-1] + "],"
-    
-    result += "\"effect\":{"
     result += "\"atk_scale_type\":\"additive\","
     result += "\"min_atk\":" + str(minAtk) + ","
     result += "\"max_atk\":" + str(maxAtk) + ","
@@ -523,13 +523,13 @@ def getConnectedCombo(baseMatches, scaleMatches):
     orbTypeM = orbTypeRe.findall(baseMatches[0])
         
     result = "{\"skilltype\":\"connected\","
-    result += "\"connected\":["
+
+    result += "\"effect\":{"
+    result += "\"orb_types\":["
     # dont check for None, there must be an orbType
     for orbType in orbTypeM:
         result += "\"" + orbType + "\","
     result = result.strip(",") + "],"
-
-    result += "\"effect\":{"
     result += "\"atk_scale_type\":\"additive\","
     result += "\"atk_scale\":" + str(atkScale) + ","
     result += "\"min_atk\":" + str(minAtk) + ","
@@ -557,7 +557,7 @@ def getBoardSize(match):
     cols = match[2]
 
     result = "{\"skilltype\":\"boardsize\","
-    result += "\"boardsize\":{"
+    result += "\"effect\":{"
     result += "\"rows\":" + str(rows) + ","
     result += "\"cols\":" + str(cols)
     result += "},"
@@ -748,9 +748,9 @@ def getHpCondSkill(match):
     thresh = match[5] if match[5] else 100
     
     result = "{\"skilltype\":\"hp_conditional\","
-    result += "\"hp_conditional\":\"" + hpType + "\","
-    result += "\"value\":" + str(thresh) + ","
     result += "\"effect\":{"
+    result += "\"conditional_type\":\"" + hpType + "\","
+    result += "\"conditional_value\":" + str(thresh) + ","
     result += "\"atk\":" + str(atk) + ","
     result += "\"rcv\":" + str(rcv)
     result += "},"
@@ -848,7 +848,7 @@ def main():
         result += "{"
         result += "\"name\":\"" + name + "\","
         result += "\"description\":\"" + des + "\","
-        result += "\"skill\":["
+        result += "\"skills\":["
         i = 0
         while i < len(leaderSkillParts):
             count += 1
