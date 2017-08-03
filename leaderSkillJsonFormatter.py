@@ -547,7 +547,9 @@ def getConnectedCombo(baseMatches, scaleMatches):
     
 def getNoSkyfallSkill(match):
     result = "{\"skilltype\":\"skyfall\","
-    result += "\"skyfall\":[\"no skyfall\"],"
+    result += "\"effect\":{"
+    result += "\"skyfall_type\":\"no skyfall\""
+    result += "},"
     result += "\"description\":\"" + match[0] + "\""
     result += "},"
     return result
@@ -593,8 +595,8 @@ def getMoveTimeSkill(match):
     moveTimeType = "fixed" if match[1] == "Fixed" else "increase"
 
     result = "{\"skilltype\":\"move_time\","
-    result += "\"move_time\":\"" + moveTimeType + "\","
     result += "\"effect\":{"
+    result += "\"move_time_type\":\"" + moveTimeType + "\","
     result += "\"time\":" + match[2]
     result += "},"
     result += "\"description\":\"" + match[0] + "\""

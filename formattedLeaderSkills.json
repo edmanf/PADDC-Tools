@@ -1,1 +1,2168 @@
-[{"name":"Sight of Mimir","description":"Water attribute & God type cards ATK x2.5, RCV x2.5. ATK x2.5 when simultaneously clearing 6+ connected Water orbs.","skills":[{"skilltype":"basic","effect":{"attribute":["Water"],"type":["God"],"hp":1,"atk":2.5,"rcv":2.5},"description":"Water attribute & God type cards ATK x2.5, RCV x2.5"},{"skilltype":"connected","effect":{"orb_types":["Water"],"atk_scale_type":"additive","atk_scale":0,"min_atk":2.5,"max_atk":2.5,"start_count":6,"end_count":6,"rcv":1,"description":"ATK x2.5 when simultaneously clearing 6+ connected Water orbs"}}]},{"name":"High Tide Dragon Power","description":"All attribute cards ATK x2 when Achtros in the same team. Matched attribute ATK x2 when matching exactly 5 connected orbs with at least 1 enhanced orb.","skills":[{"skilltype":"enhanced_match","effect":{"atk":2,"orb_count":5,"min_enhanced":1},"description":"Matched attribute ATK x2 when matching exactly 5 connected orbs with at least 1 enhanced orb"}]},{"name":"High Tide Dragon Power","description":"All attribute cards ATK x2 when Achtros in the same team. Matched attribute ATK x2 when matching exactly 5 connected orbs with at least 1 enhanced orb.","skills":[{"skilltype":"enhanced_match","effect":{"atk":2,"orb_count":5,"min_enhanced":1},"description":"Matched attribute ATK x2 when matching exactly 5 connected orbs with at least 1 enhanced orb"}]},{"name":"Hey, what are you doing?","description":"Machine type cards ATK x2. ATK x2, RCV x2 in cooperation mode.","skills":[{"skilltype":"basic","effect":{"attribute":[],"type":["Machine"],"hp":1,"atk":2,"rcv":1},"description":"Machine type cards ATK x2"},{"skilltype":"co-op","effect":{"hp":1,"atk":2,"rcv":2},"description":"ATK x2, RCV x2 in cooperation mode"}]},{"name":"Everflowing Sunlight","description":"Can no longer clear 4 or less connected orbs. Water attribute cards ATK x5. ATK x2 at 3 combos. ATK x1 for each additional combo, up to ATK x3 at 4 combos.","skills":[{"skilltype":"basic","effect":{"attribute":["Water"],"type":[],"hp":1,"atk":5,"rcv":1},"description":"Water attribute cards ATK x5"},{"skilltype":"combo","effect":{"orb_types":["all"],"atk_scale_type":"additive","atk_scale":1,"min_atk":2,"max_atk":3,"start_combo":3,"end_combo":4},"description":"ATK x2 at 3 combos. ATK x1 for each additional combo, up to ATK x3 at 4 combos"}]},{"name":"Elemental Square","description":"Change the board to 7x6 size. All attribute cards ATK x3, RCV x3 when attacking with 3 of following orb types: Fire, Water, Wood, Light & Dark. ATK x0.5,  RCV x0.5 for each additional orb type, up to ATK x4, RCV x4 for all 5 matches.","skills":[{"skilltype":"boardsize","effect":{"rows":7,"cols":6},"description":"Change the board to 7x6 size"},{"skilltype":"color_match","effect":{"orb_types":["Fire","Water","Wood","Light","Dark"],"atk_scale_type":"additive","min_atk":3,"max_atk":3,"atk_scale":0,"min_count":5,"max_count":5,"rcv":3,"shield":3},"description":"All attribute cards ATK x3, RCV x3 when attacking with 3 of following orb types: Fire, Water, Wood, Light & Dark"}]},{"name":"Eighth Dragon Awakening - Sky","description":"Can no longer clear 3 connected orbs. All attribute cards ATK x4. ATK x3, reduce damage taken by 50% after matching Heal orbs in a cross formation.","skills":[{"skilltype":"basic","effect":{"attribute":["All"],"type":["All"],"hp":1,"atk":4,"rcv":1},"description":"All attribute cards ATK x4"},{"skilltype":"heart_cross","effect":{"atk":3,"shield":50},"description":"ATK x3, reduce damage taken by 50% after matching Heal orbs in a cross formation"}]},{"name":"Critical Eye +1","description":"Matched attribute ATK x6 when matching exactly 5 connected orbs with at least 1 enhanced orb. HP x1.5, ATK x1.5, RCV x1.5 in cooperation mode.","skills":[{"skilltype":"enhanced_match","effect":{"atk":6,"orb_count":5,"min_enhanced":1},"description":"Matched attribute ATK x6 when matching exactly 5 connected orbs with at least 1 enhanced orb"},{"skilltype":"co-op","effect":{"hp":1.5,"atk":1.5,"rcv":1.5},"description":"HP x1.5, ATK x1.5, RCV x1.5 in cooperation mode"}]},{"name":"Commercial Science's Teaching","description":"Get x1.5 experience after a battle. Get x2 coins after a battle.","skills":[]},{"name":"Bubbly Dance","description":"ATK x3 at 4 combos. ATK x1 for each additional combo, up to ATK x9 at 10 combos. HP x1.5, ATK x1.5, RCV x1.5 in cooperation mode.","skills":[{"skilltype":"combo","effect":{"orb_types":["all"],"atk_scale_type":"additive","atk_scale":1,"min_atk":3,"max_atk":9,"start_combo":4,"end_combo":10},"description":"ATK x3 at 4 combos. ATK x1 for each additional combo, up to ATK x9 at 10 combos"},{"skilltype":"co-op","effect":{"hp":1.5,"atk":1.5,"rcv":1.5},"description":"HP x1.5, ATK x1.5, RCV x1.5 in cooperation mode"}]},{"name":"Brave General's Noble Heart","description":"All attribute cards HP x1.5, ATK x2.5, RCV x1.5 when Restrained Dragon Hero, Liu Bei in the same team.","skills":[]},{"name":"All right!! Time for lunch!","description":"Wood attribute cards ATK x1.5. RCV x2.5 when matching exactly 4 connected heart orbs.","skills":[{"skilltype":"basic","effect":{"attribute":["Wood"],"type":[],"hp":1,"atk":1.5,"rcv":1},"description":"Wood attribute cards ATK x1.5"}]},{"name":"Abomination","description":"50% HP reduction. Attacker type cards ATK x3.","skills":[{"skilltype":"basic","effect":{"attribute":[],"type":["Attacker"],"hp":1,"atk":3,"rcv":1},"description":"Attacker type cards ATK x3."}]},{"name":"Azure Spring Dragon's Fangs","description":"No skyfall matches. Water attribute cards ATK x1.5, RCV x1.5. All attribute cards ATK x5 when reaching exactly 7 combos.","skills":[{"skilltype":"skyfall","skyfall":["no skyfall"],"description":"No skyfall matches"},{"skilltype":"basic","effect":{"attribute":["Water"],"type":[],"hp":1,"atk":1.5,"rcv":1.5},"description":"Water attribute cards ATK x1.5, RCV x1.5"},{"skilltype":"combo","effect":{"orb_types":["all"],"atk_scale_type":"none","atk":5,"start_combo":7,"end_combo":7},"description":"All attribute cards ATK x5 when reaching exactly 7 combos"}]},{"name":"Axiom of Exorcism","description":"No skyfall matches. Fire attribute cards HP x1.5, ATK x2. ATK x6, RCV x6 when reaching 8 combos. ATK x1,  RCV x1 for each additional combo, up to ATK x7, RCV x7 at 9 combos.","skills":[{"skilltype":"skyfall","skyfall":["no skyfall"],"description":"No skyfall matches"},{"skilltype":"basic","effect":{"attribute":["Fire"],"type":[],"hp":1.5,"atk":2,"rcv":1},"description":"Fire attribute cards HP x1.5, ATK x2"},{"skilltype":"combo","effect":{"orb_types":["all"],"atk_scale_type":"none","atk":6,"rcv_scale":"none","rcv":6,"start_combo":8},"description":"ATK x6, RCV x6 when reaching 8 combos"}]},{"name":"blue-green divine clock","description":"Water attribute cards ATK x3 when HP is less than 50%. ( Water attribute cards ATK x3.3 when HP is full. Water attribute cards ATK x3.15 when HP is greater than 50%. ). Wood attribute cards RCV x2.","skills":[{"skilltype":"hp_conditional","effect":{"conditional_type":"less than","conditional_value":50,"atk":3,"rcv":1},"description":"Water attribute cards ATK x3 when HP is less than 50%"},{"skilltype":"hp_conditional","effect":{"conditional_type":"full","conditional_value":100,"atk":3.3,"rcv":1},"description":"( Water attribute cards ATK x3.3 when HP is full"},{"skilltype":"hp_conditional","effect":{"conditional_type":"greater than","conditional_value":50,"atk":3.15,"rcv":1},"description":"Water attribute cards ATK x3.15 when HP is greater than 50%"},{"skilltype":"basic","effect":{"attribute":["Wood"],"type":[],"hp":1,"atk":1,"rcv":2},"description":"Wood attribute cards RCV x2."}]},{"name":"Spinning Toe Hold","description":"All attribute cards ATK x3.5 when HP is less than 20%. ATK x2 when HP is less than 50%","skills":[{"skilltype":"hp_conditional","effect":{"conditional_type":"less than","conditional_value":20,"atk":3.5,"rcv":1},"description":"All attribute cards ATK x3.5 when HP is less than 20%"},{"skilltype":"hp_conditional","effect":{"conditional_type":"less than","conditional_value":50,"atk":2,"rcv":1},"description":"ATK x2 when HP is less than 50%"}]},{"name":"Fool!","description":"No skyfall matches. Dark attribute cards ATK x2, RCV x2. ATK x2 when simultaneously clearing 6 connected Dark orbs. ATK x1 for each additional orb, up to ATK x8 at 12 connected orb.","skills":[{"skilltype":"skyfall","skyfall":["no skyfall"],"description":"No skyfall matches"},{"skilltype":"basic","effect":{"attribute":["Dark"],"type":[],"hp":1,"atk":2,"rcv":2},"description":"Dark attribute cards ATK x2, RCV x2"},{"skilltype":"connected","effect":{"orb_types":["Dark"],"atk_scale_type":"additive","atk_scale":1,"min_atk":2,"max_atk":8,"start_count":6,"end_count":12,"rcv":1,"description":"ATK x2 when simultaneously clearing 6 connected Dark orbs. ATK x1 for each additional orb, up to ATK x8 at 12 connected orb"}}]},{"name":"Regenerator","description":"Heal RCV x2 as HP after every orbs elimination.","skills":[{"skilltype":"after_match","effect":{"atk":0,"rcv":2},"description":"Heal RCV x2 as HP after every orbs elimination"}]},{"name":"Treasure Hunting Demonic Curse","description":"Balanced, God & Devil attribute cards ATK x2 on the turn a skill is used. ( Multiple skills will not stack ) ATK x6, reduce damage taken by 35% after matching Heal orbs in a cross formation.","skills":[{"skilltype":"skill_used","attribute":[],"type":["Balanced","God","Devil"],"effect":{"atk":2,"rcv":1},"description":"Balanced, God & Devil attribute cards ATK x2 on the turn a skill is used"}]},{"name":"I'll slice it up","description":"All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light & Dark. ATK x1 for each additional orb type, up to ATK x5 for all 5 matches. Attacker & Machine type cards HP x1.3, ATK x1.3, RCV x1.3.","skills":[{"skilltype":"color_match","effect":{"orb_types":["Fire","Water","Wood","Light","Dark"],"atk_scale_type":"additive","min_atk":4,"max_atk":5,"atk_scale":1,"min_count":5,"max_count":5,"rcv":1,"shield":4},"description":"All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light & Dark. ATK x1 for each additional orb type, up to ATK x5 for all 5 matches"},{"skilltype":"basic","effect":{"attribute":[],"type":["Attacker","Machine"],"hp":1.3,"atk":1.3,"rcv":1.3},"description":"Attacker & Machine type cards HP x1.3, ATK x1.3, RCV x1.3."}]},{"name":"Bakusaiga","description":"Balanced & Devil type cards HP x1.5, ATK x3.5. ATK x2 when simultaneously clearing 4 connected Heart orbs. ATK x0.5 for each additional orb, up to ATK x3 at 6 connected orb.","skills":[{"skilltype":"basic","effect":{"attribute":[],"type":["Balanced","Devil"],"hp":1.5,"atk":3.5,"rcv":1},"description":"Balanced & Devil type cards HP x1.5, ATK x3.5"},{"skilltype":"connected","effect":{"orb_types":["Heart"],"atk_scale_type":"additive","atk_scale":0.5,"min_atk":2,"max_atk":3,"start_count":4,"end_count":6,"rcv":1,"description":"ATK x2 when simultaneously clearing 4 connected Heart orbs. ATK x0.5 for each additional orb, up to ATK x3 at 6 connected orb"}}]},{"name":"Eternal Dragon Unity - Torvio","description":"ATK x7.7, reduce damage taken by 50% after matching Heal orbs in a cross formation. Increases time limit of orb movement by 2 seconds.","skills":[{"skilltype":"heart_cross","effect":{"atk":7.7,"shield":50},"description":"ATK x7.7, reduce damage taken by 50% after matching Heal orbs in a cross formation"},{"skilltype":"move_time","move_time":"increase","effect":{"time":2},"description":"Increases time limit of orb movement by 2 seconds"}]},{"name":"Mutsu Enmei-ryu Hidden Art: Ryuha","description":"All attribute cards ATK x6, 25% all damage reduction when attacking with 4 of Fire, Water, Wood, Light & Dark orb types at the same time. Deal ATK x100 damage to all enemies after every orbs elimination. Ignores enemy element, but can be reduced by enemy defense down to 0 damage.","skills":[{"skilltype":"color_match","effect":{"orb_types":["Fire","Water","Wood","Light","Dark"],"atk_scale_type":"additive","min_atk":6,"max_atk":6,"atk_scale":0,"min_count":5,"max_count":5,"rcv":1,"shield":25},"description":"All attribute cards ATK x6, 25% all damage reduction when attacking with 4 of Fire, Water, Wood, Light & Dark orb types at the same time"},{"skilltype":"after_match","effect":{"atk":100,"rcv":0},"description":"Deal ATK x100 damage to all enemies after every orbs elimination. Ignores enemy element, but can be reduced by enemy defense down to 0 damage"}]},{"name":"Hidden Sorcery","description":"All attribute cards ATK x4.5, 25% all damage reduction when attacking with Light and Fire combos at the same time. Change the board to 7x6 size.","skills":[{"skilltype":"color_match","effect":{"orb_types":["Light","Fire"],"atk_scale_type":"additive","min_atk":4.5,"max_atk":4.5,"atk_scale":0,"min_count":2,"max_count":2,"rcv":1,"shield":25},"description":"All attribute cards ATK x4.5, 25% all damage reduction when attacking with Light and Fire combos at the same time"},{"skilltype":"boardsize","effect":{"rows":7,"cols":6},"description":"Change the board to 7x6 size"}]},{"name":"Axiom of Salvation","description":"No skyfall matches. Wood attribute cards All Stats x1.5. ATK x3 for clearing each Wood or Fire orbs in a cross formation.","skills":[{"skilltype":"skyfall","skyfall":["no skyfall"],"description":"No skyfall matches"},{"skilltype":"basic","effect":{"attribute":["Wood","All"],"type":["All"],"hp":1.5,"atk":1.5,"rcv":1.5},"description":"Wood attribute cards All Stats x1.5"},{"skilltype":"cross","cross":["Wood","Fire"],"effect":{"atk_scale_type":"multiplicative","atk_scale":3},"description":"ATK x3 for clearing each Wood or Fire orbs in a cross formation"}]},{"name":"Aqua Steel Star of Sagittarius","description":"No skyfall matches. Water attribute cards ATK x2.5, RCV x2.5. ATK x3 when simultaneously clearing 6 connected Water orbs. ATK x0.5 for each additional orb, up to ATK x4.5 at 9 connected orb.","skills":[{"skilltype":"skyfall","skyfall":["no skyfall"],"description":"No skyfall matches"},{"skilltype":"basic","effect":{"attribute":["Water"],"type":[],"hp":1,"atk":2.5,"rcv":2.5},"description":"Water attribute cards ATK x2.5, RCV x2.5"},{"skilltype":"connected","effect":{"orb_types":["Water"],"atk_scale_type":"additive","atk_scale":0.5,"min_atk":3,"max_atk":4.5,"start_count":6,"end_count":9,"rcv":1,"description":"ATK x3 when simultaneously clearing 6 connected Water orbs. ATK x0.5 for each additional orb, up to ATK x4.5 at 9 connected orb"}}]},{"name":"Eternal Dragon Unity - Torvio Koh","description":"All attribute cards ATK x2, RCV x2 when reaching 5 or more combos. ATK x4, reduce damage taken by 50% after matching Heal orbs in a cross formation.","skills":[{"skilltype":"combo","effect":{"orb_types":["all"],"atk_scale_type":"none","atk":2,"rcv_scale":"none","rcv":2,"start_combo":5},"description":"All attribute cards ATK x2, RCV x2 when reaching 5 or more combos"},{"skilltype":"heart_cross","effect":{"atk":4,"shield":50},"description":"ATK x4, reduce damage taken by 50% after matching Heal orbs in a cross formation"}]},{"name":"Longing Breath","description":"Matched attribute ATK x4.5 when matching exactly 5 connected orbs with at least 1 enhanced orb. God & Devil type cards HP x2, ATK x2.","skills":[{"skilltype":"enhanced_match","effect":{"atk":4.5,"orb_count":5,"min_enhanced":1},"description":"Matched attribute ATK x4.5 when matching exactly 5 connected orbs with at least 1 enhanced orb"},{"skilltype":"basic","effect":{"attribute":[],"type":["God","Devil"],"hp":2,"atk":2,"rcv":1},"description":"God & Devil type cards HP x2, ATK x2."}]},{"name":"Solar Barrage","description":"All attribute cards ATK x2 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart. ATK x3 for each additional orb type, up to ATK x8 for all 6 matches. God type cards HP x1.5, ATK x1.5, RCV x1.5.","skills":[{"skilltype":"color_match","effect":{"orb_types":["Fire","Water","Wood","Light","Dark","Heart"],"atk_scale_type":"additive","min_atk":2,"max_atk":8,"atk_scale":3,"min_count":6,"max_count":6,"rcv":1,"shield":4},"description":"All attribute cards ATK x2 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart. ATK x3 for each additional orb type, up to ATK x8 for all 6 matches"},{"skilltype":"basic","effect":{"attribute":[],"type":["God"],"hp":1.5,"atk":1.5,"rcv":1.5},"description":"God type cards HP x1.5, ATK x1.5, RCV x1.5."}]},{"name":"Tachibana Protective Crest","description":"Change the board to 7x6 size. All attribute cards ATK x5, 25% all damage reduction when attacking with Fire, Water, Wood & Light orb types at the same time.","skills":[{"skilltype":"boardsize","effect":{"rows":7,"cols":6},"description":"Change the board to 7x6 size"},{"skilltype":"color_match","effect":{"orb_types":["Fire","Water","Wood","Light"],"atk_scale_type":"additive","min_atk":5,"max_atk":5,"atk_scale":0,"min_count":4,"max_count":4,"rcv":1,"shield":25},"description":"All attribute cards ATK x5, 25% all damage reduction when attacking with Fire, Water, Wood & Light orb types at the same time"}]},{"name":"Spirit of the Archdemon","description":"Healer & Devil type cards HP x2, ATK x2. ATK x3 when simultaneously clearing 6 connected Wood orbs. ATK x0.5 for each additional orb, up to ATK x4 at 8 connected orb.","skills":[{"skilltype":"basic","effect":{"attribute":[],"type":["Healer","Devil"],"hp":2,"atk":2,"rcv":1},"description":"Healer & Devil type cards HP x2, ATK x2"},{"skilltype":"connected","effect":{"orb_types":["Wood"],"atk_scale_type":"additive","atk_scale":0.5,"min_atk":3,"max_atk":4,"start_count":6,"end_count":8,"rcv":1,"description":"ATK x3 when simultaneously clearing 6 connected Wood orbs. ATK x0.5 for each additional orb, up to ATK x4 at 8 connected orb"}}]},{"name":"Hermit Cycle","description":"Water & Wood attribute cards HP x1.5, ATK x1.5. All attribute cards ATK x5, 25% all damage reduction when attacking with Water and Wood combos at the same time.","skills":[{"skilltype":"basic","effect":{"attribute":["Water","Wood"],"type":[],"hp":1.5,"atk":1.5,"rcv":1},"description":"Water & Wood attribute cards HP x1.5, ATK x1.5"},{"skilltype":"color_match","effect":{"orb_types":["Water","Wood"],"atk_scale_type":"additive","min_atk":5,"max_atk":5,"atk_scale":0,"min_count":2,"max_count":2,"rcv":1,"shield":25},"description":"All attribute cards ATK x5, 25% all damage reduction when attacking with Water and Wood combos at the same time"}]},{"name":"Dance of the Dark Heavens","description":"Change the board to 7x6 size. All attribute cards ATK x6, 25% all damage reduction when attacking with Fire, Water, Wood, Dark & Heart orb types at the same time.","skills":[{"skilltype":"boardsize","effect":{"rows":7,"cols":6},"description":"Change the board to 7x6 size"},{"skilltype":"color_match","effect":{"orb_types":["Fire","Water","Wood","Dark","Heart"],"atk_scale_type":"additive","min_atk":6,"max_atk":6,"atk_scale":0,"min_count":5,"max_count":5,"rcv":1,"shield":25},"description":"All attribute cards ATK x6, 25% all damage reduction when attacking with Fire, Water, Wood, Dark & Heart orb types at the same time"}]},{"name":"From now on... I alone will stand at the top.","description":"Dark attribute cards ATK x6. Water attribute cards RCV x2. ATK x2 for clearing each Dark orbs in a cross formation.","skills":[{"skilltype":"basic","effect":{"attribute":["Dark"],"type":[],"hp":1,"atk":6,"rcv":1},"description":"Dark attribute cards ATK x6"},{"skilltype":"basic","effect":{"attribute":["Water"],"type":[],"hp":1,"atk":1,"rcv":2},"description":"Water attribute cards RCV x2"},{"skilltype":"cross","cross":["Dark"],"effect":{"atk_scale_type":"multiplicative","atk_scale":2},"description":"ATK x2 for clearing each Dark orbs in a cross formation"}]},{"name":"In the Beginning","description":"Light attribute cards ATK x6. Water attribute cards RCV x2. ATK x1.5 when simultaneously clearing 5 connected Light orbs. ATK x0.5 for each additional orb, up to ATK x2.5 at 7 connected orb.","skills":[{"skilltype":"basic","effect":{"attribute":["Light"],"type":[],"hp":1,"atk":6,"rcv":1},"description":"Light attribute cards ATK x6"},{"skilltype":"basic","effect":{"attribute":["Water"],"type":[],"hp":1,"atk":1,"rcv":2},"description":"Water attribute cards RCV x2"},{"skilltype":"connected","effect":{"orb_types":["Light"],"atk_scale_type":"additive","atk_scale":0.5,"min_atk":1.5,"max_atk":2.5,"start_count":5,"end_count":7,"rcv":1,"description":"ATK x1.5 when simultaneously clearing 5 connected Light orbs. ATK x0.5 for each additional orb, up to ATK x2.5 at 7 connected orb"}}]},{"name":"Bubbly Dance","description":"ATK x3 at 4 combos. ATK x1 for each additional combo, up to ATK x9 at 10 combos. HP x1.5, ATK x1.5, RCV x1.5 in cooperation mode.","skills":[{"skilltype":"combo","effect":{"orb_types":["all"],"atk_scale_type":"additive","atk_scale":1,"min_atk":3,"max_atk":9,"start_combo":4,"end_combo":10},"description":"ATK x3 at 4 combos. ATK x1 for each additional combo, up to ATK x9 at 10 combos"},{"skilltype":"co-op","effect":{"hp":1.5,"atk":1.5,"rcv":1.5},"description":"HP x1.5, ATK x1.5, RCV x1.5 in cooperation mode"}]},{"name":"Spirit of the Hell Deity","description":"ATK x5 at 8 combos. ATK x2.5 for each additional combo, up to ATK x10 at 10 combos. All attribute cards ATK x3, RCV x1.5 on the turn a skill is used. ( Multiple skills will not stack )","skills":[{"skilltype":"combo","effect":{"orb_types":["all"],"atk_scale_type":"additive","atk_scale":2.5,"min_atk":5,"max_atk":10,"start_combo":8,"end_combo":10},"description":"ATK x5 at 8 combos. ATK x2.5 for each additional combo, up to ATK x10 at 10 combos"},{"skilltype":"skill_used","attribute":["All"],"type":["All"],"effect":{"atk":3,"rcv":1.5},"description":"All attribute cards ATK x3, RCV x1.5 on the turn a skill is used"}]},{"name":"Victoria's Victory Song","description":"God, Attacker & Devil type cards HP x1.5, ATK x3.5. All attribute cards ATK x2, RCV x2 when reaching Dark & Water combos.","skills":[{"skilltype":"basic","effect":{"attribute":[],"type":["God","Attacker","Devil"],"hp":1.5,"atk":3.5,"rcv":1},"description":"God, Attacker & Devil type cards HP x1.5, ATK x3.5"},{"skilltype":"color_match","effect":{"orb_types":["Dark","Water"],"atk_scale_type":"additive","min_atk":2,"max_atk":2,"atk_scale":0,"min_count":2,"max_count":2,"rcv":2,"shield":0},"description":"All attribute cards ATK x2, RCV x2 when reaching Dark & Water combos"}]},{"name":"Mysterious Dazzling Shine","description":"All attribute cards ATK x6 when HP is greater than 80%. ATK x2.5 when HP is less than 80%. All attribute cards ATK x3, 25% all damage reduction when attacking with Light and Light combos at the same time.","skills":[{"skilltype":"hp_conditional","effect":{"conditional_type":"greater than","conditional_value":80,"atk":6,"rcv":1},"description":"All attribute cards ATK x6 when HP is greater than 80%"},{"skilltype":"hp_conditional","effect":{"conditional_type":"less than","conditional_value":80,"atk":2.5,"rcv":1},"description":"ATK x2.5 when HP is less than 80%"},{"skilltype":"color_match","effect":{"orb_types":["Light","Light"],"atk_scale_type":"additive","min_atk":3,"max_atk":3,"atk_scale":0,"min_count":2,"max_count":2,"rcv":1,"shield":25},"description":"All attribute cards ATK x3, 25% all damage reduction when attacking with Light and Light combos at the same time"}]},{"name":"Demonic Apotheosis","description":"Dark attribute cards ATK x2.5, RCV x1.5. All attribute cards ATK x4, 25% all damage reduction when attacking with Fire, Water & Dark orb types at the same time.","skills":[{"skilltype":"basic","effect":{"attribute":["Dark"],"type":[],"hp":1,"atk":2.5,"rcv":1.5},"description":"Dark attribute cards ATK x2.5, RCV x1.5"},{"skilltype":"color_match","effect":{"orb_types":["Fire","Water","Dark"],"atk_scale_type":"additive","min_atk":4,"max_atk":4,"atk_scale":0,"min_count":3,"max_count":3,"rcv":1,"shield":25},"description":"All attribute cards ATK x4, 25% all damage reduction when attacking with Fire, Water & Dark orb types at the same time"}]},{"name":"The Brutal Tyrant","description":"Change the board to 7x6 size. All attribute cards ATK x8.5, 25% all damage reduction when reaching 8 combos.","skills":[{"skilltype":"boardsize","effect":{"rows":7,"cols":6},"description":"Change the board to 7x6 size"},{"skilltype":"combo","effect":{"orb_types":["all"],"atk_scale_type":"none","atk":8.5,"start_combo":8,"shield":25},"description":"All attribute cards ATK x8.5, 25% all damage reduction when reaching 8 combos."}]},{"name":"Oracle of the Radiant God","description":"Healer type cards HP x2, ATK x2. Healer attribute cards RCV x2 on the turn a skill is used. ( Multiple skills will not stack )","skills":[{"skilltype":"basic","effect":{"attribute":[],"type":["Healer"],"hp":2,"atk":2,"rcv":1},"description":"Healer type cards HP x2, ATK x2"},{"skilltype":"skill_used","attribute":[],"type":["Healer"],"effect":{"atk":1,"rcv":2},"description":"Healer attribute cards RCV x2 on the turn a skill is used"}]},{"name":"Orange Gleam Petals","description":"Light attribute & Dragon type cards ATK x2.","skills":[{"skilltype":"basic","effect":{"attribute":["Light"],"type":["Dragon"],"hp":1,"atk":2,"rcv":1},"description":"Light attribute & Dragon type cards ATK x2."}]},{"name":"Orchestra of Death","description":"Devil type cards ATK x1.5, RCV x1.5. Increases time limit of orb movement by 1 seconds.","skills":[{"skilltype":"basic","effect":{"attribute":[],"type":["Devil"],"hp":1,"atk":1.5,"rcv":1.5},"description":"Devil type cards ATK x1.5, RCV x1.5"},{"skilltype":"move_time","move_time":"increase","effect":{"time":1},"description":"Increases time limit of orb movement by 1 seconds"}]},{"name":"Ouha Binding","description":"Wood attribute & Dragon type cards ATK x2.","skills":[{"skilltype":"basic","effect":{"attribute":["Wood"],"type":["Dragon"],"hp":1,"atk":2,"rcv":1},"description":"Wood attribute & Dragon type cards ATK x2."}]},{"name":"Ouha Binding","description":"Physical attribute cards HP x2, ATK x2. Attacker attribute cards ATK x1.2.","skills":[{"skilltype":"basic","effect":{"attribute":[],"type":["Physical"],"hp":2,"atk":2,"rcv":1},"description":"Physical attribute cards HP x2, ATK x2"},{"skilltype":"basic","effect":{"attribute":[],"type":["Attacker"],"hp":1,"atk":1.2,"rcv":1},"description":"Attacker attribute cards ATK x1.2."}]},{"name":"Our name is Orphan.","description":"Light attribute cards HP x1.5, ATK x1.5, RCV x1.5.","skills":[{"skilltype":"basic","effect":{"attribute":["Light"],"type":[],"hp":1.5,"atk":1.5,"rcv":1.5},"description":"Light attribute cards HP x1.5, ATK x1.5, RCV x1.5."}]},{"name":"Overclock Army of One","description":"All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light & Dark. ATK x1 for each additional orb type, up to ATK x5 for all 5 matches. ATK x2.5, RCV x2.5 when simultaneously clearing 5 connected Light orbs.","skills":[{"skilltype":"color_match","effect":{"orb_types":["Fire","Water","Wood","Light","Dark"],"atk_scale_type":"additive","min_atk":4,"max_atk":5,"atk_scale":1,"min_count":5,"max_count":5,"rcv":1,"shield":4},"description":"All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light & Dark. ATK x1 for each additional orb type, up to ATK x5 for all 5 matches"},{"skilltype":"connected","effect":{"orb_types":["Light"],"atk_scale_type":"additive","atk_scale":0,"min_atk":2.5,"max_atk":2.5,"start_count":5,"end_count":5,"rcv":2.5,"description":"ATK x2.5, RCV x2.5 when simultaneously clearing 5 connected Light orbs"}}]},{"name":"Overheat","description":"Physical type cards HP x2, ATK x2.","skills":[{"skilltype":"basic","effect":{"attribute":[],"type":["Physical"],"hp":2,"atk":2,"rcv":1},"description":"Physical type cards HP x2, ATK x2."}]},{"name":"Paladin Ice Spear","description":"Balanced type cards ATK x2.","skills":[{"skilltype":"basic","effect":{"attribute":[],"type":["Balanced"],"hp":1,"atk":2,"rcv":1},"description":"Balanced type cards ATK x2."}]},{"name":"palm of the four origins","description":"All attribute cards ATK x5 when attacking with Fire, Water, Light & Dark orb types at the same time.","skills":[{"skilltype":"color_match","effect":{"orb_types":["Fire","Water","Light","Dark"],"atk_scale_type":"additive","min_atk":5,"max_atk":5,"atk_scale":0,"min_count":4,"max_count":4,"rcv":1,"shield":0},"description":"All attribute cards ATK x5 when attacking with Fire, Water, Light & Dark orb types at the same time"}]},{"name":"Palm of the Four Origins","description":"All attribute cards ATK x5 when attacking with Fire, Water, Light & Dark orb types at the same time.","skills":[{"skilltype":"color_match","effect":{"orb_types":["Fire","Water","Light","Dark"],"atk_scale_type":"additive","min_atk":5,"max_atk":5,"atk_scale":0,"min_count":4,"max_count":4,"rcv":1,"shield":0},"description":"All attribute cards ATK x5 when attacking with Fire, Water, Light & Dark orb types at the same time"}]},{"name":"Panther Charm","description":"Water attribute cards ATK x1.5, RCV x1.5. ATK x2 when simultaneously clearing 4 connected Water orbs.","skills":[{"skilltype":"basic","effect":{"attribute":["Water"],"type":[],"hp":1,"atk":1.5,"rcv":1.5},"description":"Water attribute cards ATK x1.5, RCV x1.5"},{"skilltype":"connected","effect":{"orb_types":["Water"],"atk_scale_type":"additive","atk_scale":0,"min_atk":2,"max_atk":2,"start_count":4,"end_count":4,"rcv":1,"description":"ATK x2 when simultaneously clearing 4 connected Water orbs"}}]},{"name":"Path of Solitude","description":"Dragon & Devil type cards HP x1.5, ATK x1.5, RCV x1.5. All attribute cards ATK x4 when reaching Water & Wood combos.","skills":[{"skilltype":"basic","effect":{"attribute":[],"type":["Dragon","Devil"],"hp":1.5,"atk":1.5,"rcv":1.5},"description":"Dragon & Devil type cards HP x1.5, ATK x1.5, RCV x1.5"},{"skilltype":"color_match","effect":{"orb_types":["Water","Wood"],"atk_scale_type":"additive","min_atk":4,"max_atk":4,"atk_scale":0,"min_count":2,"max_count":2,"rcv":1,"shield":0},"description":"All attribute cards ATK x4 when reaching Water & Wood combos"}]},{"name":"Paulownia Protective Crest","description":"Can no longer clear 3 connected orbs. Water attribute cards ATK x4. All attribute cards ATK x4, 25% all damage reduction when attacking with Water and Water combos at the same time.","skills":[{"skilltype":"basic","effect":{"attribute":["Water"],"type":[],"hp":1,"atk":4,"rcv":1},"description":"Water attribute cards ATK x4"},{"skilltype":"color_match","effect":{"orb_types":["Water","Water"],"atk_scale_type":"additive","min_atk":4,"max_atk":4,"atk_scale":0,"min_count":2,"max_count":2,"rcv":1,"shield":25},"description":"All attribute cards ATK x4, 25% all damage reduction when attacking with Water and Water combos at the same time"}]},{"name":"Peacock of the Holy Lake","description":"Water attribute cards ATK x2. All attribute cards ATK x2.5 when reaching 2 set of Water combos. ATK x2.5 for each additional combo, up to ATK x5 when reaching 3 combos.","skills":[{"skilltype":"basic","effect":{"attribute":["Water"],"type":[],"hp":1,"atk":2,"rcv":1},"description":"Water attribute cards ATK x2"},{"skilltype":"combo","effect":{"orb_types":["Water"],"atk_scale_type":"additive","atk_scale":2.5,"min_atk":2.5,"max_atk":5,"start_combo":2,"end_combo":3},"description":"All attribute cards ATK x2.5 when reaching 2 set of Water combo. ATK x2.5 for each additional combo, up to ATK x5 when reaching 3 combos"}]},{"name":"Peacock of the Sacred Lake","description":"All attribute cards ATK x2.5 when reaching 2 set of Water combos. ATK x2.5 for each additional combo, up to ATK x5 when reaching 3 combos. Matched attribute ATK x1.5 when matching exactly 5 connected orbs with at least 1 enhanced orb.","skills":[{"skilltype":"combo","effect":{"orb_types":["Water"],"atk_scale_type":"additive","atk_scale":2.5,"min_atk":2.5,"max_atk":5,"start_combo":2,"end_combo":3},"description":"All attribute cards ATK x2.5 when reaching 2 set of Water combo. ATK x2.5 for each additional combo, up to ATK x5 when reaching 3 combos"},{"skilltype":"enhanced_match","effect":{"atk":1.5,"orb_count":5,"min_enhanced":1},"description":"Matched attribute ATK x1.5 when matching exactly 5 connected orbs with at least 1 enhanced orb"}]},{"name":"Peculiar Stance","description":"Attacker type cards ATK x2. 50% chance to deal counter Light damage of 5x damage taken.","skills":[{"skilltype":"basic","effect":{"attribute":[],"type":["Attacker"],"hp":1,"atk":2,"rcv":1},"description":"Attacker type cards ATK x2"},{"skilltype":"counter","effect":{"chance":50,"attribute":"Light","atk_multiplier":5},"description":"50% chance to deal counter Light damage of 5x damage taken"}]},{"name":"Peerless Hunter","description":"Physical type cards ATK x2.5, RCV x2.5.","skills":[{"skilltype":"basic","effect":{"attribute":[],"type":["Physical"],"hp":1,"atk":2.5,"rcv":2.5},"description":"Physical type cards ATK x2.5, RCV x2.5."}]},{"name":"Perfect Revolution Offense","description":"Dragon & Devil type cards HP x1.3, ATK x1.3, RCV x1.3. ATK x1.5 when simultaneously clearing 4 connected Fire orbs. ATK x0.5 for each additional orb, up to ATK x10 at 21 connected orb.","skills":[{"skilltype":"basic","effect":{"attribute":[],"type":["Dragon","Devil"],"hp":1.3,"atk":1.3,"rcv":1.3},"description":"Dragon & Devil type cards HP x1.3, ATK x1.3, RCV x1.3"},{"skilltype":"connected","effect":{"orb_types":["Fire"],"atk_scale_type":"additive","atk_scale":0.5,"min_atk":1.5,"max_atk":10,"start_count":4,"end_count":21,"rcv":1,"description":"ATK x1.5 when simultaneously clearing 4 connected Fire orbs. ATK x0.5 for each additional orb, up to ATK x10 at 21 connected orb"}}]},{"name":"Perish Along With Your Love!!","description":"ATK x3 for clearing each Light orbs in a cross formation.","skills":[{"skilltype":"cross","cross":["Light"],"effect":{"atk_scale_type":"multiplicative","atk_scale":3},"description":"ATK x3 for clearing each Light orbs in a cross formation"}]},{"name":"Permafrost Dragon Emperor's Power","description":"ATK x2.5 when simultaneously clearing 5 connected Water orbs. All attribute cards ATK x2 when reaching Heart & Heart combos.","skills":[{"skilltype":"connected","effect":{"orb_types":["Water"],"atk_scale_type":"additive","atk_scale":0,"min_atk":2.5,"max_atk":2.5,"start_count":5,"end_count":5,"rcv":1,"description":"ATK x2.5 when simultaneously clearing 5 connected Water orbs"}}]},{"name":"Piping hot gifts for everyone!","description":"Attacker type cards HP x1.35, ATK x1.35, RCV x1.35. All attribute cards ATK x3 when reaching 2 set of Fire combos. ATK x3 for each additional combo, up to ATK x6 when reaching 3 combos.","skills":[{"skilltype":"basic","effect":{"attribute":[],"type":["Attacker"],"hp":1.35,"atk":1.35,"rcv":1.35},"description":"Attacker type cards HP x1.35, ATK x1.35, RCV x1.35"},{"skilltype":"combo","effect":{"orb_types":["Fire"],"atk_scale_type":"additive","atk_scale":3,"min_atk":3,"max_atk":6,"start_combo":2,"end_combo":3},"description":"All attribute cards ATK x3 when reaching 2 set of Fire combo. ATK x3 for each additional combo, up to ATK x6 when reaching 3 combos"}]},{"name":"Plum Blossom Crest","description":"All attribute cards ATK x3.5 when reaching 6 combos or above. All attribute cards ATK x1.5 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart.","skills":[{"skilltype":"combo","effect":{"orb_types":["all"],"atk_scale_type":"none","atk":3.5,"start_combo":6},"description":"All attribute cards ATK x3.5 when reaching 6 combos or above"},{"skilltype":"color_match","effect":{"orb_types":["Fire","Water","Wood","Light","Dark","Heart"],"atk_scale_type":"additive","min_atk":1.5,"max_atk":1.5,"atk_scale":0,"min_count":6,"max_count":6,"rcv":1,"shield":4},"description":"All attribute cards ATK x1.5 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart."}]},{"name":"Plum Blossom War Crest","description":"ATK x3.5 at 6 combos. ATK x0.5 for each additional combo, up to ATK x5 at 9 combos. All attribute cards ATK x2 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart.","skills":[{"skilltype":"combo","effect":{"orb_types":["all"],"atk_scale_type":"additive","atk_scale":0.5,"min_atk":3.5,"max_atk":5,"start_combo":6,"end_combo":9},"description":"ATK x3.5 at 6 combos. ATK x0.5 for each additional combo, up to ATK x5 at 9 combos"},{"skilltype":"color_match","effect":{"orb_types":["Fire","Water","Wood","Light","Dark","Heart"],"atk_scale_type":"additive","min_atk":2,"max_atk":2,"atk_scale":0,"min_count":6,"max_count":6,"rcv":1,"shield":4},"description":"All attribute cards ATK x2 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart."}]},{"name":"Angelo","description":"All attribute cards ATK x2 when reaching 1 set of Water combo. ATK x1 for each additional combo, up to ATK x4 when reaching 3 combos.","skills":[{"skilltype":"combo","effect":{"orb_types":["Water"],"atk_scale_type":"additive","atk_scale":1,"min_atk":2,"max_atk":4,"start_combo":1,"end_combo":3},"description":"All attribute cards ATK x2 when reaching 1 set of Water combo. ATK x1 for each additional combo, up to ATK x4 when reaching 3 combos"}]},{"name":"Angel's Song","description":"All attribute cards ATK x2.5 when attacking with Fire, Water & Wood orb types at the same time.","skills":[{"skilltype":"color_match","effect":{"orb_types":["Fire","Water","Wood"],"atk_scale_type":"additive","min_atk":2.5,"max_atk":2.5,"atk_scale":0,"min_count":3,"max_count":3,"rcv":1,"shield":0},"description":"All attribute cards ATK x2.5 when attacking with Fire, Water & Wood orb types at the same time"}]},{"name":"Angel Wing","description":"Water attribute cards ATK x2. All attribute cards ATK x2 when reaching 2 set of Water combos. ATK x1 for each additional combo, up to ATK x4 when reaching 4 combos.","skills":[{"skilltype":"basic","effect":{"attribute":["Water"],"type":[],"hp":1,"atk":2,"rcv":1},"description":"Water attribute cards ATK x2"},{"skilltype":"combo","effect":{"orb_types":["Water"],"atk_scale_type":"additive","atk_scale":1,"min_atk":2,"max_atk":4,"start_combo":2,"end_combo":4},"description":"All attribute cards ATK x2 when reaching 2 set of Water combo. ATK x1 for each additional combo, up to ATK x4 when reaching 4 combos"}]},{"name":"Annihilating Divine Will","description":"All attribute cards ATK x3 when reaching Wood & Wood combos. 20% all damage reduction.","skills":[{"skilltype":"color_match","effect":{"orb_types":["Wood","Wood"],"atk_scale_type":"additive","min_atk":3,"max_atk":3,"atk_scale":0,"min_count":2,"max_count":2,"rcv":1,"shield":0},"description":"All attribute cards ATK x3 when reaching Wood & Wood combos"},{"skilltype":"shield","effect":{"attribute":["all"],"shield":20},"description":"20% all damage reduction"}]},{"name":"Anryu Hiha","description":"No skyfall matches. Dark attribute cards ATK x5. Deal ATK x30 damage to all enemies after every orbs elimination. Ignores enemy element, but can be reduced by enemy defense down to 0 damage.","skills":[{"skilltype":"skyfall","skyfall":["no skyfall"],"description":"No skyfall matches"},{"skilltype":"basic","effect":{"attribute":["Dark"],"type":[],"hp":1,"atk":5,"rcv":1},"description":"Dark attribute cards ATK x5"},{"skilltype":"after_match","effect":{"atk":30,"rcv":0},"description":"Deal ATK x30 damage to all enemies after every orbs elimination. Ignores enemy element, but can be reduced by enemy defense down to 0 damage"}]},{"name":"I was entrusted with his heart!","description":"Water attribute cards ATK x2, RCV x2. ATK x2 at 5 combos. ATK x1 for each additional combo, up to ATK x5 at 8 combos.","skills":[{"skilltype":"basic","effect":{"attribute":["Water"],"type":[],"hp":1,"atk":2,"rcv":2},"description":"Water attribute cards ATK x2, RCV x2"},{"skilltype":"combo","effect":{"orb_types":["all"],"atk_scale_type":"additive","atk_scale":1,"min_atk":2,"max_atk":5,"start_combo":5,"end_combo":8},"description":"ATK x2 at 5 combos. ATK x1 for each additional combo, up to ATK x5 at 8 combos"}]},{"name":"Spirit of the Feline Goddess","description":"ATK x3 at 4 combos. ATK x0.5 for each additional combo, up to ATK x5 at 8 combos. All attribute cards ATK x2.5, RCV x1.5 on the turn a skill is used. ( Multiple skills will not stack )","skills":[{"skilltype":"combo","effect":{"orb_types":["all"],"atk_scale_type":"additive","atk_scale":0.5,"min_atk":3,"max_atk":5,"start_combo":4,"end_combo":8},"description":"ATK x3 at 4 combos. ATK x0.5 for each additional combo, up to ATK x5 at 8 combos"},{"skilltype":"skill_used","attribute":["All"],"type":["All"],"effect":{"atk":2.5,"rcv":1.5},"description":"All attribute cards ATK x2.5, RCV x1.5 on the turn a skill is used"}]},{"name":"Spirit of the Miko Goddess","description":"No skyfall matches. Healer attribute cards HP x1.5, ATK x1.5. ATK x2 at 5 combos. ATK x2 for each additional combo, up to ATK x12 at 10 combos.","skills":[{"skilltype":"skyfall","skyfall":["no skyfall"],"description":"No skyfall matches"},{"skilltype":"basic","effect":{"attribute":[],"type":["Healer"],"hp":1.5,"atk":1.5,"rcv":1},"description":"Healer attribute cards HP x1.5, ATK x1.5"},{"skilltype":"combo","effect":{"orb_types":["all"],"atk_scale_type":"additive","atk_scale":2,"min_atk":2,"max_atk":12,"start_combo":5,"end_combo":10},"description":"ATK x2 at 5 combos. ATK x2 for each additional combo, up to ATK x12 at 10 combos"}]},{"name":"Out of the way!","description":"ATK x2 at 4 combos. ATK x0.5 for each additional combo, up to ATK x5 at 10 combos. While your HP is 50% or above, a single hit that normally kills you will instead leave you with 1 HP. For the consecutive hits, this skill will only affect the first hit.","skills":[{"skilltype":"combo","effect":{"orb_types":["all"],"atk_scale_type":"additive","atk_scale":0.5,"min_atk":2,"max_atk":5,"start_combo":4,"end_combo":10},"description":"ATK x2 at 4 combos. ATK x0.5 for each additional combo, up to ATK x5 at 10 combos"},{"skilltype":"resolve","effect":{"hp_threshold":50},"description":"While your HP is 50% or above, a single hit that normally kills you will instead leave you with 1 HP. For the consecutive hits, this skill will only affect the first hit"}]},{"name":"Spirits of the Divine Flowers","description":"All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart. ATK x2.5 when simultaneously clearing 5 connected Water or Light orbs. ATK x0.5 for each additional orb, up to ATK x4 at 8 connected orb.","skills":[{"skilltype":"color_match","effect":{"orb_types":["Fire","Water","Wood","Light","Dark","Heart"],"atk_scale_type":"additive","min_atk":4,"max_atk":4,"atk_scale":0,"min_count":6,"max_count":6,"rcv":1,"shield":4},"description":"All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart"},{"skilltype":"connected","effect":{"orb_types":["Water","Light"],"atk_scale_type":"additive","atk_scale":0.5,"min_atk":2.5,"max_atk":4,"start_count":5,"end_count":8,"rcv":1,"description":"ATK x2.5 when simultaneously clearing 5 connected Water or Light orbs. ATK x0.5 for each additional orb, up to ATK x4 at 8 connected orb"}}]},{"name":"Shoot to kill, Shinso...","description":"Increases time limit of orb movement by 13 seconds.","skills":[{"skilltype":"move_time","move_time":"increase","effect":{"time":13},"description":"Increases time limit of orb movement by 13 seconds"}]},{"name":"The Ebon Shadow","description":"Fixed orb movement time at 4 seconds. ATK x2.5, RCV x2.5 to Dragon type cards. All attribute cards ATK x6 when reaching 6 combos or above.","skills":[{"skilltype":"move_time","move_time":"fixed","effect":{"time":4},"description":"Fixed orb movement time at 4 seconds"},{"skilltype":"basic","effect":{"attribute":[],"type":["Dragon"],"hp":1,"atk":2.5,"rcv":2.5},"description":"ATK x2.5, RCV x2.5 to Dragon type cards"},{"skilltype":"combo","effect":{"orb_types":["all"],"atk_scale_type":"none","atk":6,"start_combo":6},"description":"All attribute cards ATK x6 when reaching 6 combos or above."}]},{"name":"Final Heaven","description":"ATK x2, RCV x2 when simultaneously clearing 6 connected Fire or Light orbs. ATK x3, RCV x3 for each additional orb, up to ATK x5, RCV x5 at 7 connected orb. Change the board to 7x6 size.","skills":[{"skilltype":"connected","effect":{"orb_types":["Fire","Light"],"atk_scale_type":"additive","atk_scale":0,"min_atk":2,"max_atk":2,"start_count":6,"end_count":6,"rcv":2,"description":"ATK x2, RCV x2 when simultaneously clearing 6 connected Fire or Light orbs"}},{"skilltype":"boardsize","effect":{"rows":7,"cols":6},"description":"Change the board to 7x6 size"}]},{"name":"Six Flower Palm of the Four Origins","description":"All attribute cards ATK x5 when attacking with Fire, Water, Light & Dark orb types at the same time. All attribute cards ATK x1.5 when reaching 6 combos or above.","skills":[{"skilltype":"color_match","effect":{"orb_types":["Fire","Water","Light","Dark"],"atk_scale_type":"additive","min_atk":5,"max_atk":5,"atk_scale":0,"min_count":4,"max_count":4,"rcv":1,"shield":0},"description":"All attribute cards ATK x5 when attacking with Fire, Water, Light & Dark orb types at the same time"},{"skilltype":"combo","effect":{"orb_types":["all"],"atk_scale_type":"none","atk":1.5,"start_combo":6},"description":"All attribute cards ATK x1.5 when reaching 6 combos or above."}]},{"name":"Famitsu App Guidance","description":"Enhance Material type cards ATK x4, RCV x3.","skills":[{"skilltype":"basic","effect":{"attribute":[],"type":["Enhance Material"],"hp":1,"atk":4,"rcv":3},"description":"Enhance Material type cards ATK x4, RCV x3."}]},{"name":"The Silver Comet","description":"Fixed orb movement time at 4 seconds. HP x2, ATK x2 to Dragon type cards. All attribute cards ATK x10 when attacking with Fire, Water, Wood, Light & Dark orb types at the same time.","skills":[{"skilltype":"move_time","move_time":"fixed","effect":{"time":4},"description":"Fixed orb movement time at 4 seconds"},{"skilltype":"basic","effect":{"attribute":[],"type":["Dragon"],"hp":2,"atk":2,"rcv":1},"description":"HP x2, ATK x2 to Dragon type cards"},{"skilltype":"color_match","effect":{"orb_types":["Fire","Water","Wood","Light","Dark"],"atk_scale_type":"additive","min_atk":10,"max_atk":10,"atk_scale":0,"min_count":5,"max_count":5,"rcv":1,"shield":0},"description":"All attribute cards ATK x10 when attacking with Fire, Water, Wood, Light & Dark orb types at the same time"}]},{"name":"I can't answer to your request...","description":"Dark attribute cards ATK x1.5. ATK x2 when simultaneously clearing 6 connected Poison or Mortal Poison orbs.","skills":[{"skilltype":"basic","effect":{"attribute":["Dark"],"type":[],"hp":1,"atk":1.5,"rcv":1},"description":"Dark attribute cards ATK x1.5"},{"skilltype":"connected","effect":{"orb_types":["Poison","Mortal Poison"],"atk_scale_type":"additive","atk_scale":0,"min_atk":2,"max_atk":2,"start_count":6,"end_count":6,"rcv":1,"description":"ATK x2 when simultaneously clearing 6 connected Poison or Mortal Poison orbs"}}]}]
+[{
+	"name": "Sight of Mimir",
+	"description": "Water attribute & God type cards ATK x2.5, RCV x2.5. ATK x2.5 when simultaneously clearing 6+ connected Water orbs.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Water"],
+			"type": ["God"],
+			"hp": 1,
+			"atk": 2.5,
+			"rcv": 2.5
+		},
+		"description": "Water attribute & God type cards ATK x2.5, RCV x2.5"
+	},
+	{
+		"skilltype": "connected",
+		"effect": {
+			"orb_types": ["Water"],
+			"atk_scale_type": "additive",
+			"atk_scale": 0,
+			"min_atk": 2.5,
+			"max_atk": 2.5,
+			"start_count": 6,
+			"end_count": 6,
+			"rcv": 1,
+			"description": "ATK x2.5 when simultaneously clearing 6+ connected Water orbs"
+		}
+	}]
+},
+{
+	"name": "High Tide Dragon Power",
+	"description": "All attribute cards ATK x2 when Achtros in the same team. Matched attribute ATK x2 when matching exactly 5 connected orbs with at least 1 enhanced orb.",
+	"skills": [{
+		"skilltype": "enhanced_match",
+		"effect": {
+			"atk": 2,
+			"orb_count": 5,
+			"min_enhanced": 1
+		},
+		"description": "Matched attribute ATK x2 when matching exactly 5 connected orbs with at least 1 enhanced orb"
+	}]
+},
+{
+	"name": "High Tide Dragon Power",
+	"description": "All attribute cards ATK x2 when Achtros in the same team. Matched attribute ATK x2 when matching exactly 5 connected orbs with at least 1 enhanced orb.",
+	"skills": [{
+		"skilltype": "enhanced_match",
+		"effect": {
+			"atk": 2,
+			"orb_count": 5,
+			"min_enhanced": 1
+		},
+		"description": "Matched attribute ATK x2 when matching exactly 5 connected orbs with at least 1 enhanced orb"
+	}]
+},
+{
+	"name": "Hey, what are you doing?",
+	"description": "Machine type cards ATK x2. ATK x2, RCV x2 in cooperation mode.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["Machine"],
+			"hp": 1,
+			"atk": 2,
+			"rcv": 1
+		},
+		"description": "Machine type cards ATK x2"
+	},
+	{
+		"skilltype": "co-op",
+		"effect": {
+			"hp": 1,
+			"atk": 2,
+			"rcv": 2
+		},
+		"description": "ATK x2, RCV x2 in cooperation mode"
+	}]
+},
+{
+	"name": "Everflowing Sunlight",
+	"description": "Can no longer clear 4 or less connected orbs. Water attribute cards ATK x5. ATK x2 at 3 combos. ATK x1 for each additional combo, up to ATK x3 at 4 combos.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Water"],
+			"type": [],
+			"hp": 1,
+			"atk": 5,
+			"rcv": 1
+		},
+		"description": "Water attribute cards ATK x5"
+	},
+	{
+		"skilltype": "combo",
+		"effect": {
+			"orb_types": ["all"],
+			"atk_scale_type": "additive",
+			"atk_scale": 1,
+			"min_atk": 2,
+			"max_atk": 3,
+			"start_combo": 3,
+			"end_combo": 4
+		},
+		"description": "ATK x2 at 3 combos. ATK x1 for each additional combo, up to ATK x3 at 4 combos"
+	}]
+},
+{
+	"name": "Elemental Square",
+	"description": "Change the board to 7x6 size. All attribute cards ATK x3, RCV x3 when attacking with 3 of following orb types: Fire, Water, Wood, Light & Dark. ATK x0.5,  RCV x0.5 for each additional orb type, up to ATK x4, RCV x4 for all 5 matches.",
+	"skills": [{
+		"skilltype": "boardsize",
+		"effect": {
+			"rows": 7,
+			"cols": 6
+		},
+		"description": "Change the board to 7x6 size"
+	},
+	{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Fire",
+			"Water",
+			"Wood",
+			"Light",
+			"Dark"],
+			"atk_scale_type": "additive",
+			"min_atk": 3,
+			"max_atk": 3,
+			"atk_scale": 0,
+			"min_count": 5,
+			"max_count": 5,
+			"rcv": 3,
+			"shield": 3
+		},
+		"description": "All attribute cards ATK x3, RCV x3 when attacking with 3 of following orb types: Fire, Water, Wood, Light & Dark"
+	}]
+},
+{
+	"name": "Eighth Dragon Awakening - Sky",
+	"description": "Can no longer clear 3 connected orbs. All attribute cards ATK x4. ATK x3, reduce damage taken by 50% after matching Heal orbs in a cross formation.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["All"],
+			"type": ["All"],
+			"hp": 1,
+			"atk": 4,
+			"rcv": 1
+		},
+		"description": "All attribute cards ATK x4"
+	},
+	{
+		"skilltype": "heart_cross",
+		"effect": {
+			"atk": 3,
+			"shield": 50
+		},
+		"description": "ATK x3, reduce damage taken by 50% after matching Heal orbs in a cross formation"
+	}]
+},
+{
+	"name": "Critical Eye +1",
+	"description": "Matched attribute ATK x6 when matching exactly 5 connected orbs with at least 1 enhanced orb. HP x1.5, ATK x1.5, RCV x1.5 in cooperation mode.",
+	"skills": [{
+		"skilltype": "enhanced_match",
+		"effect": {
+			"atk": 6,
+			"orb_count": 5,
+			"min_enhanced": 1
+		},
+		"description": "Matched attribute ATK x6 when matching exactly 5 connected orbs with at least 1 enhanced orb"
+	},
+	{
+		"skilltype": "co-op",
+		"effect": {
+			"hp": 1.5,
+			"atk": 1.5,
+			"rcv": 1.5
+		},
+		"description": "HP x1.5, ATK x1.5, RCV x1.5 in cooperation mode"
+	}]
+},
+{
+	"name": "Commercial Science's Teaching",
+	"description": "Get x1.5 experience after a battle. Get x2 coins after a battle.",
+	"skills": []
+},
+{
+	"name": "Bubbly Dance",
+	"description": "ATK x3 at 4 combos. ATK x1 for each additional combo, up to ATK x9 at 10 combos. HP x1.5, ATK x1.5, RCV x1.5 in cooperation mode.",
+	"skills": [{
+		"skilltype": "combo",
+		"effect": {
+			"orb_types": ["all"],
+			"atk_scale_type": "additive",
+			"atk_scale": 1,
+			"min_atk": 3,
+			"max_atk": 9,
+			"start_combo": 4,
+			"end_combo": 10
+		},
+		"description": "ATK x3 at 4 combos. ATK x1 for each additional combo, up to ATK x9 at 10 combos"
+	},
+	{
+		"skilltype": "co-op",
+		"effect": {
+			"hp": 1.5,
+			"atk": 1.5,
+			"rcv": 1.5
+		},
+		"description": "HP x1.5, ATK x1.5, RCV x1.5 in cooperation mode"
+	}]
+},
+{
+	"name": "Brave General's Noble Heart",
+	"description": "All attribute cards HP x1.5, ATK x2.5, RCV x1.5 when Restrained Dragon Hero, Liu Bei in the same team.",
+	"skills": []
+},
+{
+	"name": "All right!! Time for lunch!",
+	"description": "Wood attribute cards ATK x1.5. RCV x2.5 when matching exactly 4 connected heart orbs.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Wood"],
+			"type": [],
+			"hp": 1,
+			"atk": 1.5,
+			"rcv": 1
+		},
+		"description": "Wood attribute cards ATK x1.5"
+	}]
+},
+{
+	"name": "Abomination",
+	"description": "50% HP reduction. Attacker type cards ATK x3.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["Attacker"],
+			"hp": 1,
+			"atk": 3,
+			"rcv": 1
+		},
+		"description": "Attacker type cards ATK x3."
+	}]
+},
+{
+	"name": "Azure Spring Dragon's Fangs",
+	"description": "No skyfall matches. Water attribute cards ATK x1.5, RCV x1.5. All attribute cards ATK x5 when reaching exactly 7 combos.",
+	"skills": [{
+		"skilltype": "skyfall",
+		"effect": {
+			"skyfall_type": "no skyfall"
+		},
+		"description": "No skyfall matches"
+	},
+	{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Water"],
+			"type": [],
+			"hp": 1,
+			"atk": 1.5,
+			"rcv": 1.5
+		},
+		"description": "Water attribute cards ATK x1.5, RCV x1.5"
+	},
+	{
+		"skilltype": "combo",
+		"effect": {
+			"orb_types": ["all"],
+			"atk_scale_type": "none",
+			"atk": 5,
+			"start_combo": 7,
+			"end_combo": 7
+		},
+		"description": "All attribute cards ATK x5 when reaching exactly 7 combos"
+	}]
+},
+{
+	"name": "Axiom of Exorcism",
+	"description": "No skyfall matches. Fire attribute cards HP x1.5, ATK x2. ATK x6, RCV x6 when reaching 8 combos. ATK x1,  RCV x1 for each additional combo, up to ATK x7, RCV x7 at 9 combos.",
+	"skills": [{
+		"skilltype": "skyfall",
+		"effect": {
+			"skyfall_type": "no skyfall"
+		},
+		"description": "No skyfall matches"
+	},
+	{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Fire"],
+			"type": [],
+			"hp": 1.5,
+			"atk": 2,
+			"rcv": 1
+		},
+		"description": "Fire attribute cards HP x1.5, ATK x2"
+	},
+	{
+		"skilltype": "combo",
+		"effect": {
+			"orb_types": ["all"],
+			"atk_scale_type": "none",
+			"atk": 6,
+			"rcv_scale": "none",
+			"rcv": 6,
+			"start_combo": 8
+		},
+		"description": "ATK x6, RCV x6 when reaching 8 combos"
+	}]
+},
+{
+	"name": "blue-green divine clock",
+	"description": "Water attribute cards ATK x3 when HP is less than 50%. ( Water attribute cards ATK x3.3 when HP is full. Water attribute cards ATK x3.15 when HP is greater than 50%. ). Wood attribute cards RCV x2.",
+	"skills": [{
+		"skilltype": "hp_conditional",
+		"effect": {
+			"conditional_type": "less than",
+			"conditional_value": 50,
+			"atk": 3,
+			"rcv": 1
+		},
+		"description": "Water attribute cards ATK x3 when HP is less than 50%"
+	},
+	{
+		"skilltype": "hp_conditional",
+		"effect": {
+			"conditional_type": "full",
+			"conditional_value": 100,
+			"atk": 3.3,
+			"rcv": 1
+		},
+		"description": "( Water attribute cards ATK x3.3 when HP is full"
+	},
+	{
+		"skilltype": "hp_conditional",
+		"effect": {
+			"conditional_type": "greater than",
+			"conditional_value": 50,
+			"atk": 3.15,
+			"rcv": 1
+		},
+		"description": "Water attribute cards ATK x3.15 when HP is greater than 50%"
+	},
+	{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Wood"],
+			"type": [],
+			"hp": 1,
+			"atk": 1,
+			"rcv": 2
+		},
+		"description": "Wood attribute cards RCV x2."
+	}]
+},
+{
+	"name": "Spinning Toe Hold",
+	"description": "All attribute cards ATK x3.5 when HP is less than 20%. ATK x2 when HP is less than 50%",
+	"skills": [{
+		"skilltype": "hp_conditional",
+		"effect": {
+			"conditional_type": "less than",
+			"conditional_value": 20,
+			"atk": 3.5,
+			"rcv": 1
+		},
+		"description": "All attribute cards ATK x3.5 when HP is less than 20%"
+	},
+	{
+		"skilltype": "hp_conditional",
+		"effect": {
+			"conditional_type": "less than",
+			"conditional_value": 50,
+			"atk": 2,
+			"rcv": 1
+		},
+		"description": "ATK x2 when HP is less than 50%"
+	}]
+},
+{
+	"name": "Fool!",
+	"description": "No skyfall matches. Dark attribute cards ATK x2, RCV x2. ATK x2 when simultaneously clearing 6 connected Dark orbs. ATK x1 for each additional orb, up to ATK x8 at 12 connected orb.",
+	"skills": [{
+		"skilltype": "skyfall",
+		"effect": {
+			"skyfall_type": "no skyfall"
+		},
+		"description": "No skyfall matches"
+	},
+	{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Dark"],
+			"type": [],
+			"hp": 1,
+			"atk": 2,
+			"rcv": 2
+		},
+		"description": "Dark attribute cards ATK x2, RCV x2"
+	},
+	{
+		"skilltype": "connected",
+		"effect": {
+			"orb_types": ["Dark"],
+			"atk_scale_type": "additive",
+			"atk_scale": 1,
+			"min_atk": 2,
+			"max_atk": 8,
+			"start_count": 6,
+			"end_count": 12,
+			"rcv": 1,
+			"description": "ATK x2 when simultaneously clearing 6 connected Dark orbs. ATK x1 for each additional orb, up to ATK x8 at 12 connected orb"
+		}
+	}]
+},
+{
+	"name": "Regenerator",
+	"description": "Heal RCV x2 as HP after every orbs elimination.",
+	"skills": [{
+		"skilltype": "after_match",
+		"effect": {
+			"atk": 0,
+			"rcv": 2
+		},
+		"description": "Heal RCV x2 as HP after every orbs elimination"
+	}]
+},
+{
+	"name": "Treasure Hunting Demonic Curse",
+	"description": "Balanced, God & Devil attribute cards ATK x2 on the turn a skill is used. ( Multiple skills will not stack ) ATK x6, reduce damage taken by 35% after matching Heal orbs in a cross formation.",
+	"skills": [{
+		"skilltype": "skill_used",
+		"attribute": [],
+		"type": ["Balanced",
+		"God",
+		"Devil"],
+		"effect": {
+			"atk": 2,
+			"rcv": 1
+		},
+		"description": "Balanced, God & Devil attribute cards ATK x2 on the turn a skill is used"
+	}]
+},
+{
+	"name": "I'll slice it up",
+	"description": "All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light & Dark. ATK x1 for each additional orb type, up to ATK x5 for all 5 matches. Attacker & Machine type cards HP x1.3, ATK x1.3, RCV x1.3.",
+	"skills": [{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Fire",
+			"Water",
+			"Wood",
+			"Light",
+			"Dark"],
+			"atk_scale_type": "additive",
+			"min_atk": 4,
+			"max_atk": 5,
+			"atk_scale": 1,
+			"min_count": 5,
+			"max_count": 5,
+			"rcv": 1,
+			"shield": 4
+		},
+		"description": "All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light & Dark. ATK x1 for each additional orb type, up to ATK x5 for all 5 matches"
+	},
+	{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["Attacker",
+			"Machine"],
+			"hp": 1.3,
+			"atk": 1.3,
+			"rcv": 1.3
+		},
+		"description": "Attacker & Machine type cards HP x1.3, ATK x1.3, RCV x1.3."
+	}]
+},
+{
+	"name": "Bakusaiga",
+	"description": "Balanced & Devil type cards HP x1.5, ATK x3.5. ATK x2 when simultaneously clearing 4 connected Heart orbs. ATK x0.5 for each additional orb, up to ATK x3 at 6 connected orb.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["Balanced",
+			"Devil"],
+			"hp": 1.5,
+			"atk": 3.5,
+			"rcv": 1
+		},
+		"description": "Balanced & Devil type cards HP x1.5, ATK x3.5"
+	},
+	{
+		"skilltype": "connected",
+		"effect": {
+			"orb_types": ["Heart"],
+			"atk_scale_type": "additive",
+			"atk_scale": 0.5,
+			"min_atk": 2,
+			"max_atk": 3,
+			"start_count": 4,
+			"end_count": 6,
+			"rcv": 1,
+			"description": "ATK x2 when simultaneously clearing 4 connected Heart orbs. ATK x0.5 for each additional orb, up to ATK x3 at 6 connected orb"
+		}
+	}]
+},
+{
+	"name": "Eternal Dragon Unity - Torvio",
+	"description": "ATK x7.7, reduce damage taken by 50% after matching Heal orbs in a cross formation. Increases time limit of orb movement by 2 seconds.",
+	"skills": [{
+		"skilltype": "heart_cross",
+		"effect": {
+			"atk": 7.7,
+			"shield": 50
+		},
+		"description": "ATK x7.7, reduce damage taken by 50% after matching Heal orbs in a cross formation"
+	},
+	{
+		"skilltype": "move_time",
+		"effect": {
+			"move_time_type": "increase",
+			"time": 2
+		},
+		"description": "Increases time limit of orb movement by 2 seconds"
+	}]
+},
+{
+	"name": "Mutsu Enmei-ryu Hidden Art: Ryuha",
+	"description": "All attribute cards ATK x6, 25% all damage reduction when attacking with 4 of Fire, Water, Wood, Light & Dark orb types at the same time. Deal ATK x100 damage to all enemies after every orbs elimination. Ignores enemy element, but can be reduced by enemy defense down to 0 damage.",
+	"skills": [{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Fire",
+			"Water",
+			"Wood",
+			"Light",
+			"Dark"],
+			"atk_scale_type": "additive",
+			"min_atk": 6,
+			"max_atk": 6,
+			"atk_scale": 0,
+			"min_count": 5,
+			"max_count": 5,
+			"rcv": 1,
+			"shield": 25
+		},
+		"description": "All attribute cards ATK x6, 25% all damage reduction when attacking with 4 of Fire, Water, Wood, Light & Dark orb types at the same time"
+	},
+	{
+		"skilltype": "after_match",
+		"effect": {
+			"atk": 100,
+			"rcv": 0
+		},
+		"description": "Deal ATK x100 damage to all enemies after every orbs elimination. Ignores enemy element, but can be reduced by enemy defense down to 0 damage"
+	}]
+},
+{
+	"name": "Hidden Sorcery",
+	"description": "All attribute cards ATK x4.5, 25% all damage reduction when attacking with Light and Fire combos at the same time. Change the board to 7x6 size.",
+	"skills": [{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Light",
+			"Fire"],
+			"atk_scale_type": "additive",
+			"min_atk": 4.5,
+			"max_atk": 4.5,
+			"atk_scale": 0,
+			"min_count": 2,
+			"max_count": 2,
+			"rcv": 1,
+			"shield": 25
+		},
+		"description": "All attribute cards ATK x4.5, 25% all damage reduction when attacking with Light and Fire combos at the same time"
+	},
+	{
+		"skilltype": "boardsize",
+		"effect": {
+			"rows": 7,
+			"cols": 6
+		},
+		"description": "Change the board to 7x6 size"
+	}]
+},
+{
+	"name": "Axiom of Salvation",
+	"description": "No skyfall matches. Wood attribute cards All Stats x1.5. ATK x3 for clearing each Wood or Fire orbs in a cross formation.",
+	"skills": [{
+		"skilltype": "skyfall",
+		"effect": {
+			"skyfall_type": "no skyfall"
+		},
+		"description": "No skyfall matches"
+	},
+	{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Wood",
+			"All"],
+			"type": ["All"],
+			"hp": 1.5,
+			"atk": 1.5,
+			"rcv": 1.5
+		},
+		"description": "Wood attribute cards All Stats x1.5"
+	},
+	{
+		"skilltype": "cross",
+		"cross": ["Wood",
+		"Fire"],
+		"effect": {
+			"atk_scale_type": "multiplicative",
+			"atk_scale": 3
+		},
+		"description": "ATK x3 for clearing each Wood or Fire orbs in a cross formation"
+	}]
+},
+{
+	"name": "Aqua Steel Star of Sagittarius",
+	"description": "No skyfall matches. Water attribute cards ATK x2.5, RCV x2.5. ATK x3 when simultaneously clearing 6 connected Water orbs. ATK x0.5 for each additional orb, up to ATK x4.5 at 9 connected orb.",
+	"skills": [{
+		"skilltype": "skyfall",
+		"effect": {
+			"skyfall_type": "no skyfall"
+		},
+		"description": "No skyfall matches"
+	},
+	{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Water"],
+			"type": [],
+			"hp": 1,
+			"atk": 2.5,
+			"rcv": 2.5
+		},
+		"description": "Water attribute cards ATK x2.5, RCV x2.5"
+	},
+	{
+		"skilltype": "connected",
+		"effect": {
+			"orb_types": ["Water"],
+			"atk_scale_type": "additive",
+			"atk_scale": 0.5,
+			"min_atk": 3,
+			"max_atk": 4.5,
+			"start_count": 6,
+			"end_count": 9,
+			"rcv": 1,
+			"description": "ATK x3 when simultaneously clearing 6 connected Water orbs. ATK x0.5 for each additional orb, up to ATK x4.5 at 9 connected orb"
+		}
+	}]
+},
+{
+	"name": "Eternal Dragon Unity - Torvio Koh",
+	"description": "All attribute cards ATK x2, RCV x2 when reaching 5 or more combos. ATK x4, reduce damage taken by 50% after matching Heal orbs in a cross formation.",
+	"skills": [{
+		"skilltype": "combo",
+		"effect": {
+			"orb_types": ["all"],
+			"atk_scale_type": "none",
+			"atk": 2,
+			"rcv_scale": "none",
+			"rcv": 2,
+			"start_combo": 5
+		},
+		"description": "All attribute cards ATK x2, RCV x2 when reaching 5 or more combos"
+	},
+	{
+		"skilltype": "heart_cross",
+		"effect": {
+			"atk": 4,
+			"shield": 50
+		},
+		"description": "ATK x4, reduce damage taken by 50% after matching Heal orbs in a cross formation"
+	}]
+},
+{
+	"name": "Longing Breath",
+	"description": "Matched attribute ATK x4.5 when matching exactly 5 connected orbs with at least 1 enhanced orb. God & Devil type cards HP x2, ATK x2.",
+	"skills": [{
+		"skilltype": "enhanced_match",
+		"effect": {
+			"atk": 4.5,
+			"orb_count": 5,
+			"min_enhanced": 1
+		},
+		"description": "Matched attribute ATK x4.5 when matching exactly 5 connected orbs with at least 1 enhanced orb"
+	},
+	{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["God",
+			"Devil"],
+			"hp": 2,
+			"atk": 2,
+			"rcv": 1
+		},
+		"description": "God & Devil type cards HP x2, ATK x2."
+	}]
+},
+{
+	"name": "Solar Barrage",
+	"description": "All attribute cards ATK x2 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart. ATK x3 for each additional orb type, up to ATK x8 for all 6 matches. God type cards HP x1.5, ATK x1.5, RCV x1.5.",
+	"skills": [{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Fire",
+			"Water",
+			"Wood",
+			"Light",
+			"Dark",
+			"Heart"],
+			"atk_scale_type": "additive",
+			"min_atk": 2,
+			"max_atk": 8,
+			"atk_scale": 3,
+			"min_count": 6,
+			"max_count": 6,
+			"rcv": 1,
+			"shield": 4
+		},
+		"description": "All attribute cards ATK x2 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart. ATK x3 for each additional orb type, up to ATK x8 for all 6 matches"
+	},
+	{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["God"],
+			"hp": 1.5,
+			"atk": 1.5,
+			"rcv": 1.5
+		},
+		"description": "God type cards HP x1.5, ATK x1.5, RCV x1.5."
+	}]
+},
+{
+	"name": "Tachibana Protective Crest",
+	"description": "Change the board to 7x6 size. All attribute cards ATK x5, 25% all damage reduction when attacking with Fire, Water, Wood & Light orb types at the same time.",
+	"skills": [{
+		"skilltype": "boardsize",
+		"effect": {
+			"rows": 7,
+			"cols": 6
+		},
+		"description": "Change the board to 7x6 size"
+	},
+	{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Fire",
+			"Water",
+			"Wood",
+			"Light"],
+			"atk_scale_type": "additive",
+			"min_atk": 5,
+			"max_atk": 5,
+			"atk_scale": 0,
+			"min_count": 4,
+			"max_count": 4,
+			"rcv": 1,
+			"shield": 25
+		},
+		"description": "All attribute cards ATK x5, 25% all damage reduction when attacking with Fire, Water, Wood & Light orb types at the same time"
+	}]
+},
+{
+	"name": "Spirit of the Archdemon",
+	"description": "Healer & Devil type cards HP x2, ATK x2. ATK x3 when simultaneously clearing 6 connected Wood orbs. ATK x0.5 for each additional orb, up to ATK x4 at 8 connected orb.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["Healer",
+			"Devil"],
+			"hp": 2,
+			"atk": 2,
+			"rcv": 1
+		},
+		"description": "Healer & Devil type cards HP x2, ATK x2"
+	},
+	{
+		"skilltype": "connected",
+		"effect": {
+			"orb_types": ["Wood"],
+			"atk_scale_type": "additive",
+			"atk_scale": 0.5,
+			"min_atk": 3,
+			"max_atk": 4,
+			"start_count": 6,
+			"end_count": 8,
+			"rcv": 1,
+			"description": "ATK x3 when simultaneously clearing 6 connected Wood orbs. ATK x0.5 for each additional orb, up to ATK x4 at 8 connected orb"
+		}
+	}]
+},
+{
+	"name": "Hermit Cycle",
+	"description": "Water & Wood attribute cards HP x1.5, ATK x1.5. All attribute cards ATK x5, 25% all damage reduction when attacking with Water and Wood combos at the same time.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Water",
+			"Wood"],
+			"type": [],
+			"hp": 1.5,
+			"atk": 1.5,
+			"rcv": 1
+		},
+		"description": "Water & Wood attribute cards HP x1.5, ATK x1.5"
+	},
+	{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Water",
+			"Wood"],
+			"atk_scale_type": "additive",
+			"min_atk": 5,
+			"max_atk": 5,
+			"atk_scale": 0,
+			"min_count": 2,
+			"max_count": 2,
+			"rcv": 1,
+			"shield": 25
+		},
+		"description": "All attribute cards ATK x5, 25% all damage reduction when attacking with Water and Wood combos at the same time"
+	}]
+},
+{
+	"name": "Dance of the Dark Heavens",
+	"description": "Change the board to 7x6 size. All attribute cards ATK x6, 25% all damage reduction when attacking with Fire, Water, Wood, Dark & Heart orb types at the same time.",
+	"skills": [{
+		"skilltype": "boardsize",
+		"effect": {
+			"rows": 7,
+			"cols": 6
+		},
+		"description": "Change the board to 7x6 size"
+	},
+	{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Fire",
+			"Water",
+			"Wood",
+			"Dark",
+			"Heart"],
+			"atk_scale_type": "additive",
+			"min_atk": 6,
+			"max_atk": 6,
+			"atk_scale": 0,
+			"min_count": 5,
+			"max_count": 5,
+			"rcv": 1,
+			"shield": 25
+		},
+		"description": "All attribute cards ATK x6, 25% all damage reduction when attacking with Fire, Water, Wood, Dark & Heart orb types at the same time"
+	}]
+},
+{
+	"name": "From now on... I alone will stand at the top.",
+	"description": "Dark attribute cards ATK x6. Water attribute cards RCV x2. ATK x2 for clearing each Dark orbs in a cross formation.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Dark"],
+			"type": [],
+			"hp": 1,
+			"atk": 6,
+			"rcv": 1
+		},
+		"description": "Dark attribute cards ATK x6"
+	},
+	{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Water"],
+			"type": [],
+			"hp": 1,
+			"atk": 1,
+			"rcv": 2
+		},
+		"description": "Water attribute cards RCV x2"
+	},
+	{
+		"skilltype": "cross",
+		"cross": ["Dark"],
+		"effect": {
+			"atk_scale_type": "multiplicative",
+			"atk_scale": 2
+		},
+		"description": "ATK x2 for clearing each Dark orbs in a cross formation"
+	}]
+},
+{
+	"name": "In the Beginning",
+	"description": "Light attribute cards ATK x6. Water attribute cards RCV x2. ATK x1.5 when simultaneously clearing 5 connected Light orbs. ATK x0.5 for each additional orb, up to ATK x2.5 at 7 connected orb.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Light"],
+			"type": [],
+			"hp": 1,
+			"atk": 6,
+			"rcv": 1
+		},
+		"description": "Light attribute cards ATK x6"
+	},
+	{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Water"],
+			"type": [],
+			"hp": 1,
+			"atk": 1,
+			"rcv": 2
+		},
+		"description": "Water attribute cards RCV x2"
+	},
+	{
+		"skilltype": "connected",
+		"effect": {
+			"orb_types": ["Light"],
+			"atk_scale_type": "additive",
+			"atk_scale": 0.5,
+			"min_atk": 1.5,
+			"max_atk": 2.5,
+			"start_count": 5,
+			"end_count": 7,
+			"rcv": 1,
+			"description": "ATK x1.5 when simultaneously clearing 5 connected Light orbs. ATK x0.5 for each additional orb, up to ATK x2.5 at 7 connected orb"
+		}
+	}]
+},
+{
+	"name": "Bubbly Dance",
+	"description": "ATK x3 at 4 combos. ATK x1 for each additional combo, up to ATK x9 at 10 combos. HP x1.5, ATK x1.5, RCV x1.5 in cooperation mode.",
+	"skills": [{
+		"skilltype": "combo",
+		"effect": {
+			"orb_types": ["all"],
+			"atk_scale_type": "additive",
+			"atk_scale": 1,
+			"min_atk": 3,
+			"max_atk": 9,
+			"start_combo": 4,
+			"end_combo": 10
+		},
+		"description": "ATK x3 at 4 combos. ATK x1 for each additional combo, up to ATK x9 at 10 combos"
+	},
+	{
+		"skilltype": "co-op",
+		"effect": {
+			"hp": 1.5,
+			"atk": 1.5,
+			"rcv": 1.5
+		},
+		"description": "HP x1.5, ATK x1.5, RCV x1.5 in cooperation mode"
+	}]
+},
+{
+	"name": "Spirit of the Hell Deity",
+	"description": "ATK x5 at 8 combos. ATK x2.5 for each additional combo, up to ATK x10 at 10 combos. All attribute cards ATK x3, RCV x1.5 on the turn a skill is used. ( Multiple skills will not stack )",
+	"skills": [{
+		"skilltype": "combo",
+		"effect": {
+			"orb_types": ["all"],
+			"atk_scale_type": "additive",
+			"atk_scale": 2.5,
+			"min_atk": 5,
+			"max_atk": 10,
+			"start_combo": 8,
+			"end_combo": 10
+		},
+		"description": "ATK x5 at 8 combos. ATK x2.5 for each additional combo, up to ATK x10 at 10 combos"
+	},
+	{
+		"skilltype": "skill_used",
+		"attribute": ["All"],
+		"type": ["All"],
+		"effect": {
+			"atk": 3,
+			"rcv": 1.5
+		},
+		"description": "All attribute cards ATK x3, RCV x1.5 on the turn a skill is used"
+	}]
+},
+{
+	"name": "Victoria's Victory Song",
+	"description": "God, Attacker & Devil type cards HP x1.5, ATK x3.5. All attribute cards ATK x2, RCV x2 when reaching Dark & Water combos.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["God",
+			"Attacker",
+			"Devil"],
+			"hp": 1.5,
+			"atk": 3.5,
+			"rcv": 1
+		},
+		"description": "God, Attacker & Devil type cards HP x1.5, ATK x3.5"
+	},
+	{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Dark",
+			"Water"],
+			"atk_scale_type": "additive",
+			"min_atk": 2,
+			"max_atk": 2,
+			"atk_scale": 0,
+			"min_count": 2,
+			"max_count": 2,
+			"rcv": 2,
+			"shield": 0
+		},
+		"description": "All attribute cards ATK x2, RCV x2 when reaching Dark & Water combos"
+	}]
+},
+{
+	"name": "Mysterious Dazzling Shine",
+	"description": "All attribute cards ATK x6 when HP is greater than 80%. ATK x2.5 when HP is less than 80%. All attribute cards ATK x3, 25% all damage reduction when attacking with Light and Light combos at the same time.",
+	"skills": [{
+		"skilltype": "hp_conditional",
+		"effect": {
+			"conditional_type": "greater than",
+			"conditional_value": 80,
+			"atk": 6,
+			"rcv": 1
+		},
+		"description": "All attribute cards ATK x6 when HP is greater than 80%"
+	},
+	{
+		"skilltype": "hp_conditional",
+		"effect": {
+			"conditional_type": "less than",
+			"conditional_value": 80,
+			"atk": 2.5,
+			"rcv": 1
+		},
+		"description": "ATK x2.5 when HP is less than 80%"
+	},
+	{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Light",
+			"Light"],
+			"atk_scale_type": "additive",
+			"min_atk": 3,
+			"max_atk": 3,
+			"atk_scale": 0,
+			"min_count": 2,
+			"max_count": 2,
+			"rcv": 1,
+			"shield": 25
+		},
+		"description": "All attribute cards ATK x3, 25% all damage reduction when attacking with Light and Light combos at the same time"
+	}]
+},
+{
+	"name": "Demonic Apotheosis",
+	"description": "Dark attribute cards ATK x2.5, RCV x1.5. All attribute cards ATK x4, 25% all damage reduction when attacking with Fire, Water & Dark orb types at the same time.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Dark"],
+			"type": [],
+			"hp": 1,
+			"atk": 2.5,
+			"rcv": 1.5
+		},
+		"description": "Dark attribute cards ATK x2.5, RCV x1.5"
+	},
+	{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Fire",
+			"Water",
+			"Dark"],
+			"atk_scale_type": "additive",
+			"min_atk": 4,
+			"max_atk": 4,
+			"atk_scale": 0,
+			"min_count": 3,
+			"max_count": 3,
+			"rcv": 1,
+			"shield": 25
+		},
+		"description": "All attribute cards ATK x4, 25% all damage reduction when attacking with Fire, Water & Dark orb types at the same time"
+	}]
+},
+{
+	"name": "The Brutal Tyrant",
+	"description": "Change the board to 7x6 size. All attribute cards ATK x8.5, 25% all damage reduction when reaching 8 combos.",
+	"skills": [{
+		"skilltype": "boardsize",
+		"effect": {
+			"rows": 7,
+			"cols": 6
+		},
+		"description": "Change the board to 7x6 size"
+	},
+	{
+		"skilltype": "combo",
+		"effect": {
+			"orb_types": ["all"],
+			"atk_scale_type": "none",
+			"atk": 8.5,
+			"start_combo": 8,
+			"shield": 25
+		},
+		"description": "All attribute cards ATK x8.5, 25% all damage reduction when reaching 8 combos."
+	}]
+},
+{
+	"name": "Oracle of the Radiant God",
+	"description": "Healer type cards HP x2, ATK x2. Healer attribute cards RCV x2 on the turn a skill is used. ( Multiple skills will not stack )",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["Healer"],
+			"hp": 2,
+			"atk": 2,
+			"rcv": 1
+		},
+		"description": "Healer type cards HP x2, ATK x2"
+	},
+	{
+		"skilltype": "skill_used",
+		"attribute": [],
+		"type": ["Healer"],
+		"effect": {
+			"atk": 1,
+			"rcv": 2
+		},
+		"description": "Healer attribute cards RCV x2 on the turn a skill is used"
+	}]
+},
+{
+	"name": "Orange Gleam Petals",
+	"description": "Light attribute & Dragon type cards ATK x2.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Light"],
+			"type": ["Dragon"],
+			"hp": 1,
+			"atk": 2,
+			"rcv": 1
+		},
+		"description": "Light attribute & Dragon type cards ATK x2."
+	}]
+},
+{
+	"name": "Orchestra of Death",
+	"description": "Devil type cards ATK x1.5, RCV x1.5. Increases time limit of orb movement by 1 seconds.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["Devil"],
+			"hp": 1,
+			"atk": 1.5,
+			"rcv": 1.5
+		},
+		"description": "Devil type cards ATK x1.5, RCV x1.5"
+	},
+	{
+		"skilltype": "move_time",
+		"effect": {
+			"move_time_type": "increase",
+			"time": 1
+		},
+		"description": "Increases time limit of orb movement by 1 seconds"
+	}]
+},
+{
+	"name": "Ouha Binding",
+	"description": "Wood attribute & Dragon type cards ATK x2.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Wood"],
+			"type": ["Dragon"],
+			"hp": 1,
+			"atk": 2,
+			"rcv": 1
+		},
+		"description": "Wood attribute & Dragon type cards ATK x2."
+	}]
+},
+{
+	"name": "Ouha Binding",
+	"description": "Physical attribute cards HP x2, ATK x2. Attacker attribute cards ATK x1.2.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["Physical"],
+			"hp": 2,
+			"atk": 2,
+			"rcv": 1
+		},
+		"description": "Physical attribute cards HP x2, ATK x2"
+	},
+	{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["Attacker"],
+			"hp": 1,
+			"atk": 1.2,
+			"rcv": 1
+		},
+		"description": "Attacker attribute cards ATK x1.2."
+	}]
+},
+{
+	"name": "Our name is Orphan.",
+	"description": "Light attribute cards HP x1.5, ATK x1.5, RCV x1.5.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Light"],
+			"type": [],
+			"hp": 1.5,
+			"atk": 1.5,
+			"rcv": 1.5
+		},
+		"description": "Light attribute cards HP x1.5, ATK x1.5, RCV x1.5."
+	}]
+},
+{
+	"name": "Overclock Army of One",
+	"description": "All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light & Dark. ATK x1 for each additional orb type, up to ATK x5 for all 5 matches. ATK x2.5, RCV x2.5 when simultaneously clearing 5 connected Light orbs.",
+	"skills": [{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Fire",
+			"Water",
+			"Wood",
+			"Light",
+			"Dark"],
+			"atk_scale_type": "additive",
+			"min_atk": 4,
+			"max_atk": 5,
+			"atk_scale": 1,
+			"min_count": 5,
+			"max_count": 5,
+			"rcv": 1,
+			"shield": 4
+		},
+		"description": "All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light & Dark. ATK x1 for each additional orb type, up to ATK x5 for all 5 matches"
+	},
+	{
+		"skilltype": "connected",
+		"effect": {
+			"orb_types": ["Light"],
+			"atk_scale_type": "additive",
+			"atk_scale": 0,
+			"min_atk": 2.5,
+			"max_atk": 2.5,
+			"start_count": 5,
+			"end_count": 5,
+			"rcv": 2.5,
+			"description": "ATK x2.5, RCV x2.5 when simultaneously clearing 5 connected Light orbs"
+		}
+	}]
+},
+{
+	"name": "Overheat",
+	"description": "Physical type cards HP x2, ATK x2.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["Physical"],
+			"hp": 2,
+			"atk": 2,
+			"rcv": 1
+		},
+		"description": "Physical type cards HP x2, ATK x2."
+	}]
+},
+{
+	"name": "Paladin Ice Spear",
+	"description": "Balanced type cards ATK x2.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["Balanced"],
+			"hp": 1,
+			"atk": 2,
+			"rcv": 1
+		},
+		"description": "Balanced type cards ATK x2."
+	}]
+},
+{
+	"name": "palm of the four origins",
+	"description": "All attribute cards ATK x5 when attacking with Fire, Water, Light & Dark orb types at the same time.",
+	"skills": [{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Fire",
+			"Water",
+			"Light",
+			"Dark"],
+			"atk_scale_type": "additive",
+			"min_atk": 5,
+			"max_atk": 5,
+			"atk_scale": 0,
+			"min_count": 4,
+			"max_count": 4,
+			"rcv": 1,
+			"shield": 0
+		},
+		"description": "All attribute cards ATK x5 when attacking with Fire, Water, Light & Dark orb types at the same time"
+	}]
+},
+{
+	"name": "Palm of the Four Origins",
+	"description": "All attribute cards ATK x5 when attacking with Fire, Water, Light & Dark orb types at the same time.",
+	"skills": [{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Fire",
+			"Water",
+			"Light",
+			"Dark"],
+			"atk_scale_type": "additive",
+			"min_atk": 5,
+			"max_atk": 5,
+			"atk_scale": 0,
+			"min_count": 4,
+			"max_count": 4,
+			"rcv": 1,
+			"shield": 0
+		},
+		"description": "All attribute cards ATK x5 when attacking with Fire, Water, Light & Dark orb types at the same time"
+	}]
+},
+{
+	"name": "Panther Charm",
+	"description": "Water attribute cards ATK x1.5, RCV x1.5. ATK x2 when simultaneously clearing 4 connected Water orbs.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Water"],
+			"type": [],
+			"hp": 1,
+			"atk": 1.5,
+			"rcv": 1.5
+		},
+		"description": "Water attribute cards ATK x1.5, RCV x1.5"
+	},
+	{
+		"skilltype": "connected",
+		"effect": {
+			"orb_types": ["Water"],
+			"atk_scale_type": "additive",
+			"atk_scale": 0,
+			"min_atk": 2,
+			"max_atk": 2,
+			"start_count": 4,
+			"end_count": 4,
+			"rcv": 1,
+			"description": "ATK x2 when simultaneously clearing 4 connected Water orbs"
+		}
+	}]
+},
+{
+	"name": "Path of Solitude",
+	"description": "Dragon & Devil type cards HP x1.5, ATK x1.5, RCV x1.5. All attribute cards ATK x4 when reaching Water & Wood combos.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["Dragon",
+			"Devil"],
+			"hp": 1.5,
+			"atk": 1.5,
+			"rcv": 1.5
+		},
+		"description": "Dragon & Devil type cards HP x1.5, ATK x1.5, RCV x1.5"
+	},
+	{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Water",
+			"Wood"],
+			"atk_scale_type": "additive",
+			"min_atk": 4,
+			"max_atk": 4,
+			"atk_scale": 0,
+			"min_count": 2,
+			"max_count": 2,
+			"rcv": 1,
+			"shield": 0
+		},
+		"description": "All attribute cards ATK x4 when reaching Water & Wood combos"
+	}]
+},
+{
+	"name": "Paulownia Protective Crest",
+	"description": "Can no longer clear 3 connected orbs. Water attribute cards ATK x4. All attribute cards ATK x4, 25% all damage reduction when attacking with Water and Water combos at the same time.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Water"],
+			"type": [],
+			"hp": 1,
+			"atk": 4,
+			"rcv": 1
+		},
+		"description": "Water attribute cards ATK x4"
+	},
+	{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Water",
+			"Water"],
+			"atk_scale_type": "additive",
+			"min_atk": 4,
+			"max_atk": 4,
+			"atk_scale": 0,
+			"min_count": 2,
+			"max_count": 2,
+			"rcv": 1,
+			"shield": 25
+		},
+		"description": "All attribute cards ATK x4, 25% all damage reduction when attacking with Water and Water combos at the same time"
+	}]
+},
+{
+	"name": "Peacock of the Holy Lake",
+	"description": "Water attribute cards ATK x2. All attribute cards ATK x2.5 when reaching 2 set of Water combos. ATK x2.5 for each additional combo, up to ATK x5 when reaching 3 combos.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Water"],
+			"type": [],
+			"hp": 1,
+			"atk": 2,
+			"rcv": 1
+		},
+		"description": "Water attribute cards ATK x2"
+	},
+	{
+		"skilltype": "combo",
+		"effect": {
+			"orb_types": ["Water"],
+			"atk_scale_type": "additive",
+			"atk_scale": 2.5,
+			"min_atk": 2.5,
+			"max_atk": 5,
+			"start_combo": 2,
+			"end_combo": 3
+		},
+		"description": "All attribute cards ATK x2.5 when reaching 2 set of Water combo. ATK x2.5 for each additional combo, up to ATK x5 when reaching 3 combos"
+	}]
+},
+{
+	"name": "Peacock of the Sacred Lake",
+	"description": "All attribute cards ATK x2.5 when reaching 2 set of Water combos. ATK x2.5 for each additional combo, up to ATK x5 when reaching 3 combos. Matched attribute ATK x1.5 when matching exactly 5 connected orbs with at least 1 enhanced orb.",
+	"skills": [{
+		"skilltype": "combo",
+		"effect": {
+			"orb_types": ["Water"],
+			"atk_scale_type": "additive",
+			"atk_scale": 2.5,
+			"min_atk": 2.5,
+			"max_atk": 5,
+			"start_combo": 2,
+			"end_combo": 3
+		},
+		"description": "All attribute cards ATK x2.5 when reaching 2 set of Water combo. ATK x2.5 for each additional combo, up to ATK x5 when reaching 3 combos"
+	},
+	{
+		"skilltype": "enhanced_match",
+		"effect": {
+			"atk": 1.5,
+			"orb_count": 5,
+			"min_enhanced": 1
+		},
+		"description": "Matched attribute ATK x1.5 when matching exactly 5 connected orbs with at least 1 enhanced orb"
+	}]
+},
+{
+	"name": "Peculiar Stance",
+	"description": "Attacker type cards ATK x2. 50% chance to deal counter Light damage of 5x damage taken.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["Attacker"],
+			"hp": 1,
+			"atk": 2,
+			"rcv": 1
+		},
+		"description": "Attacker type cards ATK x2"
+	},
+	{
+		"skilltype": "counter",
+		"effect": {
+			"chance": 50,
+			"attribute": "Light",
+			"atk_multiplier": 5
+		},
+		"description": "50% chance to deal counter Light damage of 5x damage taken"
+	}]
+},
+{
+	"name": "Peerless Hunter",
+	"description": "Physical type cards ATK x2.5, RCV x2.5.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["Physical"],
+			"hp": 1,
+			"atk": 2.5,
+			"rcv": 2.5
+		},
+		"description": "Physical type cards ATK x2.5, RCV x2.5."
+	}]
+},
+{
+	"name": "Perfect Revolution Offense",
+	"description": "Dragon & Devil type cards HP x1.3, ATK x1.3, RCV x1.3. ATK x1.5 when simultaneously clearing 4 connected Fire orbs. ATK x0.5 for each additional orb, up to ATK x10 at 21 connected orb.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["Dragon",
+			"Devil"],
+			"hp": 1.3,
+			"atk": 1.3,
+			"rcv": 1.3
+		},
+		"description": "Dragon & Devil type cards HP x1.3, ATK x1.3, RCV x1.3"
+	},
+	{
+		"skilltype": "connected",
+		"effect": {
+			"orb_types": ["Fire"],
+			"atk_scale_type": "additive",
+			"atk_scale": 0.5,
+			"min_atk": 1.5,
+			"max_atk": 10,
+			"start_count": 4,
+			"end_count": 21,
+			"rcv": 1,
+			"description": "ATK x1.5 when simultaneously clearing 4 connected Fire orbs. ATK x0.5 for each additional orb, up to ATK x10 at 21 connected orb"
+		}
+	}]
+},
+{
+	"name": "Perish Along With Your Love!!",
+	"description": "ATK x3 for clearing each Light orbs in a cross formation.",
+	"skills": [{
+		"skilltype": "cross",
+		"cross": ["Light"],
+		"effect": {
+			"atk_scale_type": "multiplicative",
+			"atk_scale": 3
+		},
+		"description": "ATK x3 for clearing each Light orbs in a cross formation"
+	}]
+},
+{
+	"name": "Permafrost Dragon Emperor's Power",
+	"description": "ATK x2.5 when simultaneously clearing 5 connected Water orbs. All attribute cards ATK x2 when reaching Heart & Heart combos.",
+	"skills": [{
+		"skilltype": "connected",
+		"effect": {
+			"orb_types": ["Water"],
+			"atk_scale_type": "additive",
+			"atk_scale": 0,
+			"min_atk": 2.5,
+			"max_atk": 2.5,
+			"start_count": 5,
+			"end_count": 5,
+			"rcv": 1,
+			"description": "ATK x2.5 when simultaneously clearing 5 connected Water orbs"
+		}
+	}]
+},
+{
+	"name": "Piping hot gifts for everyone!",
+	"description": "Attacker type cards HP x1.35, ATK x1.35, RCV x1.35. All attribute cards ATK x3 when reaching 2 set of Fire combos. ATK x3 for each additional combo, up to ATK x6 when reaching 3 combos.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["Attacker"],
+			"hp": 1.35,
+			"atk": 1.35,
+			"rcv": 1.35
+		},
+		"description": "Attacker type cards HP x1.35, ATK x1.35, RCV x1.35"
+	},
+	{
+		"skilltype": "combo",
+		"effect": {
+			"orb_types": ["Fire"],
+			"atk_scale_type": "additive",
+			"atk_scale": 3,
+			"min_atk": 3,
+			"max_atk": 6,
+			"start_combo": 2,
+			"end_combo": 3
+		},
+		"description": "All attribute cards ATK x3 when reaching 2 set of Fire combo. ATK x3 for each additional combo, up to ATK x6 when reaching 3 combos"
+	}]
+},
+{
+	"name": "Plum Blossom Crest",
+	"description": "All attribute cards ATK x3.5 when reaching 6 combos or above. All attribute cards ATK x1.5 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart.",
+	"skills": [{
+		"skilltype": "combo",
+		"effect": {
+			"orb_types": ["all"],
+			"atk_scale_type": "none",
+			"atk": 3.5,
+			"start_combo": 6
+		},
+		"description": "All attribute cards ATK x3.5 when reaching 6 combos or above"
+	},
+	{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Fire",
+			"Water",
+			"Wood",
+			"Light",
+			"Dark",
+			"Heart"],
+			"atk_scale_type": "additive",
+			"min_atk": 1.5,
+			"max_atk": 1.5,
+			"atk_scale": 0,
+			"min_count": 6,
+			"max_count": 6,
+			"rcv": 1,
+			"shield": 4
+		},
+		"description": "All attribute cards ATK x1.5 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart."
+	}]
+},
+{
+	"name": "Plum Blossom War Crest",
+	"description": "ATK x3.5 at 6 combos. ATK x0.5 for each additional combo, up to ATK x5 at 9 combos. All attribute cards ATK x2 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart.",
+	"skills": [{
+		"skilltype": "combo",
+		"effect": {
+			"orb_types": ["all"],
+			"atk_scale_type": "additive",
+			"atk_scale": 0.5,
+			"min_atk": 3.5,
+			"max_atk": 5,
+			"start_combo": 6,
+			"end_combo": 9
+		},
+		"description": "ATK x3.5 at 6 combos. ATK x0.5 for each additional combo, up to ATK x5 at 9 combos"
+	},
+	{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Fire",
+			"Water",
+			"Wood",
+			"Light",
+			"Dark",
+			"Heart"],
+			"atk_scale_type": "additive",
+			"min_atk": 2,
+			"max_atk": 2,
+			"atk_scale": 0,
+			"min_count": 6,
+			"max_count": 6,
+			"rcv": 1,
+			"shield": 4
+		},
+		"description": "All attribute cards ATK x2 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart."
+	}]
+},
+{
+	"name": "Angelo",
+	"description": "All attribute cards ATK x2 when reaching 1 set of Water combo. ATK x1 for each additional combo, up to ATK x4 when reaching 3 combos.",
+	"skills": [{
+		"skilltype": "combo",
+		"effect": {
+			"orb_types": ["Water"],
+			"atk_scale_type": "additive",
+			"atk_scale": 1,
+			"min_atk": 2,
+			"max_atk": 4,
+			"start_combo": 1,
+			"end_combo": 3
+		},
+		"description": "All attribute cards ATK x2 when reaching 1 set of Water combo. ATK x1 for each additional combo, up to ATK x4 when reaching 3 combos"
+	}]
+},
+{
+	"name": "Angel's Song",
+	"description": "All attribute cards ATK x2.5 when attacking with Fire, Water & Wood orb types at the same time.",
+	"skills": [{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Fire",
+			"Water",
+			"Wood"],
+			"atk_scale_type": "additive",
+			"min_atk": 2.5,
+			"max_atk": 2.5,
+			"atk_scale": 0,
+			"min_count": 3,
+			"max_count": 3,
+			"rcv": 1,
+			"shield": 0
+		},
+		"description": "All attribute cards ATK x2.5 when attacking with Fire, Water & Wood orb types at the same time"
+	}]
+},
+{
+	"name": "Angel Wing",
+	"description": "Water attribute cards ATK x2. All attribute cards ATK x2 when reaching 2 set of Water combos. ATK x1 for each additional combo, up to ATK x4 when reaching 4 combos.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Water"],
+			"type": [],
+			"hp": 1,
+			"atk": 2,
+			"rcv": 1
+		},
+		"description": "Water attribute cards ATK x2"
+	},
+	{
+		"skilltype": "combo",
+		"effect": {
+			"orb_types": ["Water"],
+			"atk_scale_type": "additive",
+			"atk_scale": 1,
+			"min_atk": 2,
+			"max_atk": 4,
+			"start_combo": 2,
+			"end_combo": 4
+		},
+		"description": "All attribute cards ATK x2 when reaching 2 set of Water combo. ATK x1 for each additional combo, up to ATK x4 when reaching 4 combos"
+	}]
+},
+{
+	"name": "Annihilating Divine Will",
+	"description": "All attribute cards ATK x3 when reaching Wood & Wood combos. 20% all damage reduction.",
+	"skills": [{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Wood",
+			"Wood"],
+			"atk_scale_type": "additive",
+			"min_atk": 3,
+			"max_atk": 3,
+			"atk_scale": 0,
+			"min_count": 2,
+			"max_count": 2,
+			"rcv": 1,
+			"shield": 0
+		},
+		"description": "All attribute cards ATK x3 when reaching Wood & Wood combos"
+	},
+	{
+		"skilltype": "shield",
+		"effect": {
+			"attribute": ["all"],
+			"shield": 20
+		},
+		"description": "20% all damage reduction"
+	}]
+},
+{
+	"name": "Anryu Hiha",
+	"description": "No skyfall matches. Dark attribute cards ATK x5. Deal ATK x30 damage to all enemies after every orbs elimination. Ignores enemy element, but can be reduced by enemy defense down to 0 damage.",
+	"skills": [{
+		"skilltype": "skyfall",
+		"effect": {
+			"skyfall_type": "no skyfall"
+		},
+		"description": "No skyfall matches"
+	},
+	{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Dark"],
+			"type": [],
+			"hp": 1,
+			"atk": 5,
+			"rcv": 1
+		},
+		"description": "Dark attribute cards ATK x5"
+	},
+	{
+		"skilltype": "after_match",
+		"effect": {
+			"atk": 30,
+			"rcv": 0
+		},
+		"description": "Deal ATK x30 damage to all enemies after every orbs elimination. Ignores enemy element, but can be reduced by enemy defense down to 0 damage"
+	}]
+},
+{
+	"name": "I was entrusted with his heart!",
+	"description": "Water attribute cards ATK x2, RCV x2. ATK x2 at 5 combos. ATK x1 for each additional combo, up to ATK x5 at 8 combos.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Water"],
+			"type": [],
+			"hp": 1,
+			"atk": 2,
+			"rcv": 2
+		},
+		"description": "Water attribute cards ATK x2, RCV x2"
+	},
+	{
+		"skilltype": "combo",
+		"effect": {
+			"orb_types": ["all"],
+			"atk_scale_type": "additive",
+			"atk_scale": 1,
+			"min_atk": 2,
+			"max_atk": 5,
+			"start_combo": 5,
+			"end_combo": 8
+		},
+		"description": "ATK x2 at 5 combos. ATK x1 for each additional combo, up to ATK x5 at 8 combos"
+	}]
+},
+{
+	"name": "Spirit of the Feline Goddess",
+	"description": "ATK x3 at 4 combos. ATK x0.5 for each additional combo, up to ATK x5 at 8 combos. All attribute cards ATK x2.5, RCV x1.5 on the turn a skill is used. ( Multiple skills will not stack )",
+	"skills": [{
+		"skilltype": "combo",
+		"effect": {
+			"orb_types": ["all"],
+			"atk_scale_type": "additive",
+			"atk_scale": 0.5,
+			"min_atk": 3,
+			"max_atk": 5,
+			"start_combo": 4,
+			"end_combo": 8
+		},
+		"description": "ATK x3 at 4 combos. ATK x0.5 for each additional combo, up to ATK x5 at 8 combos"
+	},
+	{
+		"skilltype": "skill_used",
+		"attribute": ["All"],
+		"type": ["All"],
+		"effect": {
+			"atk": 2.5,
+			"rcv": 1.5
+		},
+		"description": "All attribute cards ATK x2.5, RCV x1.5 on the turn a skill is used"
+	}]
+},
+{
+	"name": "Spirit of the Miko Goddess",
+	"description": "No skyfall matches. Healer attribute cards HP x1.5, ATK x1.5. ATK x2 at 5 combos. ATK x2 for each additional combo, up to ATK x12 at 10 combos.",
+	"skills": [{
+		"skilltype": "skyfall",
+		"effect": {
+			"skyfall_type": "no skyfall"
+		},
+		"description": "No skyfall matches"
+	},
+	{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["Healer"],
+			"hp": 1.5,
+			"atk": 1.5,
+			"rcv": 1
+		},
+		"description": "Healer attribute cards HP x1.5, ATK x1.5"
+	},
+	{
+		"skilltype": "combo",
+		"effect": {
+			"orb_types": ["all"],
+			"atk_scale_type": "additive",
+			"atk_scale": 2,
+			"min_atk": 2,
+			"max_atk": 12,
+			"start_combo": 5,
+			"end_combo": 10
+		},
+		"description": "ATK x2 at 5 combos. ATK x2 for each additional combo, up to ATK x12 at 10 combos"
+	}]
+},
+{
+	"name": "Out of the way!",
+	"description": "ATK x2 at 4 combos. ATK x0.5 for each additional combo, up to ATK x5 at 10 combos. While your HP is 50% or above, a single hit that normally kills you will instead leave you with 1 HP. For the consecutive hits, this skill will only affect the first hit.",
+	"skills": [{
+		"skilltype": "combo",
+		"effect": {
+			"orb_types": ["all"],
+			"atk_scale_type": "additive",
+			"atk_scale": 0.5,
+			"min_atk": 2,
+			"max_atk": 5,
+			"start_combo": 4,
+			"end_combo": 10
+		},
+		"description": "ATK x2 at 4 combos. ATK x0.5 for each additional combo, up to ATK x5 at 10 combos"
+	},
+	{
+		"skilltype": "resolve",
+		"effect": {
+			"hp_threshold": 50
+		},
+		"description": "While your HP is 50% or above, a single hit that normally kills you will instead leave you with 1 HP. For the consecutive hits, this skill will only affect the first hit"
+	}]
+},
+{
+	"name": "Spirits of the Divine Flowers",
+	"description": "All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart. ATK x2.5 when simultaneously clearing 5 connected Water or Light orbs. ATK x0.5 for each additional orb, up to ATK x4 at 8 connected orb.",
+	"skills": [{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Fire",
+			"Water",
+			"Wood",
+			"Light",
+			"Dark",
+			"Heart"],
+			"atk_scale_type": "additive",
+			"min_atk": 4,
+			"max_atk": 4,
+			"atk_scale": 0,
+			"min_count": 6,
+			"max_count": 6,
+			"rcv": 1,
+			"shield": 4
+		},
+		"description": "All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart"
+	},
+	{
+		"skilltype": "connected",
+		"effect": {
+			"orb_types": ["Water",
+			"Light"],
+			"atk_scale_type": "additive",
+			"atk_scale": 0.5,
+			"min_atk": 2.5,
+			"max_atk": 4,
+			"start_count": 5,
+			"end_count": 8,
+			"rcv": 1,
+			"description": "ATK x2.5 when simultaneously clearing 5 connected Water or Light orbs. ATK x0.5 for each additional orb, up to ATK x4 at 8 connected orb"
+		}
+	}]
+},
+{
+	"name": "Shoot to kill, Shinso...",
+	"description": "Increases time limit of orb movement by 13 seconds.",
+	"skills": [{
+		"skilltype": "move_time",
+		"effect": {
+			"move_time_type": "increase",
+			"time": 13
+		},
+		"description": "Increases time limit of orb movement by 13 seconds"
+	}]
+},
+{
+	"name": "The Ebon Shadow",
+	"description": "Fixed orb movement time at 4 seconds. ATK x2.5, RCV x2.5 to Dragon type cards. All attribute cards ATK x6 when reaching 6 combos or above.",
+	"skills": [{
+		"skilltype": "move_time",
+		"effect": {
+			"move_time_type": "fixed",
+			"time": 4
+		},
+		"description": "Fixed orb movement time at 4 seconds"
+	},
+	{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["Dragon"],
+			"hp": 1,
+			"atk": 2.5,
+			"rcv": 2.5
+		},
+		"description": "ATK x2.5, RCV x2.5 to Dragon type cards"
+	},
+	{
+		"skilltype": "combo",
+		"effect": {
+			"orb_types": ["all"],
+			"atk_scale_type": "none",
+			"atk": 6,
+			"start_combo": 6
+		},
+		"description": "All attribute cards ATK x6 when reaching 6 combos or above."
+	}]
+},
+{
+	"name": "Final Heaven",
+	"description": "ATK x2, RCV x2 when simultaneously clearing 6 connected Fire or Light orbs. ATK x3, RCV x3 for each additional orb, up to ATK x5, RCV x5 at 7 connected orb. Change the board to 7x6 size.",
+	"skills": [{
+		"skilltype": "connected",
+		"effect": {
+			"orb_types": ["Fire",
+			"Light"],
+			"atk_scale_type": "additive",
+			"atk_scale": 0,
+			"min_atk": 2,
+			"max_atk": 2,
+			"start_count": 6,
+			"end_count": 6,
+			"rcv": 2,
+			"description": "ATK x2, RCV x2 when simultaneously clearing 6 connected Fire or Light orbs"
+		}
+	},
+	{
+		"skilltype": "boardsize",
+		"effect": {
+			"rows": 7,
+			"cols": 6
+		},
+		"description": "Change the board to 7x6 size"
+	}]
+},
+{
+	"name": "Six Flower Palm of the Four Origins",
+	"description": "All attribute cards ATK x5 when attacking with Fire, Water, Light & Dark orb types at the same time. All attribute cards ATK x1.5 when reaching 6 combos or above.",
+	"skills": [{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Fire",
+			"Water",
+			"Light",
+			"Dark"],
+			"atk_scale_type": "additive",
+			"min_atk": 5,
+			"max_atk": 5,
+			"atk_scale": 0,
+			"min_count": 4,
+			"max_count": 4,
+			"rcv": 1,
+			"shield": 0
+		},
+		"description": "All attribute cards ATK x5 when attacking with Fire, Water, Light & Dark orb types at the same time"
+	},
+	{
+		"skilltype": "combo",
+		"effect": {
+			"orb_types": ["all"],
+			"atk_scale_type": "none",
+			"atk": 1.5,
+			"start_combo": 6
+		},
+		"description": "All attribute cards ATK x1.5 when reaching 6 combos or above."
+	}]
+},
+{
+	"name": "Famitsu App Guidance",
+	"description": "Enhance Material type cards ATK x4, RCV x3.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["Enhance Material"],
+			"hp": 1,
+			"atk": 4,
+			"rcv": 3
+		},
+		"description": "Enhance Material type cards ATK x4, RCV x3."
+	}]
+},
+{
+	"name": "The Silver Comet",
+	"description": "Fixed orb movement time at 4 seconds. HP x2, ATK x2 to Dragon type cards. All attribute cards ATK x10 when attacking with Fire, Water, Wood, Light & Dark orb types at the same time.",
+	"skills": [{
+		"skilltype": "move_time",
+		"effect": {
+			"move_time_type": "fixed",
+			"time": 4
+		},
+		"description": "Fixed orb movement time at 4 seconds"
+	},
+	{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": [],
+			"type": ["Dragon"],
+			"hp": 2,
+			"atk": 2,
+			"rcv": 1
+		},
+		"description": "HP x2, ATK x2 to Dragon type cards"
+	},
+	{
+		"skilltype": "color_match",
+		"effect": {
+			"orb_types": ["Fire",
+			"Water",
+			"Wood",
+			"Light",
+			"Dark"],
+			"atk_scale_type": "additive",
+			"min_atk": 10,
+			"max_atk": 10,
+			"atk_scale": 0,
+			"min_count": 5,
+			"max_count": 5,
+			"rcv": 1,
+			"shield": 0
+		},
+		"description": "All attribute cards ATK x10 when attacking with Fire, Water, Wood, Light & Dark orb types at the same time"
+	}]
+},
+{
+	"name": "I can't answer to your request...",
+	"description": "Dark attribute cards ATK x1.5. ATK x2 when simultaneously clearing 6 connected Poison or Mortal Poison orbs.",
+	"skills": [{
+		"skilltype": "basic",
+		"effect": {
+			"attribute": ["Dark"],
+			"type": [],
+			"hp": 1,
+			"atk": 1.5,
+			"rcv": 1
+		},
+		"description": "Dark attribute cards ATK x1.5"
+	},
+	{
+		"skilltype": "connected",
+		"effect": {
+			"orb_types": ["Poison",
+			"Mortal Poison"],
+			"atk_scale_type": "additive",
+			"atk_scale": 0,
+			"min_atk": 2,
+			"max_atk": 2,
+			"start_count": 6,
+			"end_count": 6,
+			"rcv": 1,
+			"description": "ATK x2 when simultaneously clearing 6 connected Poison or Mortal Poison orbs"
+		}
+	}]
+}]
