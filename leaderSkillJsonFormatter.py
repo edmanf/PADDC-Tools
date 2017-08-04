@@ -4,14 +4,14 @@ import re
 
 
 #match 1: attribute
-attributePattern = r'''
+attribute_pattern = r'''
     (fire|water|wood|light|dark|all)
 
 '''
-attributeRe = re.compile(attributePattern, re.IGNORECASE|re.VERBOSE)
+attribute_re = re.compile(attribute_pattern, re.IGNORECASE|re.VERBOSE)
 
 #match 1: type
-typePattern = r'''
+type_pattern = r'''
     (
     god|balanced|attacker|physical
     |devil|healer|dragon|machine
@@ -20,19 +20,19 @@ typePattern = r'''
     |all
     )
 '''
-typeRe = re.compile(typePattern, re.IGNORECASE|re.VERBOSE)
+type_re = re.compile(type_pattern, re.IGNORECASE|re.VERBOSE)
 
-#match 1: orbType
-orbTypePattern = r'''
+#match 1: orb_type
+orb_type_pattern = r'''
     (fire|water|wood|light|dark|heal
     |heart|jammer|mortal[ ]poison|poison|all)
 '''
 
 
 # TODO:Fix using non matching groups
-basicRePattern = r'''
+basic_re_pattern = r'''
     ((((
-    ''' + attributePattern + "|" + typePattern + ''')   #list of attributes and types
+    ''' + attribute_pattern + "|" + type_pattern + ''')   #list of attributes and types
     
     \W+ (attribute\W+|type\W+)?)+   #repeat for all attributes and types
 
@@ -41,19 +41,19 @@ basicRePattern = r'''
     ((hp|atk|rcv|all[ ]stats)[ ]x\d+([.]\d+)?(,[ ])?)+)[.]?$) #followed by multipliers
 
 '''
-basicRe = re.compile(basicRePattern, re.IGNORECASE|re.VERBOSE)
+basic_re = re.compile(basic_re_pattern, re.IGNORECASE|re.VERBOSE)
 
 # match 1: hp multi
 # match 2: atk multi
 # match 3: rcv multi
 # match 4: type
-basicPattern2 = r'''
+basic_pattern2 = r'''
     (?:hp[ ]x(\d+(?:\.\d+)?))?
     (?:,[ ])?
     (?:atk[ ]x(\d+(?:\.\d+)?))?
     (?:,[ ])?
     (?:rcv[ ]x(\d+(?:\.\d+)?))?
-    [ ]to[ ] ''' + typePattern + '''
+    [ ]to[ ] ''' + type_pattern + '''
     [ ]type[ ]cards
 '''
 
@@ -61,7 +61,7 @@ basicPattern2 = r'''
 # match 2: hp multi
 # match 3: atk multi
 # match 4: rcv multi
-basicMultiPattern = r'''
+basic_multi_pattern = r'''
     cards[ ]
     (?:
     (?:all[ ]stats[ ]x(\d(?:[.]\d)?))|
@@ -73,15 +73,15 @@ basicMultiPattern = r'''
     [.]?
     )
 '''
-basicMultiRe = re.compile(basicMultiPattern, re.IGNORECASE|re.VERBOSE)
+basic_multi_re = re.compile(basic_multi_pattern, re.IGNORECASE|re.VERBOSE)
 
-scalingComboBasePattern = r'''
+scaling_combo_base_pattern = r'''
     \Aatk[ ]x(\d+(?:\.\d+)?)                              #capture atk multiplier
     (?:,[ ]rcv[ ]x(\d+(?:\.\d+)?))?
     
     [ ](?:at|when[ ]reaching)[ ](\d+)[ ]combos                              #capture base start combo
 '''
-scalingComboScalePattern = r'''
+scaling_combo_scale_pattern = r'''
     atk[ ]x(\d+(?:\.\d+)?)                              #capture scaling mutliplier
     (?:,[ ]rcv[ ]x(\d+(?:\.\d+)?))?
     [ ]for[ ]each[ ]additional[ ]combo,
@@ -90,7 +90,7 @@ scalingComboScalePattern = r'''
     (\d+)[ ]combos                                      #capture combo limit
 '''
 
-basicComboPattern = r'''
+basic_combo_pattern = r'''
     all[ ]attribute[ ]cards[ ]
     (?:atk[ ]x(\d+(?:\.\d+)?))?
     (?:,[ ])?
@@ -102,14 +102,14 @@ basicComboPattern = r'''
 
 # match 1: atk
 # match 2: combos
-exactComboPattern = r'''
+exact_combo_pattern = r'''
     all[ ]attribute[ ]cards[ ]
     (?:atk[ ]x(\d+(?:\.\d+)?))
     [ ]when[ ]reaching[ ]exactly[ ]
     (\d+)[ ]combos
 '''
 
-connectedPattern = r'''
+connected_pattern = r'''
     (?:atk[ ]x(\d+(?:\.\d+)?))?                         #capture atk multi
     (?:,[ ])?                                               
     (?:rcv[ ]x(\d+(?:\.\d+)?))?                         #capture rcv multi
@@ -117,27 +117,27 @@ connectedPattern = r'''
     (\d+)\+?[ ]connected[ ]\w+(?:[ ]or[ ].+?)?[ ]orbs      #capture beginning count
 '''
 
-connectedScalePattern = r'''
+connected_scale_pattern = r'''
     atk[ ]x(\d+(?:\.\d+)?)                              #capture atk scale
     [ ]for[ ]each[ ]additional[ ]orb,
     [ ]up[ ]to[ ]atk[ ]x (\d+(?:\.\d+)?)                #capture max atk
     [ ]at[ ](\d+)[ ]connected[ ]orb                     #capture max count
 '''
 
-noSkyfallPattern = r'''
+no_skyfall_pattern = r'''
     no[ ]skyfall[ ]matches
 '''
 
-boardSizePattern = r'''
+board_size_pattern = r'''
     change[ ]the[ ]board[ ]to[ ](\d+)x(\d+)[ ]size        #captures col and row
 '''
 
-crossPattern = r'''
+cross_pattern = r'''
     atk[ ]x(\d+(?:\.\d+)?)                              #captures atk mutliplier
     [ ]for[ ]clearing[ ](?:\w+[ ])+?
     orbs[ ]in[ ]a[ ]cross[ ]formation
 '''
-heartCrossPattern = r'''
+heart_cross_pattern = r'''
     (?:atk[ ]x(\d+(?:\.\d+)?))?
     (?:,[ ])?
     (?:reduce[ ]damage[ ]taken[ ]by[ ](\d+)%)?
@@ -145,7 +145,7 @@ heartCrossPattern = r'''
 
 '''
 
-moveTimePattern = r'''
+move_time_pattern = r'''
     (fixed|increases)[ ]                            #captures fixed or increases
     (?:\w+[ ])*?orb[ ]movement(?:[ ]\w+)+?[ ]
     (\d+(?:\.\d+)?)[ ]seconds                       #captures time value    
@@ -155,16 +155,16 @@ moveTimePattern = r'''
 
 
 
-orbTypeComboPattern = r'''
+orb_type_combo_pattern = r'''
     all[ ]attribute[ ]cards
     (?:[ ]atk[ ]x(\d+(?:\.\d+)?))?
     [ ]when[ ]reaching[ ]
     (\d+)[ ]set[ ]of[ ]
-    ''' + orbTypePattern + '''
+    ''' + orb_type_pattern + '''
     [ ](?:combo|combos)
 '''
 
-orbTypeComboScalePattern = r'''
+orb_type_combo_scale_pattern = r'''
     atk[ ]x(\d+(?:\.\d+)?)
     [ ]for[ ]each[ ]additional[ ]combo,[ ]up[ ]to[ ]
     atk[ ]x(\d+(?:\.\d+)?)
@@ -172,7 +172,7 @@ orbTypeComboScalePattern = r'''
     (\d+)[ ]combos
 '''
 
-enhancedMatchPattern = r'''
+enhanced_match_pattern = r'''
     matched[ ]attribute[ ]
     atk[ ]x(\d+(?:\.\d+)?)
     [ ]when[ ]matching[ ]exactly[ ]
@@ -181,7 +181,7 @@ enhancedMatchPattern = r'''
     (\d+)[ ]enhanced[ ](?:orbs|orb)
 '''
 
-colorMatchPattern = r'''
+color_match_pattern = r'''
     (?:all[ ]attribute[ ]cards[ ])?
     (?:atk[ ]x(\d+(?:\.\d+)?))?
     (?:,[ ])?
@@ -193,7 +193,7 @@ colorMatchPattern = r'''
     [ ]at[ ]the[ ]same[ ]time
 '''
 
-scalingColorMatchPattern = r'''
+scaling_color_match_pattern = r'''
     (?:all[ ]attribute[ ]cards[ ])?
     (?:atk[ ]x(\d+(?:\.\d+)?))?
     ,?[ ]?
@@ -204,14 +204,14 @@ scalingColorMatchPattern = r'''
     (\d+)[ ]of(.*)
 '''
 
-colorMatchScalePattern = r'''
+color_match_scale_pattern = r'''
     atk[ ]x(\d+(?:\.\d+)?)
     [ ]for[ ]each[ ]additional[ ]orb[ ]type,[ ]up[ ]to[ ]
     atk[ ]x(\d+(?:\.\d+)?)
     [ ]for[ ]all[ ](\d+)[ ]matches
 '''
 
-twoColorMatchPattern = r'''
+two_color_match_pattern = r'''
     all[ ]attribute[ ]cards[ ]
     (?:atk[ ]x(\d+(?:\.\d+)?))?
     (?:,[ ])?
@@ -223,18 +223,18 @@ twoColorMatchPattern = r'''
     ([a-zA-Z]+)[ ]combos(?:[ ]at[ ]the[ ]same[ ]time)?
 '''
 
-resolvePattern = r'''
+resolve_pattern = r'''
     while[ ]your[ ]hp[ ]is[ ](\d+)%
     [ ]or[ ]above,[ ]a[ ]single[ ]hit[ ]that[ ]normally[ ]kills[ ]you[ ]
     will[ ]instead[ ]leave[ ]you[ ]with[ ]1[ ]hp
 '''
 
-resolveExtraPattern = r'''
+resolve_extra_pattern = r'''
     for[ ]the[ ]consecutive[ ]hits,[ ]this[ ]
     skill[ ]will[ ]only[ ]affect[ ]the[ ]first[ ]hit
 '''
 
-onSkillUsedPattern = r'''
+on_skill_used_pattern = r'''
     (.*?)(?:attribute|type)[ ]cards[ ]
     (?:atk[ ]x(\d+(?:\.\d+)?))?
     (?:,[ ])?
@@ -242,11 +242,11 @@ onSkillUsedPattern = r'''
     [ ]on[ ]the[ ]turn[ ]a[ ]skill[ ]is[ ]used
 '''
 
-basicDamageReductionPattern = r'''
+basic_damage_reduction_pattern = r'''
     (\d+)%[ ](.*?)[ ]damage[ ]reduction
 '''
 
-hpConditionalPattern = r'''
+hp_conditional_pattern = r'''
     (.*?[ ]cards[ ])? 
     (?:atk[ ]x(\d+(?:\.\d+)?))?
     (?:,[ ])?
@@ -258,24 +258,24 @@ hpConditionalPattern = r'''
 '''
 
 # some descriptions have a type where a period is not followed by a space
-periodTypePattern = r'''seconds\.([a-zA-Z])'''
-periodFixPattern = r'''seconds. \1'''
+period_type_pattern = r'''seconds\.([a-zA-Z])'''
+period_fix_pattern = r'''seconds. \1'''
 
-parenOrigPattern = r'''will not stack \) '''
-parenFixPattern = r'''will not stack \). '''
+paren_orig_pattern = r'''will not stack \) '''
+paren_fix_pattern = r'''will not stack \). '''
 
 # fix for some bikkuriman collab skills
-hpParenOrigPattern = r'''%[ ]\('''
-hpParenFixPattern = r'''%. ('''
+hp_paren_orig_pattern = r'''%[ ]\('''
+hp_paren_fix_pattern = r'''%. ('''
 
-doubleSpaceOrigPattern = r'''[ ]{2}'''
-doubleSpaceFixPattern = r'''[ ]'''
+double_space_orig_pattern = r'''[ ]{2}'''
+double_space_fix_pattern = r'''[ ]'''
 
-hpRepeatTypoPattern = r'''
+hp_repeat_typo_pattern = r'''
     \.[ ][ ]when[ ]hp[ ]is[ ]less[ ]than[ ]50%\.
 '''
 
-postOrbElimPattern = r'''
+post_orb_elim_pattern = r'''
     (?:heal|deal)
     [ ](atk|rcv)[ ]x
     (\d+(?:\.\d+)?)
@@ -283,7 +283,7 @@ postOrbElimPattern = r'''
     [ ]after[ ]every[ ]orbs[ ]elimination
 '''
 
-postOrbElimExtraPattern = r'''
+post_orb_elim_extra_pattern = r'''
     ignores[ ]enemy[ ]element,
     [ ]but[ ]can[ ]be[ ]reduced[ ]
     by[ ]enemy[ ]defense[ ]down[ ]to[ ]0[ ]damage
@@ -293,7 +293,7 @@ postOrbElimExtraPattern = r'''
 # match 2: hp multi
 # match 3: atk multi
 # match 4: rcv multi
-coopModePattern = r'''
+coop_mode_pattern = r'''
     (?:all[ ]stats[ ]x(\d+(?:\.\d+)?))?
     (?:,[ ])?
     (?:hp[ ]x(\d+(?:\.\d+)?))?
@@ -307,47 +307,56 @@ coopModePattern = r'''
 # match 1: chance
 # match 2: damage attribute
 # match 3: damage multi
-counterPattern = r'''
+counter_pattern = r'''
     (\d+)%[ ]chance[ ]to[ ]deal[ ]counter[ ]
     (\w+)[ ]damage[ ]of[ ]
     (\d+)x[ ]damage[ ]taken
 '''
 
 
+def format_skill_effect(hp=0, atk=0, rcv=0, shield=0,
+                      atk_scale_type=None, atk_scale=0, min_atk=0, max_atk=0,
+                      rcv_scale=0, min_rcv=0, max_rcv=0,
+                      min_combo_count=0, max_combo_count=0,
+                      min_connected=0, max_connected=0,
+                      rows=0, cols=0,
+                      orb_types=None, attributes=None, types=None):
+    return ""
 
-def formatComboSkills(description, minAtk=0, maxAtk=0, atkScale=0,
-                minCombo=0, maxCombo=0, attributes=None, shield=0,
-                minRcv=0, maxRcv=0, rcvScale=0):
+
+def format_combo_skills(description, min_atk=0, max_atk=0, atk_scale=0,
+                min_combo=0, max_combo=0, attributes=None, shield=0,
+                min_rcv=0, maxRcv=0, rcv_scale=0):
     
-    attributeStr = "["
+    attribute_str = "["
     for attribute in attributes:
-        attributeStr += "\"" + attribute + "\","
-    attributeStr = attributeStr[:-1] + "]" #because of this, there must be at least 1 attribute
+        attribute_str += "\"" + attribute + "\","
+    attribute_str = attribute_str[:-1] + "]" #because of this, there must be at least 1 attribute
     result = "{\"skilltype\":\"combo\","
     result += "\"effect\":{"
-    result += "\"orb_types\":" + attributeStr + ","
-    if atkScale:
+    result += "\"orb_types\":" + attribute_str + ","
+    if atk_scale:
         result += "\"atk_scale_type\":\"additive\","
-        result += "\"atk_scale\":" + str(atkScale) + ","
-        result += "\"min_atk\":" + str(minAtk) + ","
-        result += "\"max_atk\":" + str(maxAtk) + ","
+        result += "\"atk_scale\":" + str(atk_scale) + ","
+        result += "\"min_atk\":" + str(min_atk) + ","
+        result += "\"max_atk\":" + str(max_atk) + ","
     else:
         result += "\"atk_scale_type\":\"none\","
-        result += "\"atk\":" + str(minAtk) + ","
+        result += "\"atk\":" + str(min_atk) + ","
         
-    if rcvScale:
-        result += "\"minRcv\":" + str(minRcv) + ","
+    if rcv_scale:
+        result += "\"min_rcv\":" + str(min_rcv) + ","
         result += "\"maxRcv\":" + str(maxRcv) + "," 
-        result += "\"rcv_scale\":" + str(rcvScale) + ","
-    elif minRcv or maxRcv:
+        result += "\"rcv_scale\":" + str(rcv_scale) + ","
+    elif min_rcv or maxRcv:
         result += "\"rcv_scale\":\"none\","
         result += "\"rcv\":"
-        result += str(minRcv) if minRcv else str(maxRcv)
+        result += str(min_rcv) if min_rcv else str(maxRcv)
         result += ","
         
-    result += "\"start_combo\":" + str(minCombo) + ","
-    if maxCombo:
-        result += "\"end_combo\":" + str(maxCombo) + ","
+    result += "\"start_combo\":" + str(min_combo) + ","
+    if max_combo:
+        result += "\"end_combo\":" + str(max_combo) + ","
     
     if shield:
         result += "\"shield\":" + str(shield) + ","
@@ -357,7 +366,7 @@ def formatComboSkills(description, minAtk=0, maxAtk=0, atkScale=0,
     
     return result
 
-def formatBasicSkills(description, hp, atk, rcv, attributes, types):
+def format_basic_skills(description, hp, atk, rcv, attributes, types):
     hp = hp if hp else 1
     atk = atk if atk else 1
     rcv = rcv if rcv else 1
@@ -385,30 +394,30 @@ def formatBasicSkills(description, hp, atk, rcv, attributes, types):
     result += "},"
     return result
     
-def formatColorMatchSkills(description, orbTypes, minAtk, 
-                           maxAtk=None, minCount=None, maxCount=None,
-                           atkScale=None, rcv=None, shield=None):
-    minAtk = minAtk if minAtk else 1
-    maxAtk = maxAtk if maxAtk else minAtk
+def format_color_match_skills(description, orb_types, min_atk, 
+                           max_atk=None, min_count=None, max_count=None,
+                           atk_scale=None, rcv=None, shield=None):
+    min_atk = min_atk if min_atk else 1
+    max_atk = max_atk if max_atk else min_atk
     rcv = rcv if rcv else 1
     
-    minCount = minCount if minCount else len(orbTypes)
-    maxCount = maxCount if maxCount else minCount
-    atkScale = atkScale if atkScale else 0
+    min_count = min_count if min_count else len(orb_types)
+    max_count = max_count if max_count else min_count
+    atk_scale = atk_scale if atk_scale else 0
     shield = shield if shield else 0
     
     result = "{\"skilltype\":\"color_match\","    
     result += "\"effect\":{"
     result += "\"orb_types\":["
-    for orbType in orbTypes:
-        result += "\"" + orbType + "\","
+    for orb_type in orb_types:
+        result += "\"" + orb_type + "\","
     result = result[:-1] + "],"
     result += "\"atk_scale_type\":\"additive\","
-    result += "\"min_atk\":" + str(minAtk) + ","
-    result += "\"max_atk\":" + str(maxAtk) + ","
-    result += "\"atk_scale\":" + str(atkScale) + ","
-    result += "\"min_count\":" + str(minCount) + ","
-    result += "\"max_count\":" + str(maxCount) + ","
+    result += "\"min_atk\":" + str(min_atk) + ","
+    result += "\"max_atk\":" + str(max_atk) + ","
+    result += "\"atk_scale\":" + str(atk_scale) + ","
+    result += "\"min_count\":" + str(min_count) + ","
+    result += "\"max_count\":" + str(max_count) + ","
     result += "\"rcv\":" + str(rcv) + ","
     result += "\"shield\":" + str(shield)
     result += "},"
@@ -416,136 +425,136 @@ def formatColorMatchSkills(description, orbTypes, minAtk,
     result += "},"
     return result
     
-def getBasicSkill(regexMatches):
-    basicStr = regexMatches.group().strip(" ")
-    description = basicStr
+def get_basic_skill(regex_matches):
+    basic_str = regex_matches.group().strip(" ")
+    description = basic_str
     
-    attributes = attributeRe.findall(basicStr)
-    types = typeRe.findall(basicStr)
+    attributes = attribute_re.findall(basic_str)
+    types = type_re.findall(basic_str)
 
-    multiplierM = basicMultiRe.search(basicStr)
+    multiplier_m = basic_multi_re.search(basic_str)
     hp = 1
     atk = 1
     rcv = 1
-    if multiplierM:
-        if multiplierM[1]: # all stats
-            hp = multiplierM[1]
-            atk = multiplierM[1]
-            rcv = multiplierM[1]
+    if multiplier_m:
+        if multiplier_m[1]: # all stats
+            hp = multiplier_m[1]
+            atk = multiplier_m[1]
+            rcv = multiplier_m[1]
         else:
-            hp = multiplierM[2] if multiplierM[2] else 1
-            atk = multiplierM[3] if multiplierM[3] else 1
-            rcv = multiplierM[4] if multiplierM[4] else 1
-    return formatBasicSkills(description, hp, atk, rcv, attributes, types)
+            hp = multiplier_m[2] if multiplier_m[2] else 1
+            atk = multiplier_m[3] if multiplier_m[3] else 1
+            rcv = multiplier_m[4] if multiplier_m[4] else 1
+    return format_basic_skills(description, hp, atk, rcv, attributes, types)
 
-def getBasicSkill2(match):
+def get_basic_skill2(match):
         des = match[0]
         hp = match[1]
         atk = match[2]
         rcv = match[3]
         type = [match[4]]
-        return formatBasicSkills(des, hp, atk, rcv, None, type)
+        return format_basic_skills(des, hp, atk, rcv, None, type)
   
-def getComboSkill(baseMatches, scaleMatches):
-    description = baseMatches[0]
-    minAtk = baseMatches[1]
-    minRcv = baseMatches[2]
-    minCombo = baseMatches[3]
+def get_combo_skill(base_matches, scale_matches):
+    description = base_matches[0]
+    min_atk = base_matches[1]
+    min_rcv = base_matches[2]
+    min_combo = base_matches[3]
             
     attributes = ["all"]
     
-    if scaleMatches:
-        description += ". " + scaleMatches[0]
-        atkScale = scaleMatches[1]
-        rcvScale = scaleMatches[2]
-        maxAtk = scaleMatches[3]
-        maxRcv = scaleMatches[4]
-        maxCombo = scaleMatches[5]
+    if scale_matches:
+        description += ". " + scale_matches[0]
+        atk_scale = scale_matches[1]
+        rcv_scale = scale_matches[2]
+        max_atk = scale_matches[3]
+        maxRcv = scale_matches[4]
+        max_combo = scale_matches[5]
         
-        return formatComboSkills(description, attributes=attributes, minAtk=minAtk, maxAtk=maxAtk, 
-                                 atkScale=atkScale, minCombo=minCombo, maxCombo=maxCombo,
-                                 rcvScale=rcvScale, minRcv=minRcv, maxRcv=maxRcv)
+        return format_combo_skills(description, attributes=attributes, min_atk=min_atk, max_atk=max_atk, 
+                                 atk_scale=atk_scale, min_combo=min_combo, max_combo=max_combo,
+                                 rcv_scale=rcv_scale, min_rcv=min_rcv, maxRcv=maxRcv)
     else:
-        return formatComboSkills(description, attributes=attributes, minAtk=minAtk,
-                                 minRcv=minRcv, minCombo=minCombo)
+        return format_combo_skills(description, attributes=attributes, min_atk=min_atk,
+                                 min_rcv=min_rcv, min_combo=min_combo)
     
-def getBasicComboSkill(match):
+def get_basic_combo_skill(match):
     des = match[0]
-    minAtk = match[1]
-    minRcv = match[2]
+    min_atk = match[1]
+    min_rcv = match[2]
     shield = match[3]
-    minCombo = match[4]
+    min_combo = match[4]
 
     attributes = ["all"]
     
-    return formatComboSkills(des, minAtk=minAtk, minCombo=minCombo,
-                attributes=attributes, shield=shield, minRcv=minRcv)
+    return format_combo_skills(des, min_atk=min_atk, min_combo=min_combo,
+                attributes=attributes, shield=shield, min_rcv=min_rcv)
     
-def getOrbTypeComboSkill(match, scaleMatch):
+def get_orb_type_combo_skill(match, scale_match):
     des = match[0]
-    minAtk = match[1]
-    minCombo = match[2]
+    min_atk = match[1]
+    min_combo = match[2]
     attributes = [match[3]]
     
-    if scaleMatch:
-        des += ". " + scaleMatch[0]
-        atkScale = scaleMatch[1] if scaleMatch[1] else 0
-        maxAtk = scaleMatch[2] if scaleMatch[2] else minAtk
-        maxCombo = scaleMatch[3] if scaleMatch[3] else minCombo
-        return formatComboSkills(des, minAtk=minAtk, maxAtk=maxAtk, atkScale=atkScale,
-                                 minCombo=minCombo, maxCombo=maxCombo, attributes=attributes)
+    if scale_match:
+        des += ". " + scale_match[0]
+        atk_scale = scale_match[1] if scale_match[1] else 0
+        max_atk = scale_match[2] if scale_match[2] else min_atk
+        max_combo = scale_match[3] if scale_match[3] else min_combo
+        return format_combo_skills(des, min_atk=min_atk, max_atk=max_atk, atk_scale=atk_scale,
+                                 min_combo=min_combo, max_combo=max_combo, attributes=attributes)
     else:
-        return formatComboSkills(des, minAtk=minAtk, minCombo=minCombo, attributes=attributes)
+        return format_combo_skills(des, min_atk=min_atk, min_combo=min_combo, attributes=attributes)
 
-def getExactComboSkill(match):
+def get_exact_combo_skill(match):
     des = match[0]
-    minAtk = match[1]
-    minCombo = match[2]
-    maxCombo = minCombo
+    min_atk = match[1]
+    min_combo = match[2]
+    max_combo = min_combo
     attributes = ["all"]
     
-    return formatComboSkills(des, minAtk=minAtk, minCombo=minCombo,
-                                  maxCombo=maxCombo, attributes=attributes)
+    return format_combo_skills(des, min_atk=min_atk, min_combo=min_combo,
+                                  max_combo=max_combo, attributes=attributes)
         
-def getConnectedCombo(baseMatches, scaleMatches):    
-    minAtk = baseMatches[1]
-    startCount = baseMatches[3]
-    rcv = baseMatches[2] if baseMatches[2] else 1
-    atkScale = 0
-    maxAtk = minAtk
-    endCount = startCount  
-    if scaleMatches:
-        atkScale = scaleMatches[1]
-        maxAtk = scaleMatches[2]
-        endCount = scaleMatches[3]
+def get_connected_combo(base_matches, scale_matches):    
+    min_atk = base_matches[1]
+    start_count = base_matches[3]
+    rcv = base_matches[2] if base_matches[2] else 1
+    atk_scale = 0
+    max_atk = min_atk
+    end_count = start_count  
+    if scale_matches:
+        atk_scale = scale_matches[1]
+        max_atk = scale_matches[2]
+        end_count = scale_matches[3]
     
-    orbTypeRe = re.compile(orbTypePattern, re.IGNORECASE|re.VERBOSE)
-    orbTypeM = orbTypeRe.findall(baseMatches[0])
+    orb_type_re = re.compile(orb_type_pattern, re.IGNORECASE|re.VERBOSE)
+    orb_type_m = orb_type_re.findall(base_matches[0])
         
     result = "{\"skilltype\":\"connected\","
 
     result += "\"effect\":{"
     result += "\"orb_types\":["
-    # dont check for None, there must be an orbType
-    for orbType in orbTypeM:
-        result += "\"" + orbType + "\","
+    # dont check for None, there must be an orb_type
+    for orb_type in orb_type_m:
+        result += "\"" + orb_type + "\","
     result = result.strip(",") + "],"
     result += "\"atk_scale_type\":\"additive\","
-    result += "\"atk_scale\":" + str(atkScale) + ","
-    result += "\"min_atk\":" + str(minAtk) + ","
-    result += "\"max_atk\":" + str(maxAtk) + ","
-    result += "\"start_count\":" + str(startCount) + ","
-    result += "\"end_count\":" + str(endCount) + ","
+    result += "\"atk_scale\":" + str(atk_scale) + ","
+    result += "\"min_atk\":" + str(min_atk) + ","
+    result += "\"max_atk\":" + str(max_atk) + ","
+    result += "\"start_count\":" + str(start_count) + ","
+    result += "\"end_count\":" + str(end_count) + ","
     result += "\"rcv\":" + str(rcv) + ","
-    result += "\"description\":\"" + baseMatches[0]
-    if scaleMatches:
-        result += ". " + scaleMatches[0]
+    result += "\"description\":\"" + base_matches[0]
+    if scale_matches:
+        result += ". " + scale_matches[0]
     result += "\""
     result += "}"
     result += "},"
     return result
     
-def getNoSkyfallSkill(match):
+def get_no_skyfall_skill(match):
     result = "{\"skilltype\":\"skyfall\","
     result += "\"effect\":{"
     result += "\"skyfall_type\":\"no skyfall\""
@@ -554,7 +563,7 @@ def getNoSkyfallSkill(match):
     result += "},"
     return result
     
-def getBoardSize(match):
+def get_board_size_skill(match):
     rows = match[1]
     cols = match[2]
 
@@ -567,97 +576,97 @@ def getBoardSize(match):
     result += "},"
     return result
     
-def getCrossSkill(match):
-    atkScale = match[1]
+def get_cross_skill(match):
+    atk_scale = match[1]
     description = match[0]
     
-    orbTypeRe = re.compile(orbTypePattern, re.IGNORECASE|re.VERBOSE)
-    orbTypeM = orbTypeRe.findall(description)
+    orb_type_re = re.compile(orb_type_pattern, re.IGNORECASE|re.VERBOSE)
+    orb_type_m = orb_type_re.findall(description)
     
     
     result = "{\"skilltype\":\"cross\","
     result += "\"cross\":["
     
     #dont check for none, because there has to be an orb type
-    for orbType in orbTypeM:
-        result += "\"" + orbType + "\","
+    for orb_type in orb_type_m:
+        result += "\"" + orb_type + "\","
     result = result.strip(",") + "],"
     result += "\"effect\":{"
     result += "\"atk_scale_type\":\"multiplicative\","
-    result += "\"atk_scale\":" + atkScale
+    result += "\"atk_scale\":" + atk_scale
     result += "},"
     
     result += "\"description\":\"" + description + "\""
     result += "}"
     return result
     
-def getMoveTimeSkill(match):
-    moveTimeType = "fixed" if match[1] == "Fixed" else "increase"
+def get_move_time_skill(match):
+    move_time_type = "fixed" if match[1] == "Fixed" else "increase"
 
     result = "{\"skilltype\":\"move_time\","
     result += "\"effect\":{"
-    result += "\"move_time_type\":\"" + moveTimeType + "\","
+    result += "\"move_time_type\":\"" + move_time_type + "\","
     result += "\"time\":" + match[2]
     result += "},"
     result += "\"description\":\"" + match[0] + "\""
     result += "},"
     return result
 
-def getEnhancedMatch(match):
+def get_enhanced_match(match):
     des = match[0]
     atk = match[1]
-    orbCount = match[2]
-    minEnhanced = match[3]
+    orb_count = match[2]
+    min_enhanced = match[3]
     
     result = "{\"skilltype\":\"enhanced_match\","
     result += "\"effect\":{"
     result += "\"atk\":" + str(atk) + ","
-    result += "\"orb_count\":" + str(orbCount) + ","
-    result += "\"min_enhanced\":" + str(minEnhanced)
+    result += "\"orb_count\":" + str(orb_count) + ","
+    result += "\"min_enhanced\":" + str(min_enhanced)
     result += "},"
     result += "\"description\":\"" + des + "\"},"
     return result
     
-def getColorMatchSkills(match):
+def get_color_match_skills(match):
     des = match[0]
     atk = match[1]
     rcv = match[2]
     shield = match[3]
     orbString = match[4]
-    orbTypeRe = re.compile(orbTypePattern, re.IGNORECASE|re.VERBOSE)
-    orbTypes = orbTypeRe.findall(orbString)
-    return formatColorMatchSkills(des, orbTypes, atk, rcv=rcv, shield=shield)
+    orb_type_re = re.compile(orb_type_pattern, re.IGNORECASE|re.VERBOSE)
+    orb_types = orb_type_re.findall(orbString)
+    return format_color_match_skills(des, orb_types, atk, rcv=rcv, shield=shield)
 
-def getScalingColorMatchSkills(match, scaleMatch):
+def get_scaling_color_match_skills(match, scale_match):
     des = match[0]
-    minAtk = match[1]
+    min_atk = match[1]
     rcv = match[2]
-    minCount = match[3]
+    min_count = match[3]
     shield = match[4]
-    atkScale = 0
-    maxCount = minCount
-    maxAtk = minAtk
-    orbTypeRe = re.compile(orbTypePattern, re.IGNORECASE|re.VERBOSE)
-    orbTypes = orbTypeRe.findall(match[5])
-    if scaleMatch:
-        des += ". " + scaleMatch[0]
-        atkScale = scaleMatch[1]
-        maxAtk = scaleMatch[2]
-        maxCount = scaleMatch[3]
+    atk_scale = 0
+    max_count = min_count
+    max_atk = min_atk
+    orb_type_re = re.compile(orb_type_pattern, re.IGNORECASE|re.VERBOSE)
+    orb_types = orb_type_re.findall(match[5])
+    if scale_match:
+        des += ". " + scale_match[0]
+        atk_scale = scale_match[1]
+        max_atk = scale_match[2]
+        max_count = scale_match[3]
     
-    return formatColorMatchSkills(des, orbTypes, minAtk, maxAtk=maxAtk,
-                                  minCount=minCount, maxCount=maxCount,
-                                  atkScale=atkScale, rcv=rcv, shield=shield)
+    return format_color_match_skills(des, orb_types, min_atk, max_atk=max_atk,
+                                  min_count=min_count, max_count=max_count,
+                                  atk_scale=atk_scale, rcv=rcv, shield=shield)
   
-def getTwoColorMatchSkills(match):
+def get_two_color_match_skills(match):
     des = match[0]
     atk = match[1]
     rcv = match[2]
     shield = match[3]
-    orbTypes = [match[4], match[5]]
-    return formatColorMatchSkills(des, orbTypes, atk, rcv=rcv, shield=shield)
+    orb_types = [match[4], match[5]]
+    return format_color_match_skills(des, orb_types, atk, rcv=rcv, shield=shield)
 
-def getHeartCrossSkill(match):
+def get_heart_cross_skill(match):
     des = match[0]
     atk = match[1] if match[1] else 1
     shield = match[2] if match[2] else 0
@@ -672,9 +681,9 @@ def getHeartCrossSkill(match):
     return result
     
     
-def getResolveSkill(resolveM, extraM):
-    des = resolveM[0] + ". " + extraM[0]
-    hpThresh = resolveM[1]
+def get_resolve_skill(resolve_m, extra_m):
+    des = resolve_m[0] + ". " + extra_m[0]
+    hpThresh = resolve_m[1]
     
     result = "{\"skilltype\":\"resolve\","
     result += "\"effect\":{"
@@ -684,7 +693,7 @@ def getResolveSkill(resolveM, extraM):
     result += "},"
     return result
 
-def getSkillUsedSkill(match, extra):
+def get_skill_used_skill(match, extra):
     des = match[0]
     if extra:
         des += ". " + extra[0]
@@ -692,10 +701,10 @@ def getSkillUsedSkill(match, extra):
     atk = match[2] if match[2] else 1
     rcv = match[3] if match[3] else 1
     
-    attributeRe = re.compile(attributePattern, re.I|re.VERBOSE)
-    attributes = attributeRe.findall(condition)
-    typeRe = re.compile(typePattern, re.I|re.VERBOSE)
-    types = typeRe.findall(condition)
+    attribute_re = re.compile(attribute_pattern, re.I|re.VERBOSE)
+    attributes = attribute_re.findall(condition)
+    type_re = re.compile(type_pattern, re.I|re.VERBOSE)
+    types = type_re.findall(condition)
         
 
     result = "{\"skilltype\":\"skill_used\","
@@ -721,11 +730,11 @@ def getSkillUsedSkill(match, extra):
     result += "},"
     return result
   
-def getBasicDamageReduction(match):
+def get_basic_damage_reduction_skill(match):
     des = match[0]
     value = match[1]
-    attributeRe = re.compile(attributePattern, re.I|re.VERBOSE)
-    attributes = attributeRe.findall(match[2])
+    attribute_re = re.compile(attribute_pattern, re.I|re.VERBOSE)
+    attributes = attribute_re.findall(match[2])
     
     result = "{\"skilltype\":\"shield\","
     result += "\"effect\":{"
@@ -741,17 +750,17 @@ def getBasicDamageReduction(match):
     result += "},"
     return result
   
-def getHpCondSkill(match):
+def get_hp_cond_skill(match):
     des = match[0]
-    attributeStr = match[1]
+    attribute_str = match[1]
     atk = match[2] if match[2] else 1
     rcv = match[3] if match[3] else 1
-    hpType = match[4]
+    hp_type = match[4]
     thresh = match[5] if match[5] else 100
     
     result = "{\"skilltype\":\"hp_conditional\","
     result += "\"effect\":{"
-    result += "\"conditional_type\":\"" + hpType + "\","
+    result += "\"conditional_type\":\"" + hp_type + "\","
     result += "\"conditional_value\":" + str(thresh) + ","
     result += "\"atk\":" + str(atk) + ","
     result += "\"rcv\":" + str(rcv)
@@ -760,7 +769,7 @@ def getHpCondSkill(match):
     result += "},"
     return result
 
-def getPostOrbElimSkill(match, extra=None):
+def get_post_orb_elim_skill(match, extra=None):
     des = match[0]
     type = match[1].lower()
     value = match[2]
@@ -781,7 +790,7 @@ def getPostOrbElimSkill(match, extra=None):
     return result
     
     
-def getCoopSkills(match):
+def get_coop_skills(match):
     des = match[0]
     hp = 1
     atk = 1
@@ -806,7 +815,7 @@ def getCoopSkills(match):
     result += "},"
     return result
     
-def getCounterSkills(match):
+def get_counter_skills(match):
     des = match[0]
     chance = match[1]
     att = match[2]
@@ -824,228 +833,228 @@ def getCounterSkills(match):
     
 def main():
     file = open("sampleLeaderSkills.json")
-    leaderJson = json.load(file)
+    leader_json = json.load(file)
     
-    if len(leaderJson) is 0:
+    if len(leader_json) is 0:
         return
     
     unfinished = 0
     count = 0
-    parenFixRe = re.compile(parenOrigPattern, re.I|re.VERBOSE)
-    periodTypoRe = re.compile(periodTypePattern, re.IGNORECASE|re.VERBOSE)
-    hpParenTypoRe = re.compile(hpParenOrigPattern, re.I|re.VERBOSE)
-    hpRepeatTypoRe = re.compile(hpRepeatTypoPattern, re.I|re.VERBOSE)
+    paren_fix_re = re.compile(paren_orig_pattern, re.I|re.VERBOSE)
+    period_typo_re = re.compile(period_type_pattern, re.IGNORECASE|re.VERBOSE)
+    hp_paren_typo_re = re.compile(hp_paren_orig_pattern, re.I|re.VERBOSE)
+    hp_repeat_typo_re = re.compile(hp_repeat_typo_pattern, re.I|re.VERBOSE)
     
     result = "["
-    for skillJson in leaderJson:
+    for skill_json in leader_json:
         
-        name = skillJson["name"]
+        name = skill_json["name"]
         if name == "N/A":
             continue
-        des = periodTypoRe.sub(periodFixPattern, skillJson["effect"])
-        des = parenFixRe.sub(parenFixPattern, des)
-        des = hpParenTypoRe.sub(hpParenFixPattern, des)
-        des = hpRepeatTypoRe.sub("", des)
-        leaderSkillParts = des.split(". ")
+        des = period_typo_re.sub(period_fix_pattern, skill_json["effect"])
+        des = paren_fix_re.sub(paren_fix_pattern, des)
+        des = hp_paren_typo_re.sub(hp_paren_fix_pattern, des)
+        des = hp_repeat_typo_re.sub("", des)
+        leader_skill_parts = des.split(". ")
         result += "{"
         result += "\"name\":\"" + name + "\","
         result += "\"description\":\"" + des + "\","
         result += "\"skills\":["
         i = 0
-        while i < len(leaderSkillParts):
+        while i < len(leader_skill_parts):
             count += 1
-            part = leaderSkillParts[i]
+            part = leader_skill_parts[i]
             #print(part)
             i += 1
-            basicM = basicRe.search(part)
-            if basicM:
-                result += getBasicSkill(basicM)
+            basic_m = basic_re.search(part)
+            if basic_m:
+                result += get_basic_skill(basic_m)
                 continue
             
-            basic2Re = re.compile(basicPattern2, re.IGNORECASE|re.VERBOSE)
-            basic2M = basic2Re.search(part)
-            if basic2M:
-                result += getBasicSkill2(basic2M)
+            basic2_re = re.compile(basic_pattern2, re.IGNORECASE|re.VERBOSE)
+            basic2_m = basic2_re.search(part)
+            if basic2_m:
+                result += get_basic_skill2(basic2_m)
                 continue
             
-            scalingComboBaseRe = re.compile(scalingComboBasePattern, re.IGNORECASE|re.VERBOSE)
-            scalingComboBaseM = scalingComboBaseRe.search(part)
-            if scalingComboBaseM:
-                if i < len(leaderSkillParts):
-                    scalePart = leaderSkillParts[i]    #i already incremented
-                    scalingComboScaleRe = re.compile(scalingComboScalePattern, re.IGNORECASE|re.VERBOSE)
-                    scalingComboScaleM = scalingComboScaleRe.search(scalePart)
-                    result += getComboSkill(scalingComboBaseM, scalingComboScaleM)
+            scaling_combo_base_re = re.compile(scaling_combo_base_pattern, re.IGNORECASE|re.VERBOSE)
+            scaling_combo_base_m = scaling_combo_base_re.search(part)
+            if scaling_combo_base_m:
+                if i < len(leader_skill_parts):
+                    scale_part = leader_skill_parts[i]    #i already incremented
+                    scaling_combo_scale_re = re.compile(scaling_combo_scale_pattern, re.IGNORECASE|re.VERBOSE)
+                    scaling_combo_scale_m = scaling_combo_scale_re.search(scale_part)
+                    result += get_combo_skill(scaling_combo_base_m, scaling_combo_scale_m)
                     i += 1
                 else:
-                    result += getComboSkill(scalingComboBaseM, None)
+                    result += get_combo_skill(scaling_combo_base_m, None)
                 continue
                 
-            connectedRe = re.compile(connectedPattern, re.IGNORECASE|re.VERBOSE)
-            connectedM = connectedRe.search(part)
-            if connectedM:
-                scalePart = leaderSkillParts[i] if i < len(leaderSkillParts) else None    #i already incremented
-                if scalePart:
-                    connectedScaleRe = re.compile(connectedScalePattern, re.IGNORECASE|re.VERBOSE)
-                    connectedScaleM = connectedScaleRe.search(scalePart)
-                    result += getConnectedCombo(connectedM, connectedScaleM)
+            connected_re = re.compile(connected_pattern, re.IGNORECASE|re.VERBOSE)
+            connected_m = connected_re.search(part)
+            if connected_m:
+                scale_part = leader_skill_parts[i] if i < len(leader_skill_parts) else None    #i already incremented
+                if scale_part:
+                    connected_scale_re = re.compile(connected_scale_pattern, re.IGNORECASE|re.VERBOSE)
+                    connected_scale_m = connected_scale_re.search(scale_part)
+                    result += get_connected_combo(connected_m, connected_scale_m)
                 else:
-                    result += getConnectedCombo(connectedM, None)
+                    result += get_connected_combo(connected_m, None)
                 i += 1
                 continue
                 
-            noSkyfallRe = re.compile(noSkyfallPattern, re.IGNORECASE|re.VERBOSE)
-            noSkyfallM = noSkyfallRe.search(part)
-            if noSkyfallM:
-                result += getNoSkyfallSkill(noSkyfallM)
+            no_skyfall_re = re.compile(no_skyfall_pattern, re.IGNORECASE|re.VERBOSE)
+            no_skyfall_m = no_skyfall_re.search(part)
+            if no_skyfall_m:
+                result += get_no_skyfall_skill(no_skyfall_m)
                 continue
                 
-            boardSizeRe = re.compile(boardSizePattern, re.IGNORECASE|re.VERBOSE)
-            boardSizeM = boardSizeRe.search(part)
-            if boardSizeM:
-                result += getBoardSize(boardSizeM)
+            board_size_re = re.compile(board_size_pattern, re.IGNORECASE|re.VERBOSE)
+            board_size_m = board_size_re.search(part)
+            if board_size_m:
+                result += get_board_size_skill(board_size_m)
                 continue
                 
-            crossRe = re.compile(crossPattern, re.IGNORECASE|re.VERBOSE)
-            crossM = crossRe.search(part)
-            if crossM:
-                result += getCrossSkill(crossM)
+            cross_re = re.compile(cross_pattern, re.IGNORECASE|re.VERBOSE)
+            cross_m = cross_re.search(part)
+            if cross_m:
+                result += get_cross_skill(cross_m)
                 continue
                 
-            moveTimeRe = re.compile(moveTimePattern, re.IGNORECASE|re.VERBOSE)
-            moveTimeM = moveTimeRe.search(part)
-            if moveTimeM:
-                result += getMoveTimeSkill(moveTimeM)
+            move_time_re = re.compile(move_time_pattern, re.IGNORECASE|re.VERBOSE)
+            move_time_m = move_time_re.search(part)
+            if move_time_m:
+                result += get_move_time_skill(move_time_m)
                 continue
                 
-            basicComboRe = re.compile(basicComboPattern, re.IGNORECASE|re.VERBOSE)
-            basicComboM = basicComboRe.search(part)
-            if basicComboM:
-                result += getBasicComboSkill(basicComboM)
+            basic_combo_re = re.compile(basic_combo_pattern, re.IGNORECASE|re.VERBOSE)
+            basic_combo_m = basic_combo_re.search(part)
+            if basic_combo_m:
+                result += get_basic_combo_skill(basic_combo_m)
                 continue
                 
-            orbTypeComboRe = re.compile(orbTypeComboPattern, re.IGNORECASE|re.VERBOSE)
-            orbTypeComboM = orbTypeComboRe.search(part)
-            orbTypeComboScaleM = None
-            if orbTypeComboM:
+            orb_type_combo_re = re.compile(orb_type_combo_pattern, re.IGNORECASE|re.VERBOSE)
+            orb_type_combo_m = orb_type_combo_re.search(part)
+            orb_type_combo_scale_m = None
+            if orb_type_combo_m:
                 
-                if i < len(leaderSkillParts):
+                if i < len(leader_skill_parts):
                 
-                    orbTypeComboScaleRe = re.compile(orbTypeComboScalePattern, re.IGNORECASE|re.VERBOSE)
+                    orb_type_combo_scale_re = re.compile(orb_type_combo_scale_pattern, re.IGNORECASE|re.VERBOSE)
                 
                 
-                    scalePart = leaderSkillParts[i]
-                    orbTypeComboScaleM = orbTypeComboScaleRe.search(scalePart)
-                    if orbTypeComboScaleM:
+                    scale_part = leader_skill_parts[i]
+                    orb_type_combo_scale_m = orb_type_combo_scale_re.search(scale_part)
+                    if orb_type_combo_scale_m:
                         i += 1
                     
-                result += getOrbTypeComboSkill(orbTypeComboM, orbTypeComboScaleM)
+                result += get_orb_type_combo_skill(orb_type_combo_m, orb_type_combo_scale_m)
                 continue
             
-            enhancedMatchRe = re.compile(enhancedMatchPattern, re.IGNORECASE|re.VERBOSE)
-            enhancedMatchM = enhancedMatchRe.search(part)
-            if enhancedMatchM:
-                result += getEnhancedMatch(enhancedMatchM)
+            enhanced_match_re = re.compile(enhanced_match_pattern, re.IGNORECASE|re.VERBOSE)
+            enhanced_match_m = enhanced_match_re.search(part)
+            if enhanced_match_m:
+                result += get_enhanced_match(enhanced_match_m)
                 continue
             
-            colorMatchRe = re.compile(colorMatchPattern, re.IGNORECASE|re.VERBOSE)
-            colorMatchM = colorMatchRe.search(part)
-            if colorMatchM:
-                result += getColorMatchSkills(colorMatchM)
+            color_match_re = re.compile(color_match_pattern, re.IGNORECASE|re.VERBOSE)
+            color_match_m = color_match_re.search(part)
+            if color_match_m:
+                result += get_color_match_skills(color_match_m)
                 continue
                 
-            scalingColorMatchRe = re.compile(scalingColorMatchPattern, re.IGNORECASE|re.VERBOSE)
-            scalingColorMatchM = scalingColorMatchRe.search(part)
-            if scalingColorMatchM:
-                if i < len(leaderSkillParts):
-                    scalePart = leaderSkillParts[i]
-                    scaleRe = re.compile(colorMatchScalePattern, re.IGNORECASE|re.VERBOSE)
-                    scaleM = scaleRe.search(scalePart)
-                    result += getScalingColorMatchSkills(scalingColorMatchM, scaleM)
-                    if scaleM:
+            scaling_color_match_re = re.compile(scaling_color_match_pattern, re.IGNORECASE|re.VERBOSE)
+            scaling_color_match_m = scaling_color_match_re.search(part)
+            if scaling_color_match_m:
+                if i < len(leader_skill_parts):
+                    scale_part = leader_skill_parts[i]
+                    scale_re = re.compile(color_match_scale_pattern, re.IGNORECASE|re.VERBOSE)
+                    scale_m = scale_re.search(scale_part)
+                    result += get_scaling_color_match_skills(scaling_color_match_m, scale_m)
+                    if scale_m:
                         i += 1
                 else:
-                    result += getScalingColorMatchSkills(scalingColorMatchM, None)
+                    result += get_scaling_color_match_skills(scaling_color_match_m, None)
                 continue
                         
-            twoColorMatchRe = re.compile(twoColorMatchPattern, re.IGNORECASE|re.VERBOSE)
-            twoColorMatchM = twoColorMatchRe.search(part)
-            if twoColorMatchM:
-                result += getTwoColorMatchSkills(twoColorMatchM)
+            two_color_match_re = re.compile(two_color_match_pattern, re.IGNORECASE|re.VERBOSE)
+            two_color_match_m = two_color_match_re.search(part)
+            if two_color_match_m:
+                result += get_two_color_match_skills(two_color_match_m)
                 continue
             
             
-            heartCrossRe = re.compile(heartCrossPattern, re.IGNORECASE|re.VERBOSE)
-            heartCrossM = heartCrossRe.search(part)
-            if heartCrossM:
-                result += getHeartCrossSkill(heartCrossM)
+            heart_cross_re = re.compile(heart_cross_pattern, re.IGNORECASE|re.VERBOSE)
+            heart_cross_m = heart_cross_re.search(part)
+            if heart_cross_m:
+                result += get_heart_cross_skill(heart_cross_m)
                 continue
             
-            resolveRe = re.compile(resolvePattern, re.IGNORECASE|re.VERBOSE)
-            resolveM = resolveRe.search(part)
-            if resolveM:
-                extraPart = None
-                if i < len(leaderSkillParts):
-                    extraPart = leaderSkillParts[i]
-                    extraPartRe = re.compile(resolveExtraPattern, re.IGNORECASE|re.VERBOSE)
-                    extraM = extraPartRe.search(extraPart)
-                    if extraM:
-                        result += getResolveSkill(resolveM, extraM)
+            resolve_re = re.compile(resolve_pattern, re.IGNORECASE|re.VERBOSE)
+            resolve_m = resolve_re.search(part)
+            if resolve_m:
+                extra_part = None
+                if i < len(leader_skill_parts):
+                    extra_part = leader_skill_parts[i]
+                    extra_part_re = re.compile(resolve_extra_pattern, re.IGNORECASE|re.VERBOSE)
+                    extra_m = extra_part_re.search(extra_part)
+                    if extra_m:
+                        result += get_resolve_skill(resolve_m, extra_m)
                         i += 1
                 continue
             
-            skillUsedRe = re.compile(onSkillUsedPattern, re.IGNORECASE|re.VERBOSE)
-            skillUsedMatch = skillUsedRe.search(part)
-            if skillUsedMatch:
-                if i < len(leaderSkillParts):
-                    extra = leaderSkillParts[i]
-                    result += getSkillUsedSkill(skillUsedMatch, extra)
+            skill_used_re = re.compile(on_skill_used_pattern, re.IGNORECASE|re.VERBOSE)
+            skill_used_match = skill_used_re.search(part)
+            if skill_used_match:
+                if i < len(leader_skill_parts):
+                    extra = leader_skill_parts[i]
+                    result += get_skill_used_skill(skill_used_match, extra)
                     i += 1
                 continue
             
-            basicDamageReductionRe = re.compile(basicDamageReductionPattern, re.I|re.VERBOSE)
-            basicDamageReductionM = basicDamageReductionRe.search(part)
-            if basicDamageReductionM:
-                result += getBasicDamageReduction(basicDamageReductionM)
+            basic_damage_reduction_re = re.compile(basic_damage_reduction_pattern, re.I|re.VERBOSE)
+            basic_damage_reduction_m = basic_damage_reduction_re.search(part)
+            if basic_damage_reduction_m:
+                result += get_basic_damage_reduction_skill(basic_damage_reduction_m)
                 continue
             
-            hpCondRe = re.compile(hpConditionalPattern, re.I|re.VERBOSE)
-            hpCondM = hpCondRe.search(part)
-            if hpCondM:
-                result += getHpCondSkill(hpCondM)
+            hp_cond_re = re.compile(hp_conditional_pattern, re.I|re.VERBOSE)
+            hp_cond_m = hp_cond_re.search(part)
+            if hp_cond_m:
+                result += get_hp_cond_skill(hp_cond_m)
                 continue
             
-            postOrbElimRe = re.compile(postOrbElimPattern, re.I|re.VERBOSE)
-            postOrbElimM = postOrbElimRe.search(part)
-            if postOrbElimM:
-                postOrbElimExtraRe = re.compile(postOrbElimExtraPattern, re.I|re.VERBOSE)
-                if i < len(leaderSkillParts):
-                    extraPart = leaderSkillParts[i]
-                    extraM = postOrbElimExtraRe.search(extraPart)
-                    if extraM:
-                        result += getPostOrbElimSkill(postOrbElimM, extra=extraM)
+            post_orb_elim_re = re.compile(post_orb_elim_pattern, re.I|re.VERBOSE)
+            post_orb_elim_m = post_orb_elim_re.search(part)
+            if post_orb_elim_m:
+                post_orb_elim_extra_re = re.compile(post_orb_elim_extra_pattern, re.I|re.VERBOSE)
+                if i < len(leader_skill_parts):
+                    extra_part = leader_skill_parts[i]
+                    extra_m = post_orb_elim_extra_re.search(extra_part)
+                    if extra_m:
+                        result += get_post_orb_elim_skill(post_orb_elim_m, extra=extra_m)
                         i += 1
                         continue
                     
-                result += getPostOrbElimSkill(postOrbElimM)
+                result += get_post_orb_elim_skill(post_orb_elim_m)
                 continue
             
-            coopRe = re.compile(coopModePattern, re.I|re.VERBOSE)
-            coopM = coopRe.search(part)
-            if coopM:
-                result += getCoopSkills(coopM)
+            coop_re = re.compile(coop_mode_pattern, re.I|re.VERBOSE)
+            coop_m = coop_re.search(part)
+            if coop_m:
+                result += get_coop_skills(coop_m)
                 continue
                 
-            counterRe = re.compile(counterPattern, re.I|re.VERBOSE)
-            counterM = counterRe.search(part)
-            if counterM:
-                result += getCounterSkills(counterM)
+            counter_re = re.compile(counter_pattern, re.I|re.VERBOSE)
+            counter_m = counter_re.search(part)
+            if counter_m:
+                result += get_counter_skills(counter_m)
                 continue
                 
-            exactComboRe = re.compile(exactComboPattern, re.I|re.VERBOSE)
-            exactComboM = exactComboRe.search(part)
-            if exactComboM:
-                result += getExactComboSkill(exactComboM)
+            exact_combo_re = re.compile(exact_combo_pattern, re.I|re.VERBOSE)
+            exact_combo_m = exact_combo_re.search(part)
+            if exact_combo_m:
+                result += get_exact_combo_skill(exact_combo_m)
                 continue
                 
             print("NOT DONE: " + part)
@@ -1059,9 +1068,9 @@ def main():
     
     print("UNFINISHED: " + str(unfinished) + "/" + str(count))
     
-    outFile = open("formattedLeaderSkills.json", "w", encoding="utf-8")
-    outFile.write(result)
-    outFile.close()
+    out_file = open("formattedLeaderSkills.json", "w", encoding="utf-8")
+    out_file.write(result)
+    out_file.close()
     file.close()
     
 
