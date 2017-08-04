@@ -314,14 +314,72 @@ counter_pattern = r'''
 '''
 
 
-def format_skill_effect(hp=0, atk=0, rcv=0, shield=0,
-                      atk_scale_type=None, atk_scale=0, min_atk=0, max_atk=0,
-                      rcv_scale=0, min_rcv=0, max_rcv=0,
-                      min_combo_count=0, max_combo_count=0,
-                      min_connected=0, max_connected=0,
-                      rows=0, cols=0,
-                      orb_types=None, attributes=None, types=None):
-    return ""
+def format_skill(description, skill_type, hp=0, atk=0, rcv=0, shield=0,
+                  orb_types=None, attributes=None, types=None,
+                  atk_scale_type=None, atk_scale=0, min_atk=0, max_atk=0,
+                  rcv_scale=0, min_rcv=0, max_rcv=0,
+                  min_combo=0, max_combo=0,
+                  min_connected=0, max_connected=0,
+                  rows=0, cols=0):
+    result = "{\"skill_type\":\"" + skill_type + "\","
+    result += "\"effect\":{"
+    if hp:
+        result += "\"hp\":" + str(hp) + ","
+    if atk:
+        result += "\"atk\":" + str(atk) + ","
+    if rcv:
+        result += "\"rcv\":" + str(rcv) + ","
+    if shield:
+        result += "\"shield\":" + str(shield) + ","
+       
+    if orb_types:
+        result += "\"orb_types\":["
+        for orb_type in orb_types:
+            result += "\"" + orb_type + "\","
+        result += result.strip(",") + "]"
+        
+    if attributes:
+        result += "\"attributes\":["
+        for attribute in attributes:
+            result += "\"" + attribute + "\","
+        result += result.strip(",") + "]"
+        
+    if types:
+        result += "\"types\":["
+        for type in types:
+            result += "\"" + type + "\","
+        result += result.strip(",") + "]"
+       
+    if atk_scale_type:
+        result += "\"atk_scale_type\":\"" + atk_scale_type + "\","
+        result += "\"atk_scale\":" + str(atk_scale) + ","
+        result += "\"min_atk\":" + str(min_atk) + ","
+        result += "\"max_atk\":" + str(max_atk) + ","
+        
+    if rcv_scale:
+        result += "\"rcv_scale\":" + str(rcv_scale) + ","
+        result += "\"min_rcv\":" + str(min_rcv) + ","
+        result += "\"max_rcv\":" + str(max_rcv) + ","
+        
+    if min_combo:
+        result += "\"min_combo\":" + str(min_combo) + ","
+    if max_combo:
+        result += "\"max_combo\":" + str(max_combo) + ","
+        
+    if min_connected:
+        result += "\"min_connected\":" + str(min_connected) + ","
+    if max_connected:
+        result += "\"max_connected\":" + str(max_connected) + ","
+        
+    if rows:
+        result += "\"rows\":" + str(rows) + ","
+    if cols:
+        result += "\"cols\":" + str(cols) + ","
+    result = result.strip(",") + "},"
+    
+    result += "\"description\":\"" + description + "\""
+    result += "},"
+    return result
 
 
 def format_combo_skills(description, min_atk=0, max_atk=0, atk_scale=0,
@@ -561,20 +619,31 @@ def get_no_skyfall_skill(match):
     result += "},"
     result += "\"description\":\"" + match[0] + "\""
     result += "},"
+    
     return result
     
 def get_board_size_skill(match):
+    """
+        returns a json string that represents the board size skill given in the
+        regex match
+        
+        the regex match is a list in the format:
+            [description, rows, cols]
+        
+        the format of the returned string is:
+            {"skill_type":"board_size",
+             "effect":{
+                "rows": rows,
+                "cols": cols
+             },
+             "description": description},
+    """
+    des = match[0]
+    skill_type = "board_size"
     rows = match[1]
     cols = match[2]
-
-    result = "{\"skilltype\":\"boardsize\","
-    result += "\"effect\":{"
-    result += "\"rows\":" + str(rows) + ","
-    result += "\"cols\":" + str(cols)
-    result += "},"
-    result += "\"description\":\"" + match[0] + "\""
-    result += "},"
-    return result
+    
+    return format_skill(des, skill_type, rows=rows, cols=cols)
     
 def get_cross_skill(match):
     atk_scale = match[1]
