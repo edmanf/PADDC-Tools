@@ -320,7 +320,8 @@ def format_skill(skill_type, description, hp=0, atk=0, rcv=0, shield=0,
                  rcv_scale=0, min_rcv=0, max_rcv=0, min_combo=0, max_combo=0,
                  min_connected=0, max_connected=0, min_enhanced=0,
                  min_orb_type_count=0, max_orb_type_count=0,
-                 rows=0, cols=0, enemy_attributes=None):
+                 rows=0, cols=0, enemy_attributes=None,
+                 hp_conditional_type=None, hp_threshold=0):
     result = "{\"skill_type\":\"" + skill_type + "\","
     result += "\"effect\":{"
     if hp:
@@ -384,7 +385,12 @@ def format_skill(skill_type, description, hp=0, atk=0, rcv=0, shield=0,
         for attribute in enemy_attributes:
             result += "\"" + attribute + "\","
         result = result.strip(",") + "],"
-        
+    
+    if hp_conditional_type:
+        result += "\"hp_conditional_type\":\"" + hp_conditional_type + "\","
+    if hp_threshold:
+        result += "\"hp_threshold\":" + str(hp_threshold) + ","
+    
     if rows:
         result += "\"rows\":" + str(rows) + ","
     if cols:
@@ -666,15 +672,9 @@ def get_heart_cross_skill(match):
     
 def get_resolve_skill(resolve_m, extra_m):
     des = resolve_m[0] + ". " + extra_m[0]
-    hpThresh = resolve_m[1]
+    hp_threshold = resolve_m[1]
     
-    result = "{\"skilltype\":\"resolve\","
-    result += "\"effect\":{"
-    result += "\"hp_threshold\":" + str(hpThresh)
-    result += "},"
-    result += "\"description\":\"" + des + "\""
-    result += "},"
-    return result
+    return format_skill("resolve", des, hp_threshold=hp_threshold)
 
 def get_skill_used_skill(match, extra):
     des = match[0]
@@ -717,7 +717,8 @@ def get_hp_cond_skill(match):
     result += "},"
     result += "\"description\":\"" + des + "\""
     result += "},"
-    return result
+    return format_skill("hp_conditional", des, atk=atk, rcv=rcv,
+                        hp_conditional_type=hp_type, hp_threshold=thresh)
 
 def get_post_orb_elim_skill(match, extra=None):
     des = match[0]
@@ -728,16 +729,8 @@ def get_post_orb_elim_skill(match, extra=None):
     
     if extra:
         des += ". " + extra[0]
-        
-    result = "{\"skilltype\":\"after_match\","
-    result += "\"effect\":{"
-    result += "\"atk\":" + str(atk) + ","
-    result += "\"rcv\":" + str(rcv)
-    result += "},"
-    
-    result += "\"description\":\"" + des + "\""
-    result += "},"
-    return result
+
+    return format_skill("post_match", des, atk=atk, rcv=rcv)
     
     
 def get_coop_skills(match):
