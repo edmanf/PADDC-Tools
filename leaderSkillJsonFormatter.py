@@ -314,13 +314,13 @@ counter_pattern = r'''
 '''
 
 
-def format_skill(description, skill_type, hp=0, atk=0, rcv=0, shield=0,
-                  orb_types=None, attributes=None, types=None,
-                  atk_scale_type=None, atk_scale=0, min_atk=0, max_atk=0,
-                  rcv_scale=0, min_rcv=0, max_rcv=0,
-                  min_combo=0, max_combo=0,
-                  min_connected=0, max_connected=0,
-                  rows=0, cols=0):
+def format_skill(skill_type, description, hp=0, atk=0, rcv=0, shield=0,
+                 orb_types=None, attributes=None, types=None,
+                 atk_scale_type=None, atk_scale=0, min_atk=0, max_atk=0,
+                 rcv_scale=0, min_rcv=0, max_rcv=0, min_combo=0, max_combo=0,
+                 min_connected=0, max_connected=0, min_enhanced=0,
+                 min_orb_type_count=0, max_orb_type_count=0,
+                 rows=0, cols=0, enemy_attributes=None):
     result = "{\"skill_type\":\"" + skill_type + "\","
     result += "\"effect\":{"
     if hp:
@@ -336,21 +336,21 @@ def format_skill(description, skill_type, hp=0, atk=0, rcv=0, shield=0,
         result += "\"orb_types\":["
         for orb_type in orb_types:
             result += "\"" + orb_type + "\","
-        result += result.strip(",") + "]"
+        result = result.strip(",") + "],"
         
     if attributes:
         result += "\"attributes\":["
         for attribute in attributes:
             result += "\"" + attribute + "\","
-        result += result.strip(",") + "]"
+        result = result.strip(",") + "],"
         
     if types:
         result += "\"types\":["
         for type in types:
             result += "\"" + type + "\","
-        result += result.strip(",") + "]"
+        result = result.strip(",") + "],"
        
-    if atk_scale_type:
+    if atk_scale:
         result += "\"atk_scale_type\":\"" + atk_scale_type + "\","
         result += "\"atk_scale\":" + str(atk_scale) + ","
         result += "\"min_atk\":" + str(min_atk) + ","
@@ -370,6 +370,20 @@ def format_skill(description, skill_type, hp=0, atk=0, rcv=0, shield=0,
         result += "\"min_connected\":" + str(min_connected) + ","
     if max_connected:
         result += "\"max_connected\":" + str(max_connected) + ","
+     
+    if min_enhanced:
+        result += "\"min_enhanced\":" + str(min_enhanced) + "," 
+     
+    if min_orb_type_count:
+        result += "\"min_orb_type_count\":" + str(min_orb_type_count) + ","
+    if max_orb_type_count:
+        result += "\"max_orb_type_count\":" + str(max_orb_type_count) + ","
+
+    if enemy_attributes:
+        result += "\"enemy_attributes\":["
+        for attribute in enemy_attributes:
+            result += "\"" + attribute + "\","
+        result = result.strip(",") + "],"
         
     if rows:
         result += "\"rows\":" + str(rows) + ","
@@ -381,77 +395,7 @@ def format_skill(description, skill_type, hp=0, atk=0, rcv=0, shield=0,
     result += "},"
     return result
 
-
-def format_combo_skills(description, min_atk=0, max_atk=0, atk_scale=0,
-                min_combo=0, max_combo=0, attributes=None, shield=0,
-                min_rcv=0, maxRcv=0, rcv_scale=0):
-    
-    attribute_str = "["
-    for attribute in attributes:
-        attribute_str += "\"" + attribute + "\","
-    attribute_str = attribute_str[:-1] + "]" #because of this, there must be at least 1 attribute
-    result = "{\"skilltype\":\"combo\","
-    result += "\"effect\":{"
-    result += "\"orb_types\":" + attribute_str + ","
-    if atk_scale:
-        result += "\"atk_scale_type\":\"additive\","
-        result += "\"atk_scale\":" + str(atk_scale) + ","
-        result += "\"min_atk\":" + str(min_atk) + ","
-        result += "\"max_atk\":" + str(max_atk) + ","
-    else:
-        result += "\"atk_scale_type\":\"none\","
-        result += "\"atk\":" + str(min_atk) + ","
-        
-    if rcv_scale:
-        result += "\"min_rcv\":" + str(min_rcv) + ","
-        result += "\"maxRcv\":" + str(maxRcv) + "," 
-        result += "\"rcv_scale\":" + str(rcv_scale) + ","
-    elif min_rcv or maxRcv:
-        result += "\"rcv_scale\":\"none\","
-        result += "\"rcv\":"
-        result += str(min_rcv) if min_rcv else str(maxRcv)
-        result += ","
-        
-    result += "\"start_combo\":" + str(min_combo) + ","
-    if max_combo:
-        result += "\"end_combo\":" + str(max_combo) + ","
-    
-    if shield:
-        result += "\"shield\":" + str(shield) + ","
-    result = result[:-1] + "},"
-    result += "\"description\":\"" + description + "\""
-    result += "},"
-    
-    return result
-
-def format_basic_skills(description, hp, atk, rcv, attributes, types):
-    hp = hp if hp else 1
-    atk = atk if atk else 1
-    rcv = rcv if rcv else 1
-    result = "{\"skilltype\":\"basic\","
-    result += "\"effect\":{"
-    result += "\"attribute\":["
-    if attributes:
-        for attribute in attributes:
-            result += "\"" + attribute + "\","
-        result = result[:-1]
-    result += "],"
-        
-    result += "\"type\":["
-    if types:
-        for type in types:
-            result += "\"" + type + "\","
-        result = result[:-1]
-    result += "],"
-    result += "\"hp\":" + str(hp) + ","
-    result += "\"atk\":" + str(atk) + ","
-    result += "\"rcv\":" + str(rcv)
-    
-    result += "},"
-    result += "\"description\":\"" + description + "\""
-    result += "},"
-    return result
-    
+"""
 def format_color_match_skills(description, orb_types, min_atk, 
                            max_atk=None, min_count=None, max_count=None,
                            atk_scale=None, rcv=None, shield=None):
@@ -482,7 +426,8 @@ def format_color_match_skills(description, orb_types, min_atk,
     result += "\"description\":\"" + description + "\""
     result += "},"
     return result
-    
+"""
+
 def get_basic_skill(regex_matches):
     basic_str = regex_matches.group().strip(" ")
     description = basic_str
@@ -503,38 +448,43 @@ def get_basic_skill(regex_matches):
             hp = multiplier_m[2] if multiplier_m[2] else 1
             atk = multiplier_m[3] if multiplier_m[3] else 1
             rcv = multiplier_m[4] if multiplier_m[4] else 1
-    return format_basic_skills(description, hp, atk, rcv, attributes, types)
+            
+    return format_skill("basic", description, hp=hp, atk=atk, rcv=rcv, attributes=attributes, types=types)
 
 def get_basic_skill2(match):
         des = match[0]
         hp = match[1]
         atk = match[2]
         rcv = match[3]
-        type = [match[4]]
-        return format_basic_skills(des, hp, atk, rcv, None, type)
+        types = [match[4]]
+        return format_skill("basic", des, hp=hp, atk=atk, rcv=rcv, types=types)
   
 def get_combo_skill(base_matches, scale_matches):
     description = base_matches[0]
     min_atk = base_matches[1]
     min_rcv = base_matches[2]
     min_combo = base_matches[3]
-            
-    attributes = ["all"]
+    
+    atk_scale_type = None
+    atk_scale = 0
+    rcv_scale = 0
+    max_atk = 0
+    max_rcv = 0
+    max_combo = 0
     
     if scale_matches:
         description += ". " + scale_matches[0]
+        atk_scale_type = "additive"
         atk_scale = scale_matches[1]
         rcv_scale = scale_matches[2]
         max_atk = scale_matches[3]
-        maxRcv = scale_matches[4]
+        max_rcv = scale_matches[4]
         max_combo = scale_matches[5]
         
-        return format_combo_skills(description, attributes=attributes, min_atk=min_atk, max_atk=max_atk, 
-                                 atk_scale=atk_scale, min_combo=min_combo, max_combo=max_combo,
-                                 rcv_scale=rcv_scale, min_rcv=min_rcv, maxRcv=maxRcv)
-    else:
-        return format_combo_skills(description, attributes=attributes, min_atk=min_atk,
-                                 min_rcv=min_rcv, min_combo=min_combo)
+    return format_skill("combo", description, min_atk=min_atk, max_atk=max_atk, 
+                        atk_scale_type=atk_scale_type, atk_scale=atk_scale, min_combo=min_combo, max_combo=max_combo,
+                        rcv_scale=rcv_scale, min_rcv=min_rcv, max_rcv=max_rcv)
+
     
 def get_basic_combo_skill(match):
     des = match[0]
@@ -542,11 +492,9 @@ def get_basic_combo_skill(match):
     min_rcv = match[2]
     shield = match[3]
     min_combo = match[4]
-
-    attributes = ["all"]
     
-    return format_combo_skills(des, min_atk=min_atk, min_combo=min_combo,
-                attributes=attributes, shield=shield, min_rcv=min_rcv)
+    return format_skill("combo", des, min_atk=min_atk, min_combo=min_combo,
+                        shield=shield, min_rcv=min_rcv)
     
 def get_orb_type_combo_skill(match, scale_match):
     des = match[0]
@@ -554,34 +502,40 @@ def get_orb_type_combo_skill(match, scale_match):
     min_combo = match[2]
     attributes = [match[3]]
     
+    atk_scale_type = None
+    atk_scale = 0
+    max_atk = 0
+    max_combo = 0
     if scale_match:
         des += ". " + scale_match[0]
-        atk_scale = scale_match[1] if scale_match[1] else 0
-        max_atk = scale_match[2] if scale_match[2] else min_atk
-        max_combo = scale_match[3] if scale_match[3] else min_combo
-        return format_combo_skills(des, min_atk=min_atk, max_atk=max_atk, atk_scale=atk_scale,
-                                 min_combo=min_combo, max_combo=max_combo, attributes=attributes)
-    else:
-        return format_combo_skills(des, min_atk=min_atk, min_combo=min_combo, attributes=attributes)
+        atk_scale_type = "additive"
+        atk_scale = scale_match[1]
+        max_atk = scale_match[2]
+        max_combo = scale_match[3]
+    return format_skill("combo", des, min_atk=min_atk, max_atk=max_atk,
+                        atk_scale=atk_scale, atk_scale_type=atk_scale_type,
+                        min_combo=min_combo, max_combo=max_combo, attributes=attributes)
 
 def get_exact_combo_skill(match):
     des = match[0]
     min_atk = match[1]
     min_combo = match[2]
     max_combo = min_combo
-    attributes = ["all"]
     
-    return format_combo_skills(des, min_atk=min_atk, min_combo=min_combo,
-                                  max_combo=max_combo, attributes=attributes)
+    return format_skill("combo", des, min_atk=min_atk, min_combo=min_combo,
+                                  max_combo=max_combo)
         
-def get_connected_combo(base_matches, scale_matches):    
+def get_connected_combo(base_matches, scale_matches): 
+    des = base_matches[0]
     min_atk = base_matches[1]
     start_count = base_matches[3]
     rcv = base_matches[2] if base_matches[2] else 1
     atk_scale = 0
+    atk_scale_type = "additive"
     max_atk = min_atk
-    end_count = start_count  
+    end_count = 0  
     if scale_matches:
+        des += ". " + scale_matches[0]
         atk_scale = scale_matches[1]
         max_atk = scale_matches[2]
         end_count = scale_matches[3]
@@ -589,28 +543,9 @@ def get_connected_combo(base_matches, scale_matches):
     orb_type_re = re.compile(orb_type_pattern, re.IGNORECASE|re.VERBOSE)
     orb_type_m = orb_type_re.findall(base_matches[0])
         
-    result = "{\"skilltype\":\"connected\","
-
-    result += "\"effect\":{"
-    result += "\"orb_types\":["
-    # dont check for None, there must be an orb_type
-    for orb_type in orb_type_m:
-        result += "\"" + orb_type + "\","
-    result = result.strip(",") + "],"
-    result += "\"atk_scale_type\":\"additive\","
-    result += "\"atk_scale\":" + str(atk_scale) + ","
-    result += "\"min_atk\":" + str(min_atk) + ","
-    result += "\"max_atk\":" + str(max_atk) + ","
-    result += "\"start_count\":" + str(start_count) + ","
-    result += "\"end_count\":" + str(end_count) + ","
-    result += "\"rcv\":" + str(rcv) + ","
-    result += "\"description\":\"" + base_matches[0]
-    if scale_matches:
-        result += ". " + scale_matches[0]
-    result += "\""
-    result += "}"
-    result += "},"
-    return result
+    return format_skill("connected", des, min_atk=min_atk, min_connected=start_count,
+                        atk_scale_type=atk_scale_type, rcv=rcv, atk_scale=atk_scale,
+                        max_atk=max_atk, max_connected=end_count, orb_types=orb_type_m)
     
 def get_no_skyfall_skill(match):
     result = "{\"skilltype\":\"skyfall\","
@@ -650,24 +585,12 @@ def get_cross_skill(match):
     description = match[0]
     
     orb_type_re = re.compile(orb_type_pattern, re.IGNORECASE|re.VERBOSE)
-    orb_type_m = orb_type_re.findall(description)
+    orb_types = orb_type_re.findall(description)
     
+    atk_scale_type="multiplicative"
     
-    result = "{\"skilltype\":\"cross\","
-    result += "\"cross\":["
-    
-    #dont check for none, because there has to be an orb type
-    for orb_type in orb_type_m:
-        result += "\"" + orb_type + "\","
-    result = result.strip(",") + "],"
-    result += "\"effect\":{"
-    result += "\"atk_scale_type\":\"multiplicative\","
-    result += "\"atk_scale\":" + atk_scale
-    result += "},"
-    
-    result += "\"description\":\"" + description + "\""
-    result += "}"
-    return result
+    return format_skill("cross", description, atk_scale_type=atk_scale_type, atk_scale=atk_scale,
+                        orb_types=orb_types)
     
 def get_move_time_skill(match):
     move_time_type = "fixed" if match[1] == "Fixed" else "increase"
@@ -687,16 +610,11 @@ def get_enhanced_match(match):
     orb_count = match[2]
     min_enhanced = match[3]
     
-    result = "{\"skilltype\":\"enhanced_match\","
-    result += "\"effect\":{"
-    result += "\"atk\":" + str(atk) + ","
-    result += "\"orb_count\":" + str(orb_count) + ","
-    result += "\"min_enhanced\":" + str(min_enhanced)
-    result += "},"
-    result += "\"description\":\"" + des + "\"},"
-    return result
+    return format_skill("enhanced_match", des, atk=atk, min_connected=orb_count,
+                        max_connected=orb_count, min_enhanced=min_enhanced)
     
 def get_color_match_skills(match):
+    skill_type = "color_match"
     des = match[0]
     atk = match[1]
     rcv = match[2]
@@ -704,7 +622,7 @@ def get_color_match_skills(match):
     orbString = match[4]
     orb_type_re = re.compile(orb_type_pattern, re.IGNORECASE|re.VERBOSE)
     orb_types = orb_type_re.findall(orbString)
-    return format_color_match_skills(des, orb_types, atk, rcv=rcv, shield=shield)
+    return format_skill(skill_type, des, orb_types=orb_types, atk=atk, rcv=rcv, shield=shield)
 
 def get_scaling_color_match_skills(match, scale_match):
     des = match[0]
@@ -712,6 +630,7 @@ def get_scaling_color_match_skills(match, scale_match):
     rcv = match[2]
     min_count = match[3]
     shield = match[4]
+    atk_scale_type = "additive"
     atk_scale = 0
     max_count = min_count
     max_atk = min_atk
@@ -723,9 +642,10 @@ def get_scaling_color_match_skills(match, scale_match):
         max_atk = scale_match[2]
         max_count = scale_match[3]
     
-    return format_color_match_skills(des, orb_types, min_atk, max_atk=max_atk,
-                                  min_count=min_count, max_count=max_count,
-                                  atk_scale=atk_scale, rcv=rcv, shield=shield)
+    return format_skill("color_match", des, orb_types=orb_types, min_atk=min_atk,
+                        max_atk=max_atk, atk_scale_type=atk_scale_type,
+                        min_orb_type_count=min_count, max_orb_type_count=max_count,
+                        atk_scale=atk_scale, rcv=rcv, shield=shield)
   
 def get_two_color_match_skills(match):
     des = match[0]
@@ -733,21 +653,15 @@ def get_two_color_match_skills(match):
     rcv = match[2]
     shield = match[3]
     orb_types = [match[4], match[5]]
-    return format_color_match_skills(des, orb_types, atk, rcv=rcv, shield=shield)
+    return format_skill("color_match", des, orb_types=orb_types, atk=atk,
+                        rcv=rcv, shield=shield)
 
 def get_heart_cross_skill(match):
     des = match[0]
     atk = match[1] if match[1] else 1
     shield = match[2] if match[2] else 0
-    
-    result = "{\"skilltype\":\"heart_cross\","
-    result += "\"effect\":{"
-    result += "\"atk\":" + str(atk) + ","
-    result += "\"shield\":" + str(shield)
-    result += "},"
-    result += "\"description\":\"" + des + "\""
-    result += "},"
-    return result
+
+    return format_skill("heart_cross", des, atk=atk, shield=shield)
     
     
 def get_resolve_skill(resolve_m, extra_m):
@@ -775,49 +689,16 @@ def get_skill_used_skill(match, extra):
     type_re = re.compile(type_pattern, re.I|re.VERBOSE)
     types = type_re.findall(condition)
         
-
-    result = "{\"skilltype\":\"skill_used\","
-    result += "\"attribute\":["
-    if attributes:
-        for attribute in attributes:
-            result += "\"" + attribute + "\","
-        result = result[:-1]
-    result += "],"
-        
-    result += "\"type\":["
-    if types:
-        for type in types:
-            result += "\"" + type + "\","
-        result = result[:-1]
-    result += "],"
-        
-    result += "\"effect\":{"
-    result += "\"atk\":" + str(atk) + ","
-    result += "\"rcv\":" + str(rcv)
-    result += "},"
-    result += "\"description\":\"" + match[0] + "\""
-    result += "},"
-    return result
+    return format_skill("skill_used", des, atk=atk, rcv=rcv, attributes=attributes, types=types)
   
 def get_basic_damage_reduction_skill(match):
     des = match[0]
     value = match[1]
     attribute_re = re.compile(attribute_pattern, re.I|re.VERBOSE)
-    attributes = attribute_re.findall(match[2])
+    enemy_attributes = attribute_re.findall(match[2])
     
-    result = "{\"skilltype\":\"shield\","
-    result += "\"effect\":{"
-    result += "\"attribute\":["
-    if attributes:
-        for attribute in attributes:
-            result += "\"" + attribute + "\","
-        result = result[:-1]
-    result += "],"
-    result += "\"shield\":" + str(value)
-    result += "},"
-    result += "\"description\":\"" + des + "\""
-    result += "},"
-    return result
+    return format_skill("basic", des, enemy_attributes=enemy_attributes,
+                        shield=value)
   
 def get_hp_cond_skill(match):
     des = match[0]
@@ -869,20 +750,9 @@ def get_coop_skills(match):
         hp = match[1]
         atk = match[1]
         rcv = match[1]
-        
-    hp = match[2] if match[2] else hp
-    atk = match[3] if match[3] else atk
-    rcv = match[4] if match[4] else rcv
-    
-    result = "{\"skilltype\":\"co-op\","
-    result += "\"effect\":{"
-    result += "\"hp\":" + str(hp) + ","
-    result += "\"atk\":" + str(atk) + ","
-    result += "\"rcv\":" + str(rcv)
-    result += "},"
-    result += "\"description\":\"" + des + "\""
-    result += "},"
-    return result
+        return format_skill("co-op", des, hp=match[1], atk=match[1], rcv=match[1])
+    else:    
+        return format_skill("co-op", des, hp=match[2], atk=match[3], rcv=match[4])
     
 def get_counter_skills(match):
     des = match[0]
@@ -899,14 +769,8 @@ def get_counter_skills(match):
     result += "\"description\":\"" + des + "\""
     result += "},"
     return result
-    
-def main():
-    file = open("sampleLeaderSkills.json")
-    leader_json = json.load(file)
-    
-    if len(leader_json) is 0:
-        return
-    
+  
+def get_skills(leader_json):
     unfinished = 0
     count = 0
     paren_fix_re = re.compile(paren_orig_pattern, re.I|re.VERBOSE)
@@ -981,7 +845,8 @@ def main():
             board_size_re = re.compile(board_size_pattern, re.IGNORECASE|re.VERBOSE)
             board_size_m = board_size_re.search(part)
             if board_size_m:
-                result += get_board_size_skill(board_size_m)
+                result += format_skill("board_size", board_size_m[0], 
+                                               rows=board_size_m[1], cols=board_size_m[2])
                 continue
                 
             cross_re = re.compile(cross_pattern, re.IGNORECASE|re.VERBOSE)
@@ -1136,9 +1001,17 @@ def main():
     result += "]"
     
     print("UNFINISHED: " + str(unfinished) + "/" + str(count))
+    return result
+  
+def main():
+    file = open("sampleLeaderSkills.json")
+    leader_json = json.load(file)
+    
+    if len(leader_json) is 0:
+        return
     
     out_file = open("formattedLeaderSkills.json", "w", encoding="utf-8")
-    out_file.write(result)
+    out_file.write(get_skills(leader_json))
     out_file.close()
     file.close()
     
