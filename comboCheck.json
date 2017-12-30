@@ -1,0 +1,379 @@
+[{
+	"name": "Everflowing Sunlight",
+	"description": "Can no longer clear 4 or less connected orbs. Water attribute cards ATK x5. ATK x2 at 3 combos. ATK x1 for each additional combo, up to ATK x3 at 4 combos.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"atk_scale_type": "additive",
+			"atk_scale": 1,
+			"min_atk": 2,
+			"max_atk": 3,
+			"min_combo": 3
+		},
+		"description": "ATK x2 at 3 combos. ATK x1 for each additional combo, up to ATK x3 at 4 combos"
+	}]
+},
+{
+	"name": "Bubbly Dance",
+	"description": "ATK x3 at 4 combos. ATK x1 for each additional combo, up to ATK x9 at 10 combos. HP x1.5, ATK x1.5, RCV x1.5 in cooperation mode.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"atk_scale_type": "additive",
+			"atk_scale": 1,
+			"min_atk": 3,
+			"max_atk": 9,
+			"min_combo": 4
+		},
+		"description": "ATK x3 at 4 combos. ATK x1 for each additional combo, up to ATK x9 at 10 combos"
+	}]
+},
+{
+	"name": "Azure Spring Dragon's Fangs",
+	"description": "No skyfall matches. Water attribute cards ATK x1.5, RCV x1.5. All attribute cards ATK x5 when reaching exactly 7 combos.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"atk_scale_type": "additive",
+			"atk_scale": 0,
+			"min_atk": 5,
+			"max_atk": 5,
+			"min_combo": 7,
+			"max_combo": 7
+		},
+		"description": "All attribute cards ATK x5 when reaching exactly 7 combos"
+	}]
+},
+{
+	"name": "Axiom of Exorcism",
+	"description": "No skyfall matches. Fire attribute cards HP x1.5, ATK x2. ATK x6, RCV x6 when reaching 8 combos. ATK x1,  RCV x1 for each additional combo, up to ATK x7, RCV x7 at 9 combos.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"atk_scale_type": "additive",
+			"atk_scale": 1,
+			"min_atk": 6,
+			"max_atk": 7,
+			"rcv_scale_type": "additive",
+			"rcv_scale": 1,
+			"min_rcv": 6,
+			"max_rcv": 7,
+			"min_combo": 8
+		},
+		"description": "ATK x6, RCV x6 when reaching 8 combos. ATK x1,  RCV x1 for each additional combo, up to ATK x7, RCV x7 at 9 combos"
+	}]
+},
+{
+	"name": "Eternal Dragon Unity - Torvio Koh",
+	"description": "All attribute cards ATK x2, RCV x2 when reaching 5 or more combos. ATK x4, reduce damage taken by 50% after matching Heal orbs in a cross formation.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"atk_scale_type": "additive",
+			"atk_scale": 0,
+			"min_atk": 2,
+			"max_atk": 2,
+			"rcv_scale_type": "additive",
+			"rcv_scale": 0,
+			"min_rcv": 2,
+			"max_rcv": 2,
+			"min_combo": 5
+		},
+		"description": "All attribute cards ATK x2, RCV x2 when reaching 5 or more combos"
+	}]
+},
+{
+	"name": "Bubbly Dance",
+	"description": "ATK x3 at 4 combos. ATK x1 for each additional combo, up to ATK x9 at 10 combos. HP x1.5, ATK x1.5, RCV x1.5 in cooperation mode.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"atk_scale_type": "additive",
+			"atk_scale": 1,
+			"min_atk": 3,
+			"max_atk": 9,
+			"min_combo": 4
+		},
+		"description": "ATK x3 at 4 combos. ATK x1 for each additional combo, up to ATK x9 at 10 combos"
+	}]
+},
+{
+	"name": "Spirit of the Hell Deity",
+	"description": "ATK x5 at 8 combos. ATK x2.5 for each additional combo, up to ATK x10 at 10 combos. All attribute cards ATK x3, RCV x1.5 on the turn a skill is used. ( Multiple skills will not stack )",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"atk_scale_type": "additive",
+			"atk_scale": 2.5,
+			"min_atk": 5,
+			"max_atk": 10,
+			"min_combo": 8
+		},
+		"description": "ATK x5 at 8 combos. ATK x2.5 for each additional combo, up to ATK x10 at 10 combos"
+	}]
+},
+{
+	"name": "Mysterious Dazzling Shine",
+	"description": "All attribute cards ATK x6 when HP is greater than 80%. ATK x2.5 when HP is less than 80%. All attribute cards ATK x3, 25% all damage reduction when attacking with Light and Light combos at the same time.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"shield": 25,
+			"orb_types": ["Light"],
+			"atk_scale_type": "additive",
+			"atk_scale": 0,
+			"min_atk": 3,
+			"max_atk": 3,
+			"min_combo": 2
+		},
+		"description": "All attribute cards ATK x3, 25% all damage reduction when attacking with Light and Light combos"
+	}]
+},
+{
+	"name": "The Brutal Tyrant",
+	"description": "Change the board to 7x6 size. All attribute cards ATK x8.5, 25% all damage reduction when reaching 8 combos.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"shield": 25,
+			"atk_scale_type": "additive",
+			"atk_scale": 0,
+			"min_atk": 8.5,
+			"max_atk": 8.5,
+			"min_combo": 8
+		},
+		"description": "All attribute cards ATK x8.5, 25% all damage reduction when reaching 8 combos"
+	}]
+},
+{
+	"name": "Peacock of the Holy Lake",
+	"description": "Water attribute cards ATK x2. All attribute cards ATK x2.5 when reaching 2 set of Water combos. ATK x2.5 for each additional combo, up to ATK x5 when reaching 3 combos.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"orb_types": ["Water"],
+			"atk_scale_type": "additive",
+			"atk_scale": 2.5,
+			"min_atk": 2.5,
+			"max_atk": 5,
+			"min_combo": 2
+		},
+		"description": "All attribute cards ATK x2.5 when reaching 2 set of Water combos. ATK x2.5 for each additional combo, up to ATK x5 when reaching 3 combos"
+	}]
+},
+{
+	"name": "Peacock of the Sacred Lake",
+	"description": "All attribute cards ATK x2.5 when reaching 2 set of Water combos. ATK x2.5 for each additional combo, up to ATK x5 when reaching 3 combos. Matched attribute ATK x1.5 when matching exactly 5 connected orbs with at least 1 enhanced orb.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"orb_types": ["Water"],
+			"atk_scale_type": "additive",
+			"atk_scale": 2.5,
+			"min_atk": 2.5,
+			"max_atk": 5,
+			"min_combo": 2
+		},
+		"description": "All attribute cards ATK x2.5 when reaching 2 set of Water combos. ATK x2.5 for each additional combo, up to ATK x5 when reaching 3 combos"
+	}]
+},
+{
+	"name": "Permafrost Dragon Emperor's Power",
+	"description": "ATK x2.5 when simultaneously clearing 5 connected Water orbs. All attribute cards ATK x2 when reaching Heart & Heart combos.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"orb_types": ["Heart"],
+			"atk_scale_type": "additive",
+			"atk_scale": 0,
+			"min_atk": 2,
+			"max_atk": 2,
+			"min_combo": 2
+		},
+		"description": "All attribute cards ATK x2 when reaching Heart & Heart combos"
+	}]
+},
+{
+	"name": "Piping hot gifts for everyone!",
+	"description": "Attacker type cards HP x1.35, ATK x1.35, RCV x1.35. All attribute cards ATK x3 when reaching 2 set of Fire combos. ATK x3 for each additional combo, up to ATK x6 when reaching 3 combos.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"orb_types": ["Fire"],
+			"atk_scale_type": "additive",
+			"atk_scale": 3,
+			"min_atk": 3,
+			"max_atk": 6,
+			"min_combo": 2
+		},
+		"description": "All attribute cards ATK x3 when reaching 2 set of Fire combos. ATK x3 for each additional combo, up to ATK x6 when reaching 3 combos"
+	}]
+},
+{
+	"name": "Plum Blossom Crest",
+	"description": "All attribute cards ATK x3.5 when reaching 6 combos or above. All attribute cards ATK x1.5 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"atk_scale_type": "additive",
+			"atk_scale": 0,
+			"min_atk": 3.5,
+			"max_atk": 3.5,
+			"min_combo": 6
+		},
+		"description": "All attribute cards ATK x3.5 when reaching 6 combos or above"
+	}]
+},
+{
+	"name": "Plum Blossom War Crest",
+	"description": "ATK x3.5 at 6 combos. ATK x0.5 for each additional combo, up to ATK x5 at 9 combos. All attribute cards ATK x2 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"atk_scale_type": "additive",
+			"atk_scale": 0.5,
+			"min_atk": 3.5,
+			"max_atk": 5,
+			"min_combo": 6
+		},
+		"description": "ATK x3.5 at 6 combos. ATK x0.5 for each additional combo, up to ATK x5 at 9 combos"
+	}]
+},
+{
+	"name": "Angelo",
+	"description": "All attribute cards ATK x2 when reaching 1 set of Water combo. ATK x1 for each additional combo, up to ATK x4 when reaching 3 combos.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"orb_types": ["Water"],
+			"atk_scale_type": "additive",
+			"atk_scale": 1,
+			"min_atk": 2,
+			"max_atk": 4,
+			"min_combo": 1
+		},
+		"description": "All attribute cards ATK x2 when reaching 1 set of Water combo. ATK x1 for each additional combo, up to ATK x4 when reaching 3 combos"
+	}]
+},
+{
+	"name": "Angel Wing",
+	"description": "Water attribute cards ATK x2. All attribute cards ATK x2 when reaching 2 set of Water combos. ATK x1 for each additional combo, up to ATK x4 when reaching 4 combos.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"orb_types": ["Water"],
+			"atk_scale_type": "additive",
+			"atk_scale": 1,
+			"min_atk": 2,
+			"max_atk": 4,
+			"min_combo": 2
+		},
+		"description": "All attribute cards ATK x2 when reaching 2 set of Water combos. ATK x1 for each additional combo, up to ATK x4 when reaching 4 combos"
+	}]
+},
+{
+	"name": "Annihilating Divine Will",
+	"description": "All attribute cards ATK x3 when reaching Wood & Wood combos. 20% all damage reduction.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"orb_types": ["Wood"],
+			"atk_scale_type": "additive",
+			"atk_scale": 0,
+			"min_atk": 3,
+			"max_atk": 3,
+			"min_combo": 2
+		},
+		"description": "All attribute cards ATK x3 when reaching Wood & Wood combos"
+	}]
+},
+{
+	"name": "I was entrusted with his heart!",
+	"description": "Water attribute cards ATK x2, RCV x2. ATK x2 at 5 combos. ATK x1 for each additional combo, up to ATK x5 at 8 combos.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"atk_scale_type": "additive",
+			"atk_scale": 1,
+			"min_atk": 2,
+			"max_atk": 5,
+			"min_combo": 5
+		},
+		"description": "ATK x2 at 5 combos. ATK x1 for each additional combo, up to ATK x5 at 8 combos"
+	}]
+},
+{
+	"name": "Spirit of the Feline Goddess",
+	"description": "ATK x3 at 4 combos. ATK x0.5 for each additional combo, up to ATK x5 at 8 combos. All attribute cards ATK x2.5, RCV x1.5 on the turn a skill is used. ( Multiple skills will not stack )",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"atk_scale_type": "additive",
+			"atk_scale": 0.5,
+			"min_atk": 3,
+			"max_atk": 5,
+			"min_combo": 4
+		},
+		"description": "ATK x3 at 4 combos. ATK x0.5 for each additional combo, up to ATK x5 at 8 combos"
+	}]
+},
+{
+	"name": "Spirit of the Miko Goddess",
+	"description": "No skyfall matches. Healer attribute cards HP x1.5, ATK x1.5. ATK x2 at 5 combos. ATK x2 for each additional combo, up to ATK x12 at 10 combos.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"atk_scale_type": "additive",
+			"atk_scale": 2,
+			"min_atk": 2,
+			"max_atk": 12,
+			"min_combo": 5
+		},
+		"description": "ATK x2 at 5 combos. ATK x2 for each additional combo, up to ATK x12 at 10 combos"
+	}]
+},
+{
+	"name": "Out of the way!",
+	"description": "ATK x2 at 4 combos. ATK x0.5 for each additional combo, up to ATK x5 at 10 combos. While your HP is 50% or above, a single hit that normally kills you will instead leave you with 1 HP. For the consecutive hits, this skill will only affect the first hit.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"atk_scale_type": "additive",
+			"atk_scale": 0.5,
+			"min_atk": 2,
+			"max_atk": 5,
+			"min_combo": 4
+		},
+		"description": "ATK x2 at 4 combos. ATK x0.5 for each additional combo, up to ATK x5 at 10 combos"
+	}]
+},
+{
+	"name": "The Ebon Shadow",
+	"description": "Fixed orb movement time at 4 seconds. ATK x2.5, RCV x2.5 to Dragon type cards. All attribute cards ATK x6 when reaching 6 combos or above.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"atk_scale_type": "additive",
+			"atk_scale": 0,
+			"min_atk": 6,
+			"max_atk": 6,
+			"min_combo": 6
+		},
+		"description": "All attribute cards ATK x6 when reaching 6 combos or above"
+	}]
+},
+{
+	"name": "Six Flower Palm of the Four Origins",
+	"description": "All attribute cards ATK x5 when attacking with Fire, Water, Light & Dark orb types at the same time. All attribute cards ATK x1.5 when reaching 6 combos or above.",
+	"skills": [{
+		"skill_type": "combo",
+		"effect": {
+			"atk_scale_type": "additive",
+			"atk_scale": 0,
+			"min_atk": 1.5,
+			"max_atk": 1.5,
+			"min_combo": 6
+		},
+		"description": "All attribute cards ATK x1.5 when reaching 6 combos or above"
+	}]
+}]

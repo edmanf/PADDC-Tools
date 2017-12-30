@@ -36,6 +36,10 @@
 	"name": "The Brutal Tyrant"
 },
 {
+	"effect": "Can no longer clear 3 connected orbs. Water attribute cards ATK x4. All attribute cards ATK x4, 25% all damage reduction when attacking with Water and Water combos at the same time.",
+	"name": "Paulownia Protective Crest"
+},
+{
 	"effect": "Water attribute cards ATK x2. All attribute cards ATK x2.5 when reaching 2 set of Water combos. ATK x2.5 for each additional combo, up to ATK x5 when reaching 3 combos.",
 	"name": "Peacock of the Holy Lake"
 },

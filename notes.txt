@@ -18,6 +18,7 @@ BASIC 49/51
         Axiom of salvation
             "ALL" is in attributes and types
 
-CONNECTED 14/14
+CONNECTED 14/14 make sure exactly works correctly
     simultaneously == x+
 
+COMBO 25/25
