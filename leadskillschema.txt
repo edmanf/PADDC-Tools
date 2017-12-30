@@ -16,6 +16,15 @@ JSON Schema
         }]
 }
 
+types:
+    basic
+        hp, atk, rcv, shield
+    connected
+        minatk, maxatk, atkscale, minrcv, maxrcv, rcvscale, minconnected, maxconnected, atkscaletype, rcvscaletype
+    combo
+    color_match
+    
+
 conditions:
     other
         [list of effects]

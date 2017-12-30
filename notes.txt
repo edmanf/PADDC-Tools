@@ -1,0 +1,23 @@
+TODO
+    remove writing multipliers of 1 in basic json
+    
+    TYPO
+        Spinning Toe Hold
+        
+    add uid leader skill
+
+BASIC 49/51
+    ADD HP REDUCTION FOR BASIC
+        ABOMINATION +1
+        
+    SHIELD
+        annihilating divine will +1
+
+        
+    MISTAKES
+        Axiom of salvation
+            "ALL" is in attributes and types
+
+CONNECTED 14/14
+    simultaneously == x+
+

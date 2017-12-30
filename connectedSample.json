@@ -1,0 +1,61 @@
+[
+{
+	"effect": "Water attribute & God type cards ATK x2.5, RCV x2.5. ATK x2.5 when simultaneously clearing 6+ connected Water orbs.",
+	"name": "Sight of Mimir"
+},
+{
+	"effect": "Wood attribute cards ATK x1.5. RCV x2.5 when matching exactly 4 connected heart orbs.",
+	"name": "All right!! Time for lunch!"
+},
+{
+	"effect": "No skyfall matches. Dark attribute cards ATK x2, RCV x2. ATK x2 when simultaneously clearing 6 connected Dark orbs. ATK x1 for each additional orb, up to ATK x8 at 12 connected orb.",
+	"name": "Fool!"
+},
+{
+	"effect": "Balanced & Devil type cards HP x1.5, ATK x3.5. ATK x2 when simultaneously clearing 4 connected Heart orbs. ATK x0.5 for each additional orb, up to ATK x3 at 6 connected orb.",
+	"name": "Bakusaiga"
+},
+{
+	"effect": "No skyfall matches. Water attribute cards ATK x2.5, RCV x2.5. ATK x3 when simultaneously clearing 6 connected Water orbs. ATK x0.5 for each additional orb, up to ATK x4.5 at 9 connected orb.",
+	"name": "Aqua Steel Star of Sagittarius"
+},
+{
+	"effect": "Healer & Devil type cards HP x2, ATK x2. ATK x3 when simultaneously clearing 6 connected Wood orbs. ATK x0.5 for each additional orb, up to ATK x4 at 8 connected orb.",
+	"name": "Spirit of the Archdemon"
+},
+{
+	"effect": "Light attribute cards ATK x6. Water attribute cards RCV x2. ATK x1.5 when simultaneously clearing 5 connected Light orbs. ATK x0.5 for each additional orb, up to ATK x2.5 at 7 connected orb.",
+	"name": "In the Beginning"
+},
+{
+	"effect": "All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light & Dark. ATK x1 for each additional orb type, up to ATK x5 for all 5 matches. ATK x2.5, RCV x2.5 when simultaneously clearing 5 connected Light orbs.",
+	"name": "Overclock Army of One"
+},
+{
+	"effect": "Water attribute cards ATK x1.5, RCV x1.5. ATK x2 when simultaneously clearing 4 connected Water orbs.",
+	"name": "Panther Charm"
+},
+{
+	"effect": "Dragon & Devil type cards HP x1.3, ATK x1.3, RCV x1.3. ATK x1.5 when simultaneously clearing 4 connected Fire orbs. ATK x0.5 for each additional orb, up to ATK x10 at 21 connected orb.",
+	"name": "Perfect Revolution Offense"
+},
+{
+	"data": [1,
+	2.5,
+	1],
+	"effect": "ATK x2.5 when simultaneously clearing 5 connected Water orbs. All attribute cards ATK x2 when reaching Heart & Heart combos.",
+	"name": "Permafrost Dragon Emperor's Power"
+},
+{
+	"effect": "All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart. ATK x2.5 when simultaneously clearing 5 connected Water or Light orbs. ATK x0.5 for each additional orb, up to ATK x4 at 8 connected orb.",
+	"name": "Spirits of the Divine Flowers"
+},
+{
+	"effect": "ATK x2, RCV x2 when simultaneously clearing 6 connected Fire or Light orbs. ATK x3, RCV x3 for each additional orb, up to ATK x5, RCV x5 at 7 connected orb. Change the board to 7x6 size.",
+	"name": "Final Heaven"
+},
+{
+	"effect": "Dark attribute cards ATK x1.5. ATK x2 when simultaneously clearing 6 connected Poison or Mortal Poison orbs.",
+	"name": "I can't answer to your request..."
+}
+]
