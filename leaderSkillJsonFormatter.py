@@ -131,14 +131,14 @@ combo_exact_pattern = r'''
     (\d+)[ ]combos
 '''
 
-# For "reaching x and/& x"
+# For "attacking with x and/& x"
 # match 1: atk multi
 # match 2: rcv multi
 # match 3: shield
 # match 4: orb type
 combo_orb_type_pattern = r'''
     all[ ]attribute[ ]cards[ ]''' + active_multi_shield_pattern + r'''
-    [ ]when[ ](?:(?:attacking[ ]with))[ ](''' + orb_type_pattern + '''
+    [ ]when[ ](?:(?:attacking[ ]with)|reaching)[ ](''' + orb_type_pattern + '''
     )[ ](?:and|&)[ ](?P=orb_type)
     [ ]combos(?:at[ ]the[ ]same[ ]time)?
 '''
@@ -1169,13 +1169,13 @@ def get_skills(leader_json):
     return result
   
 def main():
-    file = open("comboSample.json")
+    file = open("sampleLeaderSkills.json")
     leader_json = json.load(file)
     
     if len(leader_json) is 0:
         return
     
-    out_file = open("comboFormatted.json", "w", encoding="utf-8")
+    out_file = open("expectedOutput.json", "w", encoding="utf-8")
     out_file.write(get_skills(leader_json))
     out_file.close()
     file.close()

@@ -2,7 +2,7 @@ TODO
     remove writing multipliers of 1 in basic json
     
     TYPO
-        Spinning Toe Hold
+        Spinning Toe Hold - PADX left out shield
         
     add uid leader skill
 
@@ -21,4 +21,67 @@ BASIC 49/51
 CONNECTED 14/14 make sure exactly works correctly
     simultaneously == x+
 
-COMBO 25/25
+COMBO 23/25
+    Permafrost Dragon Emperor's Power
+    Annhilating
+    
+    
+ORDER
+    Basic
+        hp atk rcv
+        shield
+        attributes
+        types
+    connected
+    combo
+    enhanced
+    heart cross
+    cross
+    
+    Teammate
+        atk...
+        attributes
+        name (Case sensitive)
+        
+    Cooperation
+        hp, atk, rcv
+        
+    minimum_connected
+        minimum_connected
+        
+    board_size
+        cols
+        rows
+        
+    color_match
+        orb_types []
+        atk_scale_type, rcv_scale_type
+        atk_scale, rcv_scale
+        min_atk, max_atk
+        min_rcv, max_rcv
+        min_match
+        
+    boost
+        experience
+        coin
+        
+    skyfall
+        skyfall:none
+        
+    hp_conditional
+        NOTE: PADX probably incorrect. GZL incorrect w/ proof
+        NOTE: Multiple thresholds wont stack
+        hp_condition: <, <=, >, >=, =, !=
+        hp_threshold
+        atk, rcv, shield
+        
+    after_match
+        after_match_type: heal, damage
+        rcv
+        atk
+        
+    skill_use
+        atk, rcv, shield
+        attributes
+        types
+        
