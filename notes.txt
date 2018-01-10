@@ -74,6 +74,7 @@ ORDER
         hp_condition: <, <=, >, >=, =, !=
         hp_threshold
         atk, rcv, shield
+        resolve: 1, 0 (1 is yes)
         
     after_match
         after_match_type: heal, damage
@@ -84,4 +85,15 @@ ORDER
         atk, rcv, shield
         attributes
         types
+        
+    move_time
+        move_time_type: fixed, increase
+        time
+        time_multi
+        
+    counter
+        chance
+        attribute
+        multi
+
         
