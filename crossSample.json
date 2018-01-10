@@ -1,0 +1,17 @@
+[
+{
+	"effect": "No skyfall matches. Wood attribute cards All Stats x1.5. ATK x3 for clearing each Wood or Fire orbs in a cross formation.",
+	"name": "Axiom of Salvation"
+},
+{
+	"effect": "Dark attribute cards ATK x6. Water attribute cards RCV x2. ATK x2 for clearing each Dark orbs in a cross formation.",
+	"name": "From now on... I alone will stand at the top."
+},
+{
+	"data": [1,
+	3,
+	1],
+	"effect": "ATK x3 for clearing each Light orbs in a cross formation.",
+	"name": "Perish Along With Your Love!!"
+}
+]

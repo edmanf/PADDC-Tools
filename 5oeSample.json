@@ -1,0 +1,21 @@
+[
+{
+	"effect": "All attribute cards ATK x2 when Achtros in the same team. Matched attribute ATK x2 when matching exactly 5 connected orbs with at least 1 enhanced orb.",
+	"name": "High Tide Dragon Power"
+},
+{
+	"effect": "Matched attribute ATK x6 when matching exactly 5 connected orbs with at least 1 enhanced orb. HP x1.5, ATK x1.5, RCV x1.5 in cooperation mode.",
+	"name": "Critical Eye +1"
+},
+{
+	"effect": "Matched attribute ATK x4.5 when matching exactly 5 connected orbs with at least 1 enhanced orb. God & Devil type cards HP x2, ATK x2.",
+	"name": "Longing Breath"
+},
+{
+	"data": [1,
+	5,
+	1],
+	"effect": "All attribute cards ATK x2.5 when reaching 2 set of Water combos. ATK x2.5 for each additional combo, up to ATK x5 when reaching 3 combos. Matched attribute ATK x1.5 when matching exactly 5 connected orbs with at least 1 enhanced orb.",
+	"name": "Peacock of the Sacred Lake"
+}
+]

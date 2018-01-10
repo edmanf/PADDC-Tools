@@ -1,0 +1,18 @@
+[
+{
+	"effect": "Can no longer clear 3 connected orbs. All attribute cards ATK x4. ATK x3, reduce damage taken by 50% after matching Heal orbs in a cross formation.",
+	"name": "Eighth Dragon Awakening - Sky"
+},
+{
+	"effect": "Balanced, God & Devil attribute cards ATK x2 on the turn a skill is used. ( Multiple skills will not stack ) ATK x6, reduce damage taken by 35% after matching Heal orbs in a cross formation.",
+	"name": "Treasure Hunting Demonic Curse"
+},
+{
+	"effect": "ATK x7.7, reduce damage taken by 50% after matching Heal orbs in a cross formation. Increases time limit of orb movement by 2 seconds.",
+	"name": "Eternal Dragon Unity - Torvio"
+},
+{
+	"effect": "All attribute cards ATK x2, RCV x2 when reaching 5 or more combos. ATK x4, reduce damage taken by 50% after matching Heal orbs in a cross formation.",
+	"name": "Eternal Dragon Unity - Torvio Koh"
+}
+]
