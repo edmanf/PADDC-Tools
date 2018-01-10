@@ -32,16 +32,16 @@ orb_type_pattern = r'''
 # match 2: rcv multi
 # TODO: fix double space typos in preproccessing so [ ]+ isn't neccessary
 active_multi_pattern = r'''
-    (?:atk[ ]x(\d+(?:\.\d+)?))?
+    (?:ATK[ ]x(\d+(?:\.\d+)?))?
     (?:,[ ]+)?
-    (?:rcv[ ]x(\d+(?:\.\d+)?))?
+    (?:RCV[ ]x(\d+(?:\.\d+)?))?
 '''
 
 # match 1: hp multi
 # match 2: atk multi
 # match 3: rcv multi
 all_stat_pattern = r'''
-    (?:hp[ ]x(\d+(?:[.]\d+)?))?
+    (?:HP[ ]x(\d+(?:[.]\d+)?))?
     (?:,[ ])?''' + active_multi_pattern
 
 
@@ -195,6 +195,18 @@ color_match_pattern2 = r'''
 color_match_pattern = r'''
     all attribute cards''' + active_multi_shield_pattern + '''
     when attacking with ((?:[a-zA-Z]+\W+)+)at the same time
+'''
+
+
+# For skills that activate when a specific unit is in the team
+# match 1: hp multi
+# match 2: atk multi
+# match 3: rcv multi
+# match 4: teammate name
+teammate_pattern = r'''
+All[ ]attribute[ ]cards[ ]''' + all_stat_pattern + '''
+[ ]when[ ](.*)
+[ ]in[ ]the[ ]same[ ]team
 '''
 
 
@@ -389,7 +401,8 @@ def format_skill(skill_type, description, hp=0, atk=0, rcv=0, shield=0,
                  min_combo=0, max_combo=0, min_connected=0, max_connected=0,
                  min_enhanced=0, min_orb_type_count=0, max_orb_type_count=0,
                  rows=0, cols=0, enemy_attributes=None,
-                 hp_conditional_type=None, hp_threshold=0):
+                 hp_conditional_type=None, hp_threshold=0,
+                 teammate=None):
     result = "{\"skill_type\":\"" + skill_type + "\","
     result += "\"effect\":{"
     if hp:
@@ -469,6 +482,10 @@ def format_skill(skill_type, description, hp=0, atk=0, rcv=0, shield=0,
         result += "\"rows\":" + str(rows) + ","
     if cols:
         result += "\"cols\":" + str(cols) + ","
+        
+    if teammate:
+        result += "\"teammate\":\"" + teammate + "\","
+        print(teammate)
     result = result.strip(",") + "},"
     
     result += "\"description\":\"" + description + "\""
@@ -1006,7 +1023,14 @@ def get_skills(leader_json):
             if cross_m:
                 result += get_cross_skill(cross_m)
                 continue
-                
+            
+            teammate_m = re.compile(teammate_pattern, re.I|re.VERBOSE).search(part)
+            if teammate_m:
+                print(teammate_m[4])
+                result += format_skill("teammate", teammate_m[0], hp=teammate_m[1],
+                                       atk=teammate_m[2], rcv=teammate_m[3],
+                                       teammate=teammate_m[4])
+            
             """                 
                 
             orb_type_combo_re = re.compile(orb_type_combo_pattern, re.IGNORECASE|re.VERBOSE)
@@ -1169,13 +1193,13 @@ def get_skills(leader_json):
     return result
   
 def main():
-    file = open("sampleLeaderSkills.json")
+    file = open("teammateSample.json")
     leader_json = json.load(file)
     
     if len(leader_json) is 0:
         return
     
-    out_file = open("expectedOutput.json", "w", encoding="utf-8")
+    out_file = open("teammateOut.json", "w", encoding="utf-8")
     out_file.write(get_skills(leader_json))
     out_file.close()
     file.close()

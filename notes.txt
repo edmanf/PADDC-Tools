@@ -25,7 +25,8 @@ COMBO 23/25
     Permafrost Dragon Emperor's Power
     Annhilating
     
-    
+TEAMMATE 2/2
+
 ORDER
     Basic
         hp atk rcv
@@ -40,8 +41,7 @@ ORDER
     
     Teammate
         atk...
-        attributes
-        name (Case sensitive)
+        name
         
     Cooperation
         hp, atk, rcv
