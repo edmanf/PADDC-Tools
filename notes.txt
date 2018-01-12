@@ -5,6 +5,8 @@ TODO
         Spinning Toe Hold - PADX left out shield
         
     add uid leader skill
+    
+    hp_conditional: remove start " ( " from descriptions
 
 BASIC 49/51
     ADD HP REDUCTION FOR BASIC

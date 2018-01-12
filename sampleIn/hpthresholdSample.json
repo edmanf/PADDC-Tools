@@ -1,0 +1,14 @@
+[
+{
+	"effect": "Water attribute cards ATK x3 when HP is less than 50% ( Water attribute cards ATK x3.3 when HP is full. Water attribute cards ATK x3.15 when HP is greater than 50%. ). Wood attribute cards RCV x2.",
+	"name": "blue-green divine clock"
+},
+{
+	"effect": "All attribute cards ATK x3.5 when HP is less than 20%. ATK x2 when HP is less than 50%.  when HP is less than 50%.",
+	"name": "Spinning Toe Hold"
+},
+{
+	"effect": "All attribute cards ATK x6 when HP is greater than 80%. ATK x2.5 when HP is less than 80%. All attribute cards ATK x3, 25% all damage reduction when attacking with Light and Light combos at the same time.",
+	"name": "Mysterious Dazzling Shine"
+}
+]

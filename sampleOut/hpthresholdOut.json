@@ -1,0 +1,101 @@
+[{
+	"name": "blue-green divine clock",
+	"description": "Water attribute cards ATK x3 when HP is less than 50%. ( Water attribute cards ATK x3.3 when HP is full. Water attribute cards ATK x3.15 when HP is greater than 50%. ). Wood attribute cards RCV x2.",
+	"skills": [{
+		"skill_type": "hp_conditional",
+		"effect": {
+			"atk": 3,
+			"attributes": ["Water"],
+			"hp_conditional_type": "<",
+			"hp_threshold": 50
+		},
+		"description": "Water attribute cards ATK x3 when HP is less than 50%"
+	},
+	{
+		"skill_type": "hp_conditional",
+		"effect": {
+			"atk": 3.3,
+			"attributes": ["Water"],
+			"hp_conditional_type": "=",
+			"hp_threshold": 100
+		},
+		"description": "( Water attribute cards ATK x3.3 when HP is full"
+	},
+	{
+		"skill_type": "hp_conditional",
+		"effect": {
+			"atk": 3.15,
+			"attributes": ["Water"],
+			"hp_conditional_type": ">",
+			"hp_threshold": 50
+		},
+		"description": "Water attribute cards ATK x3.15 when HP is greater than 50%"
+	},
+	{
+		"skill_type": "basic",
+		"effect": {
+			"rcv": 2,
+			"attributes": ["Wood"]
+		},
+		"description": "Wood attribute cards RCV x2."
+	}]
+},
+{
+	"name": "Spinning Toe Hold",
+	"description": "All attribute cards ATK x3.5 when HP is less than 20%. ATK x2 when HP is less than 50%",
+	"skills": [{
+		"skill_type": "hp_conditional",
+		"effect": {
+			"atk": 3.5,
+			"attributes": ["All"],
+			"hp_conditional_type": "<",
+			"hp_threshold": 20
+		},
+		"description": "All attribute cards ATK x3.5 when HP is less than 20%"
+	},
+	{
+		"skill_type": "hp_conditional",
+		"effect": {
+			"atk": 2,
+			"hp_conditional_type": "<",
+			"hp_threshold": 50
+		},
+		"description": "ATK x2 when HP is less than 50%"
+	}]
+},
+{
+	"name": "Mysterious Dazzling Shine",
+	"description": "All attribute cards ATK x6 when HP is greater than 80%. ATK x2.5 when HP is less than 80%. All attribute cards ATK x3, 25% all damage reduction when attacking with Light and Light combos at the same time.",
+	"skills": [{
+		"skill_type": "hp_conditional",
+		"effect": {
+			"atk": 6,
+			"attributes": ["All"],
+			"hp_conditional_type": ">",
+			"hp_threshold": 80
+		},
+		"description": "All attribute cards ATK x6 when HP is greater than 80%"
+	},
+	{
+		"skill_type": "hp_conditional",
+		"effect": {
+			"atk": 2.5,
+			"hp_conditional_type": "<",
+			"hp_threshold": 80
+		},
+		"description": "ATK x2.5 when HP is less than 80%"
+	},
+	{
+		"skill_type": "combo",
+		"effect": {
+			"shield": 25,
+			"orb_types": ["Light"],
+			"atk_scale_type": "additive",
+			"atk_scale": 0,
+			"min_atk": 3,
+			"max_atk": 3,
+			"min_combo": 2
+		},
+		"description": "All attribute cards ATK x3, 25% all damage reduction when attacking with Light and Light combos"
+	}]
+}]

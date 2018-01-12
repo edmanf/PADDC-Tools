@@ -5,7 +5,7 @@ import re
 
 # match 1: attribute
 attribute_pattern = r'''
-    (fire|water|wood|light|dark|all)
+    (Fire|Water|Wood|Light|Dark|All)
 '''
 attribute_re = re.compile(attribute_pattern, re.IGNORECASE|re.VERBOSE)
 
@@ -209,16 +209,29 @@ All[ ]attribute[ ]cards[ ]''' + all_stat_pattern + '''
 [ ]in[ ]the[ ]same[ ]team
 '''
 
+# For skills that activate based on remaining HP%
+# match 1: attributes
+# match 2: atk multi
+# match 3: rcv multi
+# match 4: hp threshold type
+# match 5: hp threshold value (greater than or less than)
+# match 6: hp threshold value/type: full (or = 1)
+hp_conditional_pattern = r'''
+    (?:(.*)[ ]attribute[ ]cards[ ])?''' + active_multi_pattern + '''
+    [ ]when[ ]HP[ ]is[ ]
+    (?:
+    (?:((?:less[ ]than)|(?:greater[ ]than))[ ](\d+)%)
+    |(full))
+'''
+
 
 no_skyfall_pattern = r'''
-    no[ ]skyfall[ ]matches
+    No[ ]skyfall[ ]matches
 '''
 
 board_size_pattern = r'''
-    change[ ]the[ ]board[ ]to[ ](\d+)x(\d+)[ ]size        #captures col and row
+    Change[ ]the[ ]board[ ]to[ ](\d+)x(\d+)[ ]size        #captures col and row
 '''
-
-
 
 move_time_pattern = r'''
     (fixed|increases)[ ]                            #captures fixed or increases
@@ -282,17 +295,6 @@ on_skill_used_pattern = r'''
 
 basic_damage_reduction_pattern = r'''
     (\d+)%[ ](.*?)[ ]damage[ ]reduction
-'''
-
-hp_conditional_pattern = r'''
-    (.*?[ ]cards[ ])? 
-    (?:atk[ ]x(\d+(?:\.\d+)?))?
-    (?:,[ ])?
-    (?:rcv[ ]x(\d+(?:\.\d+)?))?
-    (?:,[ ])?
-    [ ]when[ ]hp[ ]is[ ]
-    (less[ ]than|greater[ ]than|full)
-    (?:[ ](\d+)%)?
 '''
 
 # some descriptions have a type where a period is not followed by a space
@@ -708,6 +710,43 @@ def get_cross_skill(match):
                         min_atk=min_atk, atk_scale=atk_scale,
                         orb_types=orb_types)
     
+def get_hp_cond_skill(match):
+    """ Returns a json string representation of a hp conditional leader skill
+        
+        match is an array with the following properties
+            match[0] - description of the leader skill
+            match[1] - array of attributes that the skill applies to, or None
+            match[2] - atk multiplier
+            match[3] - rcv multiplier
+            match[4] - the type of hp conditional, either "<" or ">"                       
+            match[5] - the hp% that gets compared to current hp%
+            match[6] - "full" if the skill activates when HP is full
+                       None otherwise
+    
+    """
+    des = match[0]
+    attributes = None
+    if match[1]:
+        attributes = attribute_re.findall(match[1])
+    atk = match[2]
+    rcv = match[3]
+    condition = None
+    threshold = None
+    if match[4]:
+        if match[4] == "less than":
+            condition = "<"
+        elif match[4] == "greater than":
+            condition = ">"
+        threshold = match[5]
+    else:
+        # when hp is full
+        condition = "="
+        threshold = 100
+    
+    return format_skill("hp_conditional", des, atk=atk, rcv=rcv,
+                        attributes=attributes, hp_conditional_type=condition,
+                        hp_threshold=threshold)    
+
     
 def get_orb_type_combo_skill(match, scale_match):
     des = match[0]
@@ -850,25 +889,7 @@ def get_basic_damage_reduction_skill(match):
     return format_skill("basic", des, enemy_attributes=enemy_attributes,
                         shield=value)
   
-def get_hp_cond_skill(match):
-    des = match[0]
-    attribute_str = match[1]
-    atk = match[2] if match[2] else 1
-    rcv = match[3] if match[3] else 1
-    hp_type = match[4]
-    thresh = match[5] if match[5] else 100
-    
-    result = "{\"skilltype\":\"hp_conditional\","
-    result += "\"effect\":{"
-    result += "\"conditional_type\":\"" + hp_type + "\","
-    result += "\"conditional_value\":" + str(thresh) + ","
-    result += "\"atk\":" + str(atk) + ","
-    result += "\"rcv\":" + str(rcv)
-    result += "},"
-    result += "\"description\":\"" + des + "\""
-    result += "},"
-    return format_skill("hp_conditional", des, atk=atk, rcv=rcv,
-                        hp_conditional_type=hp_type, hp_threshold=thresh)
+
 
 def get_post_orb_elim_skill(match, extra=None):
     des = match[0]
@@ -1026,10 +1047,16 @@ def get_skills(leader_json):
             
             teammate_m = re.compile(teammate_pattern, re.I|re.VERBOSE).search(part)
             if teammate_m:
-                print(teammate_m[4])
                 result += format_skill("teammate", teammate_m[0], hp=teammate_m[1],
                                        atk=teammate_m[2], rcv=teammate_m[3],
                                        teammate=teammate_m[4])
+                continue
+            
+            hp_conditional_m = (re.compile(hp_conditional_pattern, re.VERBOSE)
+                                  .search(part))
+            if hp_conditional_m:
+                result += get_hp_cond_skill(hp_conditional_m)
+                continue
             
             """                 
                 
@@ -1193,13 +1220,13 @@ def get_skills(leader_json):
     return result
   
 def main():
-    file = open("teammateSample.json")
+    file = open("sampleIn\hpthresholdSample.json")
     leader_json = json.load(file)
     
     if len(leader_json) is 0:
         return
     
-    out_file = open("teammateOut.json", "w", encoding="utf-8")
+    out_file = open("sampleOut\hpthresholdOut.json", "w", encoding="utf-8")
     out_file.write(get_skills(leader_json))
     out_file.close()
     file.close()
