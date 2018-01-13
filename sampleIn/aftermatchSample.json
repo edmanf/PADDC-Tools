@@ -1,0 +1,14 @@
+[
+{
+	"effect": "Heal RCV x2 as HP after every orbs elimination.",
+	"name": "Regenerator"
+},
+{
+	"effect": "All attribute cards ATK x6, 25% all damage reduction when attacking with 4 of Fire, Water, Wood, Light & Dark orb types at the same time. Deal ATK x100 damage to all enemies after every orbs elimination. Ignores enemy element, but can be reduced by enemy defense down to 0 damage.",
+	"name": "Mutsu Enmei-ryu Hidden Art: Ryuha"
+},
+{
+	"effect": "No skyfall matches. Dark attribute cards ATK x5. Deal ATK x30 damage to all enemies after every orbs elimination. Ignores enemy element, but can be reduced by enemy defense down to 0 damage.",
+	"name": "Anryu Hiha"
+}
+]

@@ -9,6 +9,8 @@ TODO
     hp_conditional: remove start " ( " from descriptions
 
     minimum_connected->min_connected for reuse
+    
+    aftermatch -> post_orb_clear
 BASIC 49/51
     ADD HP REDUCTION FOR BASIC
         ABOMINATION +1
@@ -37,6 +39,11 @@ COOPERATION 4/4
 SKYFALL 7/7
 
 MOVETIME 5/5
+
+AFTERMATCH 3/3
+
+SKILLUSE 4/4
+    fix typo - no . after ) breaks separation into parts
 
 ORDER
     Basic
