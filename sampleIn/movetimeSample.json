@@ -1,0 +1,22 @@
+[
+{
+	"effect": "ATK x7.7, reduce damage taken by 50% after matching Heal orbs in a cross formation. Increases time limit of orb movement by 2 seconds.",
+	"name": "Eternal Dragon Unity - Torvio"
+},
+{
+	"effect": "Devil type cards ATK x1.5, RCV x1.5. Increases time limit of orb movement by 1 seconds.",
+	"name": "Orchestra of Death"
+},
+{
+	"effect": "Increases time limit of orb movement by 13 seconds.",
+	"name": "Shoot to kill, Shinso..."
+},
+{
+	"effect": "Fixed orb movement time at 4 seconds.ATK x2.5, RCV x2.5 to Dragon type cards. All attribute cards ATK x6 when reaching 6 combos or above.",
+	"name": "The Ebon Shadow"
+},
+{
+	"effect": "Fixed orb movement time at 4 seconds.HP x2, ATK x2 to Dragon type cards. All attribute cards ATK x10 when attacking with Fire, Water, Wood, Light & Dark orb types at the same time.",
+	"name": "The Silver Comet"
+}
+]

@@ -248,12 +248,14 @@ no_skyfall_pattern = r'''
     No[ ]skyfall[ ]matches
 '''
 
-
-
+# For skills that change orb movement time
+# match 1: either "Fixed" or "Increases"
+# match 2: time in seconds that movement is fixed to or increased by
 move_time_pattern = r'''
-    (fixed|increases)[ ]                            #captures fixed or increases
-    (?:\w+[ ])*?orb[ ]movement(?:[ ]\w+)+?[ ]
-    (\d+(?:\.\d+)?)[ ]seconds                       #captures time value    
+    (Fixed|Increases)[ ]                            
+    (?:(?:orb[ ]movement[ ]time[ ]at)
+    |(?:time[ ]limit[ ]of[ ]orb[ ]movement[ ]by))[ ]
+    (\d+(?:\.\d+)?)[ ]seconds
 '''
 
 
@@ -347,21 +349,6 @@ post_orb_elim_extra_pattern = r'''
     by[ ]enemy[ ]defense[ ]down[ ]to[ ]0[ ]damage
 '''
 
-# match 1: all stat multi
-# match 2: hp multi
-# match 3: atk multi
-# match 4: rcv multi
-coop_mode_pattern = r'''
-    (?:all[ ]stats[ ]x(\d+(?:\.\d+)?))?
-    (?:,[ ])?
-    (?:hp[ ]x(\d+(?:\.\d+)?))?
-    (?:,[ ])?
-    (?:atk[ ]x(\d+(?:\.\d+)?))?
-    (?:,[ ])?
-    (?:rcv[ ]x(\d+(?:\.\d+)?))?
-    [ ]in[ ]cooperation[ ]mode
-'''
-
 # match 1: chance
 # match 2: damage attribute
 # match 3: damage multi
@@ -421,7 +408,8 @@ def format_skill(skill_type, description, hp=0, atk=0, rcv=0, shield=0,
                  min_enhanced=0, min_orb_type_count=0, max_orb_type_count=0,
                  rows=0, cols=0, enemy_attributes=None,
                  hp_conditional_type=None, hp_threshold=0,
-                 teammate=None, skyfall_matches=None):
+                 teammate=None, skyfall_matches=None,
+                 move_time_type=None, time=None):
     result = "{\"skill_type\":\"" + skill_type + "\","
     result += "\"effect\":{"
     if hp:
@@ -508,6 +496,11 @@ def format_skill(skill_type, description, hp=0, atk=0, rcv=0, shield=0,
     
     if skyfall_matches:
         result += "\"skyfall_matches\":\"" + skyfall_matches + "\","
+    
+    if move_time_type:
+        result += "\"move_time_type\":\"" + move_time_type + "\","
+        result += "\"time\":" + str(time) + ","
+    
     
     result = result.strip(",") + "},"
     
@@ -1102,10 +1095,18 @@ def get_skills(leader_json):
                                        min_connected=int(minimum_connected_m[1]) + 1)
                 continue
                 
-            skyfall_m = (re.compile(no_skyfall_pattern, re.VERBOSE).search(part))
+            skyfall_m = (re.compile(no_skyfall_pattern, re.VERBOSE)
+                           .search(part))
             if skyfall_m:
                 result += format_skill("skyfall_matches", skyfall_m[0],
                                        skyfall_matches="none")
+                                       
+            move_time_m = (re.compile(move_time_pattern, re.VERBOSE)
+                             .search(part))
+            if move_time_m:
+                result += format_skill("move_time", move_time_m[0],
+                                       move_time_type=move_time_m[1],
+                                       time=move_time_m[2])
             """                 
                 
             orb_type_combo_re = re.compile(orb_type_combo_pattern, re.IGNORECASE|re.VERBOSE)
@@ -1268,13 +1269,13 @@ def get_skills(leader_json):
     return result
   
 def main():
-    file = open("sampleIn\\skyfallmatchesSample.json")
+    file = open("sampleIn\\movetimeSample.json")
     leader_json = json.load(file)
     
     if len(leader_json) is 0:
         return
     
-    out_file = open("sampleOut\\skyfallmatchesOut.json", "w", encoding="utf-8")
+    out_file = open("sampleOut\\movetimeOut.json", "w", encoding="utf-8")
     out_file.write(get_skills(leader_json))
     out_file.close()
     file.close()
