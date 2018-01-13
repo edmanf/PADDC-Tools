@@ -224,14 +224,31 @@ hp_conditional_pattern = r'''
     |(full))
 '''
 
+# For skills that change board size
+# match 1: cols
+# match 2: rows
+board_size_pattern = r'''
+    Change[ ]the[ ]board[ ]to[ ]
+    (\d+)x(\d+)[ ]size        
+'''
 
+# For skill that activate in cooperation mode
+cooperation_pattern = all_stat_pattern + r'''
+    [ ]in[ ]cooperation[ ]mode
+'''
+
+# For skills that change the number of orbs required for a match
+# match 1: minimum number of orbs required for a match
+minimum_connected_pattern = r'''
+    Can[ ]no[ ]longer[ ]clear[ ](\d+)[ ](?:or[ ]less[ ])?connected[ ]orbs
+'''
+
+# For skills that prevent matches from skyfall
 no_skyfall_pattern = r'''
     No[ ]skyfall[ ]matches
 '''
 
-board_size_pattern = r'''
-    Change[ ]the[ ]board[ ]to[ ](\d+)x(\d+)[ ]size        #captures col and row
-'''
+
 
 move_time_pattern = r'''
     (fixed|increases)[ ]                            #captures fixed or increases
@@ -404,7 +421,7 @@ def format_skill(skill_type, description, hp=0, atk=0, rcv=0, shield=0,
                  min_enhanced=0, min_orb_type_count=0, max_orb_type_count=0,
                  rows=0, cols=0, enemy_attributes=None,
                  hp_conditional_type=None, hp_threshold=0,
-                 teammate=None):
+                 teammate=None, skyfall_matches=None):
     result = "{\"skill_type\":\"" + skill_type + "\","
     result += "\"effect\":{"
     if hp:
@@ -488,6 +505,10 @@ def format_skill(skill_type, description, hp=0, atk=0, rcv=0, shield=0,
     if teammate:
         result += "\"teammate\":\"" + teammate + "\","
         print(teammate)
+    
+    if skyfall_matches:
+        result += "\"skyfall_matches\":\"" + skyfall_matches + "\","
+    
     result = result.strip(",") + "},"
     
     result += "\"description\":\"" + description + "\""
@@ -1058,6 +1079,33 @@ def get_skills(leader_json):
                 result += get_hp_cond_skill(hp_conditional_m)
                 continue
             
+            board_size_m = (re.compile(board_size_pattern, re.VERBOSE)
+                              .search(part))
+            if board_size_m:
+                result += format_skill("board_size", board_size_m[0],
+                                       cols=board_size_m[1],
+                                       rows=board_size_m[2])
+                continue
+                
+            cooperation_m = (re.compile(cooperation_pattern, re.VERBOSE)
+                               .search(part))
+            if cooperation_m:
+                result += format_skill("cooperation", cooperation_m[0],
+                                       hp=cooperation_m[1], atk=cooperation_m[2],
+                                       rcv=cooperation_m[3])
+                continue
+              
+            minimum_connected_m = (re.compile(minimum_connected_pattern, re.VERBOSE)
+                                     .search(part))
+            if minimum_connected_m:
+                result += format_skill("min_connected", minimum_connected_m[0],
+                                       min_connected=int(minimum_connected_m[1]) + 1)
+                continue
+                
+            skyfall_m = (re.compile(no_skyfall_pattern, re.VERBOSE).search(part))
+            if skyfall_m:
+                result += format_skill("skyfall_matches", skyfall_m[0],
+                                       skyfall_matches="none")
             """                 
                 
             orb_type_combo_re = re.compile(orb_type_combo_pattern, re.IGNORECASE|re.VERBOSE)
@@ -1220,13 +1268,13 @@ def get_skills(leader_json):
     return result
   
 def main():
-    file = open("sampleIn\hpthresholdSample.json")
+    file = open("sampleIn\\skyfallmatchesSample.json")
     leader_json = json.load(file)
     
     if len(leader_json) is 0:
         return
     
-    out_file = open("sampleOut\hpthresholdOut.json", "w", encoding="utf-8")
+    out_file = open("sampleOut\\skyfallmatchesOut.json", "w", encoding="utf-8")
     out_file.write(get_skills(leader_json))
     out_file.close()
     file.close()

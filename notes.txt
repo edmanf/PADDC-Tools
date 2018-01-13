@@ -8,6 +8,7 @@ TODO
     
     hp_conditional: remove start " ( " from descriptions
 
+    minimum_connected->min_connected for reuse
 BASIC 49/51
     ADD HP REDUCTION FOR BASIC
         ABOMINATION +1
@@ -28,6 +29,13 @@ COMBO 23/25
     Annhilating
     
 TEAMMATE 2/2
+
+BOARDSIZE 6/6
+
+COOPERATION 4/4
+
+SKYFALL 7/7
+
 
 ORDER
     Basic

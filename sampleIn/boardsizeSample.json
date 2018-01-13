@@ -1,0 +1,26 @@
+[
+{
+	"effect": "Change the board to 7x6 size. All attribute cards ATK x3, RCV x3 when attacking with 3 of following orb types: Fire, Water, Wood, Light & Dark. ATK x0.5,  RCV x0.5 for each additional orb type, up to ATK x4, RCV x4 for all 5 matches.",
+	"name": "Elemental Square"
+},
+{
+	"effect": "All attribute cards ATK x4.5, 25% all damage reduction when attacking with Light and Fire combos at the same time. Change the board to 7x6 size.",
+	"name": "Hidden Sorcery"
+},
+{
+	"effect": "Change the board to 7x6 size. All attribute cards ATK x5, 25% all damage reduction when attacking with Fire, Water, Wood & Light orb types at the same time.",
+	"name": "Tachibana Protective Crest"
+},
+{
+	"effect": "Change the board to 7x6 size. All attribute cards ATK x6, 25% all damage reduction when attacking with Fire, Water, Wood, Dark & Heart orb types at the same time.",
+	"name": "Dance of the Dark Heavens"
+},
+{
+	"effect": "Change the board to 7x6 size. All attribute cards ATK x8.5, 25% all damage reduction when reaching 8 combos.",
+	"name": "The Brutal Tyrant"
+},
+{
+	"effect": "ATK x2, RCV x2 when simultaneously clearing 6 connected Fire or Light orbs. ATK x3, RCV x3 for each additional orb, up to ATK x5, RCV x5 at 7 connected orb. Change the board to 7x6 size.",
+	"name": "Final Heaven"
+}
+]

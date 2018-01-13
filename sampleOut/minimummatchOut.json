@@ -1,0 +1,89 @@
+[{
+	"name": "Everflowing Sunlight",
+	"description": "Can no longer clear 4 or less connected orbs. Water attribute cards ATK x5. ATK x2 at 3 combos. ATK x1 for each additional combo, up to ATK x3 at 4 combos.",
+	"skills": [{
+		"skill_type": "min_connected",
+		"effect": {
+			"min_connected": 5
+		},
+		"description": "Can no longer clear 4 or less connected orbs"
+	},
+	{
+		"skill_type": "basic",
+		"effect": {
+			"atk": 5,
+			"attributes": ["Water"]
+		},
+		"description": "Water attribute cards ATK x5"
+	},
+	{
+		"skill_type": "combo",
+		"effect": {
+			"atk_scale_type": "additive",
+			"atk_scale": 1,
+			"min_atk": 2,
+			"max_atk": 3,
+			"min_combo": 3
+		},
+		"description": "ATK x2 at 3 combos. ATK x1 for each additional combo, up to ATK x3 at 4 combos"
+	}]
+},
+{
+	"name": "Eighth Dragon Awakening - Sky",
+	"description": "Can no longer clear 3 connected orbs. All attribute cards ATK x4. ATK x3, reduce damage taken by 50% after matching Heal orbs in a cross formation.",
+	"skills": [{
+		"skill_type": "min_connected",
+		"effect": {
+			"min_connected": 4
+		},
+		"description": "Can no longer clear 3 connected orbs"
+	},
+	{
+		"skill_type": "basic",
+		"effect": {
+			"atk": 4,
+			"attributes": ["All"]
+		},
+		"description": "All attribute cards ATK x4"
+	},
+	{
+		"skill_type": "heart_cross",
+		"effect": {
+			"atk": 3,
+			"shield": 50
+		},
+		"description": "ATK x3, reduce damage taken by 50% after matching Heal orbs in a cross formation"
+	}]
+},
+{
+	"name": "Paulownia Protective Crest",
+	"description": "Can no longer clear 3 connected orbs. Water attribute cards ATK x4. All attribute cards ATK x4, 25% all damage reduction when attacking with Water and Water combos at the same time.",
+	"skills": [{
+		"skill_type": "min_connected",
+		"effect": {
+			"min_connected": 4
+		},
+		"description": "Can no longer clear 3 connected orbs"
+	},
+	{
+		"skill_type": "basic",
+		"effect": {
+			"atk": 4,
+			"attributes": ["Water"]
+		},
+		"description": "Water attribute cards ATK x4"
+	},
+	{
+		"skill_type": "combo",
+		"effect": {
+			"shield": 25,
+			"orb_types": ["Water"],
+			"atk_scale_type": "additive",
+			"atk_scale": 0,
+			"min_atk": 4,
+			"max_atk": 4,
+			"min_combo": 2
+		},
+		"description": "All attribute cards ATK x4, 25% all damage reduction when attacking with Water and Water combos"
+	}]
+}]

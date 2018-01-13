@@ -1,0 +1,18 @@
+[
+{
+	"effect": "Machine type cards ATK x2. ATK x2, RCV x2 in cooperation mode.",
+	"name": "Hey, what are you doing?"
+},
+{
+	"effect": "Matched attribute ATK x6 when matching exactly 5 connected orbs with at least 1 enhanced orb. HP x1.5, ATK x1.5, RCV x1.5 in cooperation mode.",
+	"name": "Critical Eye +1"
+},
+{
+	"effect": "ATK x3 at 4 combos. ATK x1 for each additional combo, up to ATK x9 at 10 combos. HP x1.5, ATK x1.5, RCV x1.5 in cooperation mode.",
+	"name": "Bubbly Dance"
+},
+{
+	"effect": "ATK x3 at 4 combos. ATK x1 for each additional combo, up to ATK x9 at 10 combos. HP x1.5, ATK x1.5, RCV x1.5 in cooperation mode.",
+	"name": "Bubbly Dance"
+}
+]

@@ -1,0 +1,14 @@
+[
+{
+	"effect": "Can no longer clear 4 or less connected orbs. Water attribute cards ATK x5. ATK x2 at 3 combos. ATK x1 for each additional combo, up to ATK x3 at 4 combos.",
+	"name": "Everflowing Sunlight"
+},
+{
+	"effect": "Can no longer clear 3 connected orbs. All attribute cards ATK x4. ATK x3, reduce damage taken by 50% after matching Heal orbs in a cross formation.",
+	"name": "Eighth Dragon Awakening - Sky"
+},
+{
+	"effect": "Can no longer clear 3 connected orbs. Water attribute cards ATK x4. All attribute cards ATK x4, 25% all damage reduction when attacking with Water and Water combos at the same time.",
+	"name": "Paulownia Protective Crest"
+}
+]
