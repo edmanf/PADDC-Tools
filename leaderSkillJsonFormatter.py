@@ -65,7 +65,6 @@ basic_pattern = r'''
     [.]?)$
 '''
 
-
 # match 1: hp multi
 # match 2: atk multi
 # match 3: rcv multi
@@ -74,6 +73,13 @@ basic_pattern = r'''
 basic_type_pattern = all_stat_pattern + r'''
     [ ]to[ ] ''' + type_pattern + '''
     [ ]type[ ]cards
+'''
+
+# For skills that reduce something
+# match 1: reduction %
+# match 2: reduction target
+basic_reduction_patter = r'''
+    ^(\d+(?:\.\d+)?)%[ ](HP|(?:all[ ]damage))[ ]reduction\.?$
 '''
 
 # match 1: min atk multi
@@ -316,6 +322,8 @@ boost_pattern = r'''
     Get[ ]x(\d+(?:\.\d+)?)[ ]
     (experience|coins)[ ]after[ ]a[ ]battle
 '''
+
+
 
 """
 
@@ -601,6 +609,17 @@ def get_basic_type_skill(match):
         types = [match[4]]
         return format_skill("basic", des, hp=hp, atk=atk, rcv=rcv, types=types)
 
+def get_basic_reduction_skill(match):
+    des = match[0]
+    reduction_type = match[2]
+    if reduction_type == "HP":
+        hp = float(match[1]) / 100.0
+        return format_skill("basic", des, hp=hp)
+    elif reduction_type == "all damage":
+        return format_skill("basic", des, shield=match[1])
+    else:
+        return None
+        
 def get_connected_combo(base_matches, scale_matches):
     # base matches      
     # match 1: min atk multi
@@ -816,6 +835,7 @@ def get_skill_use_skill(match, extra):
                         attributes=attributes, types=types)
 
 
+
 '''  
 def get_orb_type_combo_skill(match, scale_match):
     des = match[0]
@@ -1023,6 +1043,12 @@ def get_skills(leader_json):
                               .search(part))
             if basic_type_m:
                 result += get_basic_type_skill(basic_type_m)
+                continue
+                
+            basic_reduction_m = (re.compile(basic_reduction_patter, re.VERBOSE)
+                                   .search(part))
+            if basic_reduction_m:
+                result += get_basic_reduction_skill(basic_reduction_m)
                 continue
                 
             connected_m = (re.compile(connected_pattern, re.I|re.VERBOSE)
@@ -1285,13 +1311,13 @@ def get_skills(leader_json):
     return result
   
 def main():
-    file = open("sampleIn\\boostSample.json")
+    file = open("sampleIn\\basicSample.json")
     leader_json = json.load(file)
     
     if len(leader_json) is 0:
         return
     
-    out_file = open("sampleOut\\boostOut.json", "w", encoding="utf-8")
+    out_file = open("sampleOut\\basicOut.json", "w", encoding="utf-8")
     out_file.write(get_skills(leader_json))
     out_file.close()
     file.close()

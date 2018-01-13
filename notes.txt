@@ -11,12 +11,9 @@ TODO
     minimum_connected->min_connected for reuse
     
     aftermatch -> post_orb_clear
-BASIC 49/51
-    ADD HP REDUCTION FOR BASIC
-        ABOMINATION +1
-        
-    SHIELD
-        annihilating divine will +1
+BASIC 51/51
+    Abom and annhilating
+        figure out why one includes . and other doesn't
 
         
     MISTAKES
