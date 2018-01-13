@@ -296,6 +296,21 @@ counter_pattern = r'''
     (\d+(?:\.\d+)?)x[ ]damage[ ]taken
 '''
 
+# For skills that allow you to survive a lethal hit when above a certain hp
+# match 1: hp threshold
+resolve_pattern = r'''
+    While[ ]your[ ]HP[ ]is[ ](\d+(?:\.\d+)?)%[ ]or[ ]above,[ ]a[ ]single[ ]
+    hit[ ]that[ ]normally[ ]kills[ ]you[ ]will[ ]
+    instead[ ]leave[ ]you[ ]with[ ]1[ ]HP
+'''
+
+resolve_extra_pattern = r'''
+    For[ ]the[ ]consecutive[ ]hits,[ ]this[ ]skill[ ]
+    will[ ]only[ ]affect[ ]the[ ]first[ ]hit
+'''
+
+
+
 """
 
 scaling_color_match_pattern = r'''
@@ -326,17 +341,6 @@ two_color_match_pattern = r'''
     [ ]when[ ](?:reaching|attacking[ ]with)[ ]
     ([a-zA-Z]+)[ ](?:&|and)[ ]
     ([a-zA-Z]+)[ ]combos(?:[ ]at[ ]the[ ]same[ ]time)?
-'''
-
-resolve_pattern = r'''
-    while[ ]your[ ]hp[ ]is[ ](\d+)%
-    [ ]or[ ]above,[ ]a[ ]single[ ]hit[ ]that[ ]normally[ ]kills[ ]you[ ]
-    will[ ]instead[ ]leave[ ]you[ ]with[ ]1[ ]hp
-'''
-
-resolve_extra_pattern = r'''
-    for[ ]the[ ]consecutive[ ]hits,[ ]this[ ]
-    skill[ ]will[ ]only[ ]affect[ ]the[ ]first[ ]hit
 '''
 """
 
@@ -1164,6 +1168,20 @@ def get_skills(leader_json):
                                        damage_attribute=counter_m[2])
                 continue
                 
+            resolve_m = re.compile(resolve_pattern, re.VERBOSE).search(part)
+            if resolve_m:
+                if i < len(leader_skill_parts):
+                    extra_part = leader_skill_parts[i]
+                    extra_m = (re.compile(resolve_extra_pattern, re.I|re.VERBOSE)
+                                 .search(extra_part))
+                    if extra_m:
+                        i += 1
+                        result += format_skill("resolve", resolve_m[0] + ". " + extra_m[0],
+                                               hp_threshold=resolve_m[1])
+                    else:
+                        result += format_skill("resolve", resolve_m[0],
+                                               hp_threshold=resolve_m[1])
+                continue
             """                 
                 
             orb_type_combo_re = re.compile(orb_type_combo_pattern, re.IGNORECASE|re.VERBOSE)
@@ -1250,13 +1268,13 @@ def get_skills(leader_json):
     return result
   
 def main():
-    file = open("sampleIn\\counterSample.json")
+    file = open("sampleIn\\resolveSample.json")
     leader_json = json.load(file)
     
     if len(leader_json) is 0:
         return
     
-    out_file = open("sampleOut\\counterOut.json", "w", encoding="utf-8")
+    out_file = open("sampleOut\\resolveOut.json", "w", encoding="utf-8")
     out_file.write(get_skills(leader_json))
     out_file.close()
     file.close()

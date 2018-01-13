@@ -44,6 +44,10 @@ AFTERMATCH 3/3
 
 SKILLUSE 4/4
     fix typo - no . after ) breaks separation into parts
+    
+COUNTER 1/1
+
+RESOLVE 1/1
 
 ORDER
     Basic
