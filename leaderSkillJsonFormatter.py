@@ -1311,13 +1311,13 @@ def get_skills(leader_json):
     return result
   
 def main():
-    file = open("sampleIn\\basicSample.json")
+    file = open("sampleIn\\colormatchSample.json")
     leader_json = json.load(file)
     
     if len(leader_json) is 0:
         return
     
-    out_file = open("sampleOut\\basicOut.json", "w", encoding="utf-8")
+    out_file = open("sampleOut\\colormatchOut.json", "w", encoding="utf-8")
     out_file.write(get_skills(leader_json))
     out_file.close()
     file.close()
