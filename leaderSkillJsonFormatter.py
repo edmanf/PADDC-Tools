@@ -309,7 +309,13 @@ resolve_extra_pattern = r'''
     will[ ]only[ ]affect[ ]the[ ]first[ ]hit
 '''
 
-
+# For skills that boost rewards after battle
+# match 1: boost multiplier
+# match 2: boost type
+boost_pattern = r'''
+    Get[ ]x(\d+(?:\.\d+)?)[ ]
+    (experience|coins)[ ]after[ ]a[ ]battle
+'''
 
 """
 
@@ -417,7 +423,8 @@ def format_skill(skill_type, description, hp=0, atk=0, rcv=0, shield=0,
                  teammate=None, skyfall_matches=None,
                  move_time_type=None, time=None,
                  after_match_type=None, chance=None,
-                 damage_multi=None, damage_attribute=None):
+                 damage_multi=None, damage_attribute=None,
+                 boost_type=None, boost=None):
     result = "{\"skill_type\":\"" + skill_type + "\","
     result += "\"effect\":{"
     if hp:
@@ -518,6 +525,10 @@ def format_skill(skill_type, description, hp=0, atk=0, rcv=0, shield=0,
     if damage_multi:
         result += "\"damage_multi\":" + str(damage_multi) + ","
         result += "\"damage_attribute\":\"" + damage_attribute + "\","
+        
+    if boost_type:
+        result += "\"boost_type\":\"" + boost_type + "\","
+        result += "\"boost\":" + str(boost) + ","
         
         
     result = result.strip(",") + "},"
@@ -1182,6 +1193,12 @@ def get_skills(leader_json):
                         result += format_skill("resolve", resolve_m[0],
                                                hp_threshold=resolve_m[1])
                 continue
+                
+            boost_m = re.compile(boost_pattern, re.VERBOSE).search(part)
+            if boost_m:
+                result += format_skill("boost", boost_m[0],
+                                       boost=boost_m[1], boost_type=boost_m[2])
+                continue
             """                 
                 
             orb_type_combo_re = re.compile(orb_type_combo_pattern, re.IGNORECASE|re.VERBOSE)
@@ -1268,13 +1285,13 @@ def get_skills(leader_json):
     return result
   
 def main():
-    file = open("sampleIn\\resolveSample.json")
+    file = open("sampleIn\\boostSample.json")
     leader_json = json.load(file)
     
     if len(leader_json) is 0:
         return
     
-    out_file = open("sampleOut\\resolveOut.json", "w", encoding="utf-8")
+    out_file = open("sampleOut\\boostOut.json", "w", encoding="utf-8")
     out_file.write(get_skills(leader_json))
     out_file.close()
     file.close()

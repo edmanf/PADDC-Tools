@@ -1,0 +1,20 @@
+[{
+	"name": "Commercial Science's Teaching",
+	"description": "Get x1.5 experience after a battle. Get x2 coins after a battle.",
+	"skills": [{
+		"skill_type": "boost",
+		"effect": {
+			"boost_type": "experience",
+			"boost": 1.5
+		},
+		"description": "Get x1.5 experience after a battle"
+	},
+	{
+		"skill_type": "boost",
+		"effect": {
+			"boost_type": "coins",
+			"boost": 2
+		},
+		"description": "Get x2 coins after a battle"
+	}]
+}]

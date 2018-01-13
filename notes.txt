@@ -49,6 +49,8 @@ COUNTER 1/1
 
 RESOLVE 1/1
 
+BOOST 2/2
+
 ORDER
     Basic
         hp atk rcv
@@ -84,8 +86,8 @@ ORDER
         min_match
         
     boost
-        experience
-        coin
+        boost_type: experience, coins
+        boost
         
     skyfall
         skyfall:none

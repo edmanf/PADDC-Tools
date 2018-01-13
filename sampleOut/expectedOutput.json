@@ -184,14 +184,16 @@
 	"skills": [{
 		"skill_type": "boost",
 		"effect": {
-			"experience": 1.5
+            "boost_type": "experience",
+			"boost": 1.5
 		},
 		"description": "Get x1.5 experience after a battle"
 	},
 	{
 		"skill_type": "boost",
 		"effect": {
-			"coin": 2
+            "boost_type": "coin",
+			"boost": 2
 		},
 		"description": "Get x2 coins after a battle"
 	}]
