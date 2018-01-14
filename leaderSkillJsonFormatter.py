@@ -203,6 +203,20 @@ color_match_pattern = r'''
     when attacking with ((?:[a-zA-Z]+\W+)+)at the same time
 '''
 
+# For skills that activate when two specific sets of different orb types are matched
+# match 1: atk
+# match 2: rcv
+# match 3: shield
+# match 4: first orb type
+# match 5: second orb type
+color_two_match_pattern = r'''
+    ^All[ ]attribute[ ]cards[ ]''' + active_multi_shield_pattern + '''
+    [ ]when[ ](?:(?:attacking[ ]with)|reaching)[ ]
+    ''' + orb_type_pattern + '''[ ]
+    (?:and|&)[ ](?!(?P=orb_type))(\w+)
+    [ ]combos(?:[ ]at[ ]the[ ]same[ ]time)?\.$
+'''
+
 
 # For skills that activate when a specific unit is in the team
 # match 1: hp multi
@@ -345,17 +359,6 @@ color_match_scale_pattern = r'''
     [ ]for[ ]all[ ](\d+)[ ]matches
 '''
 
-two_color_match_pattern = r'''
-    all[ ]attribute[ ]cards[ ]
-    (?:atk[ ]x(\d+(?:\.\d+)?))?
-    (?:,[ ])?
-    (?:rcv[ ]x(\d+(?:\.\d+)?))?
-    (?:,[ ])?
-    (?:(\d+)%[ ]all[ ]damage[ ]reduction)?
-    [ ]when[ ](?:reaching|attacking[ ]with)[ ]
-    ([a-zA-Z]+)[ ](?:&|and)[ ]
-    ([a-zA-Z]+)[ ]combos(?:[ ]at[ ]the[ ]same[ ]time)?
-'''
 """
 
 
@@ -751,8 +754,8 @@ def get_enhanced_match(match):
                         
 def get_heart_cross_skill(match):
     des = match[0]
-    atk = match[1] if match[1] else None
-    shield = match[2] if match[2] else None
+    atk = match[1]
+    shield = match[2]
 
     return format_skill("heart_cross", des, atk=atk, shield=shield)
     
@@ -837,71 +840,8 @@ def get_skill_use_skill(match, extra):
 
 
 '''  
-def get_orb_type_combo_skill(match, scale_match):
-    des = match[0]
-    min_atk = match[1]
-    min_combo = match[2]
-    attributes = [match[3]]
-    
-    atk_scale_type = None
-    atk_scale = 0
-    max_atk = 0
-    max_combo = 0
-    if scale_match:
-        des += ". " + scale_match[0]
-        atk_scale_type = "additive"
-        atk_scale = scale_match[1]
-        max_atk = scale_match[2]
-        max_combo = scale_match[3]
-    return format_skill("combo", des, min_atk=min_atk, max_atk=max_atk,
-                        atk_scale=atk_scale, atk_scale_type=atk_scale_type,
-                        min_combo=min_combo, max_combo=max_combo, attributes=attributes)
 
-    
-def get_no_skyfall_skill(match):
-    result = "{\"skilltype\":\"skyfall\","
-    result += "\"effect\":{"
-    result += "\"skyfall_type\":\"no skyfall\""
-    result += "},"
-    result += "\"description\":\"" + match[0] + "\""
-    result += "},"
-    
-    return result
-    
-def get_board_size_skill(match):
-    """
-        returns a json string that represents the board size skill given in the
-        regex match
-        
-        the regex match is a list in the format:
-            [description, rows, cols]
-        
-        the format of the returned string is:
-            {"skill_type":"board_size",
-             "effect":{
-                "rows": rows,
-                "cols": cols
-             },
-             "description": description},
-    """
-    des = match[0]
-    skill_type = "board_size"
-    rows = match[1]
-    cols = match[2]
-    
-    return format_skill(des, skill_type, rows=rows, cols=cols)
  
-def get_move_time_skill(match):
-    move_time_type = "fixed" if match[1] == "Fixed" else "increase"
-
-    result = "{\"skilltype\":\"move_time\","
-    result += "\"effect\":{"
-    result += "\"move_time_type\":\"" + move_time_type + "\","
-    result += "\"time\":" + match[2]
-    result += "},"
-    result += "\"description\":\"" + match[0] + "\""
-    result += "},"
-    return result
 
 
 def get_color_match_skills(match):
@@ -948,59 +888,8 @@ def get_two_color_match_skills(match):
                         rcv=rcv, shield=shield)
 
 
-def get_resolve_skill(resolve_m, extra_m):
-    des = resolve_m[0] + ". " + extra_m[0]
-    hp_threshold = resolve_m[1]
     
-    return format_skill("resolve", des, hp_threshold=hp_threshold)
-
-
-        
-    return format_skill("skill_used", des, atk=atk, rcv=rcv, attributes=attributes, types=types)
-  
-def get_basic_damage_reduction_skill(match):
-    des = match[0]
-    value = match[1]
-    attribute_re = re.compile(attribute_pattern, re.I|re.VERBOSE)
-    enemy_attributes = attribute_re.findall(match[2])
-    
-    return format_skill("basic", des, enemy_attributes=enemy_attributes,
-                        shield=value)
-  
-
-
-
-    
-    
-def get_coop_skills(match):
-    des = match[0]
-    hp = 1
-    atk = 1
-    rcv = 1
-    
-    if match[1]:
-        hp = match[1]
-        atk = match[1]
-        rcv = match[1]
-        return format_skill("co-op", des, hp=match[1], atk=match[1], rcv=match[1])
-    else:    
-        return format_skill("co-op", des, hp=match[2], atk=match[3], rcv=match[4])
-    
-def get_counter_skills(match):
-    des = match[0]
-    chance = match[1]
-    att = match[2]
-    value = match[3]
-    
-    result = "{\"skilltype\":\"counter\","
-    result += "\"effect\":{"
-    result += "\"chance\":" + str(chance) + ","
-    result += "\"attribute\":\"" + att + "\","
-    result += "\"atk_multiplier\":" + str(value)
-    result += "},"
-    result += "\"description\":\"" + des + "\""
-    result += "},"
-    return result
+   
   
   '''
   
@@ -1225,6 +1114,12 @@ def get_skills(leader_json):
                 result += format_skill("boost", boost_m[0],
                                        boost=boost_m[1], boost_type=boost_m[2])
                 continue
+            
+            color_two_match_m = (re.compile(color_two_match_pattern, re.I|re.VERBOSE)
+                                   .search(part))
+            if color_two_match_m:
+                result += format_skill("color_match", color_two_match_m[0], atk=color_two_match_m[1], rcv=color_two_match_m[2], shield=color_two_match_m[3], orb_types=[color_two_match_m[4], color_two_match_m[5]])
+                continue
             """                 
                 
             orb_type_combo_re = re.compile(orb_type_combo_pattern, re.IGNORECASE|re.VERBOSE)
@@ -1279,24 +1174,7 @@ def get_skills(leader_json):
                         i += 1
                 else:
                     result += get_scaling_color_match_skills(scaling_color_match_m, None)
-                continue
-                        
-    
-            resolve_re = re.compile(resolve_pattern, re.IGNORECASE|re.VERBOSE)
-            resolve_m = resolve_re.search(part)
-            if resolve_m:
-                extra_part = None
-                if i < len(leader_skill_parts):
-                    extra_part = leader_skill_parts[i]
-                    extra_part_re = re.compile(resolve_extra_pattern, re.IGNORECASE|re.VERBOSE)
-                    extra_m = extra_part_re.search(extra_part)
-                    if extra_m:
-                        result += get_resolve_skill(resolve_m, extra_m)
-                        i += 1
-                continue
-
-
-            
+                continue       
             """
             print("NOT DONE: " + part)
             print(name)
