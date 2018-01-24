@@ -1,0 +1,22 @@
+All attribute cards ... when attacking with \d of following orb types: .... SCALE/NO SCALE
+
+All attribute cards ... when attacking with \d of ... orb types at the same time    NO SCALE
+
+All attribute cards ... when attacking with ... orb types at the same time          EXACT NO SCALE
+
+
+    
+
+All attribute cards ... when attacking with X and Y combos at the same time
+
+All attribute cards ... when reaching X & Y combos
+
+_________________________________________
+
+All attribute cards .... when attacking with X and X combos at the same time
+
+All attribute cards ... when reaching # set of X combo(s)
+
+All attribute cards ... when reaching X & X combos
+
+All[ ]attribute[ ]cards[ ](.*)[ ]when[ ]attacking[ ]with[ ](\d+)[ ]of[ ](?:following[ ]orb[ ]types:)?[ ](.*)(?:[ ]orb[ ]types[ ]at[ ]the[ ]same[ ]time)

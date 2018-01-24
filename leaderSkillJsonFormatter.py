@@ -181,26 +181,43 @@ cross_pattern = r'''
     orbs[ ]in[ ]a[ ]cross[ ]formation
 '''
 
-color_match_pattern2 = r'''
-    (?:all[ ]attribute[ ]cards[ ])?
-    (?:atk[ ]x(\d+(?:\.\d+)?))?
-    (?:,[ ])?
-    (?:rcv[ ]x(\d+(?:\.\d+)?))?
-    (?:,[ ])?
-    (?:(\d+)%[ ]all[ ]damage[ ]reduction)?
-    [ ]when[ ]attacking[ ]with
-    (.*?)orb[ ]types
-    [ ]at[ ]the[ ]same[ ]time
+# For skills that activate when clearing a number of orb types that dont scale
+# match 1: atk
+# match 2: rcv
+# match 3: shield
+# match 4: number of cleared orb types needed
+# match 5: possible orb types to choose from
+color_match_pattern = r'''
+    All[ ]attribute[ ]cards[ ]''' + active_multi_shield_pattern + '''
+    [ ]when[ ]attacking[ ]with[ ]
+    (\d+)[ ]of[ ](.*)[ ]
+    orb[ ]types[ ]at[ ]the[ ]same[ ]time
 '''
 
-# For skills that match exact color combinations
+# For color match skills that can scale
 # match 1: atk multi
 # match 2: rcv multi
 # match 3: shield
-# match 4: orb type string; will have punctuation and some other words
-color_match_pattern = r'''
-    all attribute cards''' + active_multi_shield_pattern + '''
-    when attacking with ((?:[a-zA-Z]+\W+)+)at the same time
+# match 4: number of matches needed to activate skill
+# match 5: string containing the orb types that count towards the skill
+color_scale_pattern = r'''
+    ^All[ ]attribute[ ]cards[ ]''' + active_multi_shield_pattern + '''
+    [ ]when[ ]attacking[ ]with[ ]
+    (\d+)[ ]of[ ]following[ ]orb[ ]types:[ ]
+    (.*)$
+'''
+
+# The scaling portion of a color match skill
+# match 1: atk scale
+# match 2: rcv scale
+# match 3: atk max
+# match 4: rcv max
+# match 5: number of matches that the skill with scale up to
+color_scale_extra_pattern = r'''
+    ^''' + active_multi_pattern + '''
+    [ ]for[ ]each[ ]additional[ ]orb[ ]type,[ ]
+    up[ ]to[ ]''' + active_multi_pattern + '''
+    for[ ]all[ ](\d+)[ ]matches\.?$
 '''
 
 # For skills that activate when two specific sets of different orb types are matched
@@ -214,7 +231,7 @@ color_two_match_pattern = r'''
     [ ]when[ ](?:(?:attacking[ ]with)|reaching)[ ]
     ''' + orb_type_pattern + '''[ ]
     (?:and|&)[ ](?!(?P=orb_type))(\w+)
-    [ ]combos(?:[ ]at[ ]the[ ]same[ ]time)?\.$
+    [ ]combos(?:[ ]at[ ]the[ ]same[ ]time)?\.?$
 '''
 
 
@@ -435,7 +452,8 @@ def format_skill(skill_type, description, hp=0, atk=0, rcv=0, shield=0,
                  move_time_type=None, time=None,
                  after_match_type=None, chance=None,
                  damage_multi=None, damage_attribute=None,
-                 boost_type=None, boost=None):
+                 boost_type=None, boost=None,
+                 min_match=None):
     result = "{\"skill_type\":\"" + skill_type + "\","
     result += "\"effect\":{"
     if hp:
@@ -541,6 +559,9 @@ def format_skill(skill_type, description, hp=0, atk=0, rcv=0, shield=0,
         result += "\"boost_type\":\"" + boost_type + "\","
         result += "\"boost\":" + str(boost) + ","
         
+    if min_match:
+        result += "\"min_match\":" + str(min_match) + ","
+        
         
     result = result.strip(",") + "},"
     
@@ -548,38 +569,6 @@ def format_skill(skill_type, description, hp=0, atk=0, rcv=0, shield=0,
     result += "},"
     return result
 
-"""
-def format_color_match_skills(description, orb_types, min_atk, 
-                           max_atk=None, min_count=None, max_count=None,
-                           atk_scale=None, rcv=None, shield=None):
-    min_atk = min_atk if min_atk else 1
-    max_atk = max_atk if max_atk else min_atk
-    rcv = rcv if rcv else 1
-    
-    min_count = min_count if min_count else len(orb_types)
-    max_count = max_count if max_count else min_count
-    atk_scale = atk_scale if atk_scale else 0
-    shield = shield if shield else 0
-    
-    result = "{\"skilltype\":\"color_match\","    
-    result += "\"effect\":{"
-    result += "\"orb_types\":["
-    for orb_type in orb_types:
-        result += "\"" + orb_type + "\","
-    result = result[:-1] + "],"
-    result += "\"atk_scale_type\":\"additive\","
-    result += "\"min_atk\":" + str(min_atk) + ","
-    result += "\"max_atk\":" + str(max_atk) + ","
-    result += "\"atk_scale\":" + str(atk_scale) + ","
-    result += "\"min_count\":" + str(min_count) + ","
-    result += "\"max_count\":" + str(max_count) + ","
-    result += "\"rcv\":" + str(rcv) + ","
-    result += "\"shield\":" + str(shield)
-    result += "},"
-    result += "\"description\":\"" + description + "\""
-    result += "},"
-    return result
-"""
 
 def get_basic_skill(regex_matches):
     #basic_str = regex_matches.group().strip(" ")
@@ -743,6 +732,57 @@ def get_combo_exact_skill(match):
                         min_combo=min_combo, max_combo=max_combo,
                         atk_scale=atk_scale, atk_scale_type=atk_scale_type)
 
+def get_color_two_match_skill(match):
+    # match 1: atk
+    # match 2: rcv
+    # match 3: shield
+    # match 4: first orb type
+    # match 5: second orb type
+    des = match[0]
+    min_atk = max_atk = match[1]
+    min_rcv = max_rcv = match[2]
+    shield = match[3]
+    orb_types = [match[4], match[5]]
+    min_match = 2
+    atk_scale_type = "additive"
+    atk_scale = 0
+    
+    rcv_scale_type = "additive" if min_rcv else None
+    rcv_scale = 0
+    return format_skill("color_match", des, min_atk=min_atk, max_atk=max_atk,
+                        min_rcv=min_rcv, max_rcv=max_rcv, shield=shield,
+                        orb_types=orb_types, min_match=min_match,
+                        atk_scale_type=atk_scale_type, atk_scale=atk_scale,
+                        rcv_scale_type=rcv_scale_type, rcv_scale=rcv_scale)
+    
+def get_color_match_skill(match, extra):
+    # match 1: atk
+    # match 2: rcv
+    # match 3: shield
+    # match 4: number of cleared orb types needed
+    # match 5: possible orb types to choose from
+    des = match[0]
+    atk_scale_type = None
+    atk_scale = 0
+    rcv_scale_type = None
+    rcv_scale = 0
+    min_atk = max_atk = match[1]
+    if min_atk:
+        atk_scale_type = "additive"
+    min_rcv = max_rcv = match[2]
+    if min_rcv:
+        rcv_scale_type = "additive"
+    shield = match[3]
+    min_match = 4
+    orb_types = re.compile(orb_type_pattern, re.I|re.VERBOSE).findall(match[5])
+    
+    return format_skill("color_match", des, atk_scale_type=atk_scale_type,
+                        atk_scale=atk_scale, min_atk=min_atk, max_atk=max_atk,
+                        rcv_scale_type=rcv_scale_type, rcv_scale=rcv_scale,
+                        min_rcv=min_rcv, max_rcv=max_rcv, orb_types=orb_types,
+                        min_match=min_match)
+    
+                        
 def get_enhanced_match(match):
     des = match[0]
     atk = match[1]
@@ -1118,8 +1158,19 @@ def get_skills(leader_json):
             color_two_match_m = (re.compile(color_two_match_pattern, re.I|re.VERBOSE)
                                    .search(part))
             if color_two_match_m:
-                result += format_skill("color_match", color_two_match_m[0], atk=color_two_match_m[1], rcv=color_two_match_m[2], shield=color_two_match_m[3], orb_types=[color_two_match_m[4], color_two_match_m[5]])
+                result += get_color_two_match_skill(color_two_match_m)
                 continue
+                
+            color_match_m = re.compile(color_match_pattern, re.VERBOSE).search(part)
+            if color_match_m:
+                result += get_color_match_skill(color_match_m, None)
+                continue
+                
+            color_match2_m = re.compile(color_match_pattern2, re.I|re.VERBOSE).search(part)
+            if color_match2_m:
+                result += format_skill("color_match2", color_match2_m[0])
+                continue
+                
             """                 
                 
             orb_type_combo_re = re.compile(orb_type_combo_pattern, re.IGNORECASE|re.VERBOSE)
