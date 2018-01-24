@@ -186,11 +186,11 @@ cross_pattern = r'''
 # match 2: rcv
 # match 3: shield
 # match 4: number of cleared orb types needed
-# match 5: possible orb types to choose from
+# match 5: possible orb types to match
 color_match_pattern = r'''
     All[ ]attribute[ ]cards[ ]''' + active_multi_shield_pattern + '''
     [ ]when[ ]attacking[ ]with[ ]
-    (\d+)[ ]of[ ](.*)[ ]
+    (?:(\d+)[ ]of[ ])?(.*)[ ]
     orb[ ]types[ ]at[ ]the[ ]same[ ]time
 '''
 
@@ -773,8 +773,9 @@ def get_color_match_skill(match, extra):
     if min_rcv:
         rcv_scale_type = "additive"
     shield = match[3]
-    min_match = 4
+    
     orb_types = re.compile(orb_type_pattern, re.I|re.VERBOSE).findall(match[5])
+    min_match = match[4] if match[4] else len(orb_types)
     
     return format_skill("color_match", des, atk_scale_type=atk_scale_type,
                         atk_scale=atk_scale, min_atk=min_atk, max_atk=max_atk,
@@ -1166,7 +1167,7 @@ def get_skills(leader_json):
                 result += get_color_match_skill(color_match_m, None)
                 continue
                 
-            color_match2_m = re.compile(color_match_pattern2, re.I|re.VERBOSE).search(part)
+            color_match2_m = re.compile(color_two_match_pattern, re.I|re.VERBOSE).search(part)
             if color_match2_m:
                 result += format_skill("color_match2", color_match2_m[0])
                 continue
