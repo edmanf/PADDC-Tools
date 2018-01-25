@@ -31,7 +31,7 @@
 		"skill_type": "teammate",
 		"effect": {
 			"atk": 2,
-			"name": "Achtros"
+			"teammate": "Achtros"
 		},
 		"description": "All attribute cards ATK x2 when Achtros in the same team"
 	},
@@ -70,9 +70,9 @@
 	"name": "Everflowing Sunlight",
 	"description": "Can no longer clear 4 or less connected orbs. Water attribute cards ATK x5. ATK x2 at 3 combos. ATK x1 for each additional combo, up to ATK x3 at 4 combos.",
 	"skills": [{
-		"skill_type": "minimum_connected",
+		"skill_type": "min_connected",
 		"effect": {
-			"minimum_connected": 5
+			"min_connected": 5
 		},
 		"description": "Can no longer clear 4 or less connected orbs"
 	},
@@ -132,9 +132,9 @@
 	"name": "Eighth Dragon Awakening - Sky",
 	"description": "Can no longer clear 3 connected orbs. All attribute cards ATK x4. ATK x3, reduce damage taken by 50% after matching Heal orbs in a cross formation.",
 	"skills": [{
-		"skill_type": "minimum_connected",
+		"skill_type": "min_connected",
 		"effect": {
-			"minimum_connected": "4"
+			"min_connected": 4
 		},
 		"description": "Can no longer clear 3 connected orbs"
 	},
@@ -184,7 +184,7 @@
 	"skills": [{
 		"skill_type": "boost",
 		"effect": {
-            "boost_type": "experience",
+			"boost_type": "experience",
 			"boost": 1.5
 		},
 		"description": "Get x1.5 experience after a battle"
@@ -192,7 +192,7 @@
 	{
 		"skill_type": "boost",
 		"effect": {
-            "boost_type": "coin",
+			"boost_type": "coins",
 			"boost": 2
 		},
 		"description": "Get x2 coins after a battle"
@@ -231,7 +231,7 @@
 			"hp": 1.5,
 			"atk": 2.5,
 			"rcv": 1.5,
-			"name": "Restrained Dragon Hero, Liu Bei"
+			"teammate": "Restrained Dragon Hero, Liu Bei"
 		},
 		"description": "All attribute cards HP x1.5, ATK x2.5, RCV x1.5 when Restrained Dragon Hero, Liu Bei in the same team"
 	}]
@@ -284,9 +284,9 @@
 	"name": "Azure Spring Dragon's Fangs",
 	"description": "No skyfall matches. Water attribute cards ATK x1.5, RCV x1.5. All attribute cards ATK x5 when reaching exactly 7 combos.",
 	"skills": [{
-		"skill_type": "skyfall",
+		"skill_type": "skyfall_matches",
 		"effect": {
-			"skyfall": "none"
+			"skyfall_matches": "none"
 		},
 		"description": "No skyfall matches"
 	},
@@ -316,9 +316,9 @@
 	"name": "Axiom of Exorcism",
 	"description": "No skyfall matches. Fire attribute cards HP x1.5, ATK x2. ATK x6, RCV x6 when reaching 8 combos. ATK x1,  RCV x1 for each additional combo, up to ATK x7, RCV x7 at 9 combos.",
 	"skills": [{
-		"skill_type": "skyfall",
+		"skill_type": "skyfall_matches",
 		"effect": {
-			"skyfall": "none"
+			"skyfall_matches": "none"
 		},
 		"description": "No skyfall matches"
 	},
@@ -355,7 +355,7 @@
 		"effect": {
 			"atk": 3,
 			"attributes": ["Water"],
-			"hp_condition": "<",
+			"hp_conditional_type": "<",
 			"hp_threshold": 50
 		},
 		"description": "Water attribute cards ATK x3 when HP is less than 50%"
@@ -365,7 +365,7 @@
 		"effect": {
 			"atk": 3.3,
 			"attributes": ["Water"],
-			"hp_condition": "=",
+			"hp_conditional_type": "=",
 			"hp_threshold": 100
 		},
 		"description": "Water attribute cards ATK x3.3 when HP is full"
@@ -375,7 +375,7 @@
 		"effect": {
 			"atk": 3.15,
 			"attributes": ["Water"],
-			"hp_condition": ">",
+			"hp_conditional_type": ">",
 			"hp_threshold": 50
 		},
 		"description": "Water attribute cards ATK x3.15 when HP is greater than 50%"
@@ -396,8 +396,8 @@
 		"skill_type": "hp_conditional",
 		"effect": {
 			"atk": 3.5,
-			"attributes": ["all"],
-			"hp_condition": "<",
+			"attributes": ["All"],
+			"hp_conditional_type": "<",
 			"hp_threshold": 20
 		},
 		"description": "All attribute cards ATK x3.5 when HP is less than 20%"
@@ -406,18 +406,19 @@
 		"skill_type": "hp_conditional",
 		"effect": {
 			"atk": 2,
-			"hp_condition": "<",
+			"hp_conditional_type": "<",
 			"hp_threshold": 50
-		}
+		},
+		"description": "ATK x2 when HP is less than 50%"
 	}]
 },
 {
 	"name": "Fool!",
 	"description": "No skyfall matches. Dark attribute cards ATK x2, RCV x2. ATK x2 when simultaneously clearing 6 connected Dark orbs. ATK x1 for each additional orb, up to ATK x8 at 12 connected orb.",
 	"skills": [{
-		"skill_type": "skyfall",
+		"skill_type": "skyfall_matches",
 		"effect": {
-			"skyfall": "none"
+			"skyfall_matches": "none"
 		},
 		"description": "No skyfall matches"
 	},
@@ -449,8 +450,8 @@
 	"skills": [{
 		"skill_type": "after_match",
 		"effect": {
-			"after_match_type": "heal",
-			"rcv": 2
+			"rcv": 2,
+			"after_match_type": "heal"
 		},
 		"description": "Heal RCV x2 as HP after every orbs elimination"
 	}]
@@ -494,7 +495,7 @@
 			"max_atk": 5,
 			"min_match": 4
 		},
-		"description": "ll attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light & Dark. ATK x1 for each additional orb type, up to ATK x5 for all 5 matches"
+		"description": "All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light & Dark. ATK x1 for each additional orb type, up to ATK x5 for all 5 matches"
 	},
 	{
 		"skill_type": "basic",
@@ -548,7 +549,7 @@
 	{
 		"skill_type": "move_time",
 		"effect": {
-			"move_time_type": "increase",
+			"move_time_type": "Increases",
 			"time": 2
 		},
 		"description": "Increases time limit of orb movement by 2 seconds"
@@ -560,6 +561,7 @@
 	"skills": [{
 		"skill_type": "color_match",
 		"effect": {
+			"shield": 25,
 			"orb_types": ["Fire",
 			"Water",
 			"Wood",
@@ -569,7 +571,6 @@
 			"atk_scale": 0,
 			"min_atk": 6,
 			"max_atk": 6,
-			"shield": 25,
 			"min_match": 4
 		},
 		"description": "All attribute cards ATK x6, 25% all damage reduction when attacking with 4 of Fire, Water, Wood, Light & Dark orb types at the same time"
@@ -589,7 +590,7 @@
 	"skills": [{
 		"skill_type": "color_match",
 		"effect": {
-			"attributes": ["all"],
+			"attributes": ["All"],
 			"orb_types": ["Light",
 			"Fire"],
 			"atk_scale_type": "additive",
@@ -614,9 +615,9 @@
 	"name": "Axiom of Salvation",
 	"description": "No skyfall matches. Wood attribute cards All Stats x1.5. ATK x3 for clearing each Wood or Fire orbs in a cross formation.",
 	"skills": [{
-		"skill_type": "skyfall",
+		"skill_type": "skyfall_matches",
 		"effect": {
-			"skyfall": "none"
+			"skyfall_matches": "none"
 		},
 		"description": "No skyfall matches"
 	},
@@ -646,9 +647,9 @@
 	"name": "Aqua Steel Star of Sagittarius",
 	"description": "No skyfall matches. Water attribute cards ATK x2.5, RCV x2.5. ATK x3 when simultaneously clearing 6 connected Water orbs. ATK x0.5 for each additional orb, up to ATK x4.5 at 9 connected orb.",
 	"skills": [{
-		"skill_type": "skyfall",
+		"skill_type": "skyfall_matches",
 		"effect": {
-			"skyfall": "none"
+			"skyfall_matches": "none"
 		},
 		"description": "No skyfall matches"
 	},
@@ -731,7 +732,7 @@
 	"skills": [{
 		"skill_type": "color_match",
 		"effect": {
-			"attributes": ["all"],
+			"attributes": ["All"],
 			"orb_types": ["Fire",
 			"Water",
 			"Wood",
@@ -771,7 +772,7 @@
 	{
 		"skill_type": "color_match",
 		"effect": {
-			"attributes": ["all"],
+			"attributes": ["All"],
 			"shield": 25,
 			"orb_types": ["Fire",
 			"Water",
@@ -828,7 +829,7 @@
 	{
 		"skill_type": "color_match",
 		"effect": {
-			"attributes": ["all"],
+			"attributes": ["All"],
 			"shield": 25,
 			"orb_types": ["Water",
 			"Wood"],
@@ -856,7 +857,7 @@
 		"skill_type": "color_match",
 		"effect": {
 			"shield": 25,
-			"attributes": ["all"],
+			"attributes": ["All"],
 			"orb_types": ["Fire",
 			"Water",
 			"Wood",
@@ -976,7 +977,7 @@
 		"effect": {
 			"atk": 3,
 			"rcv": 1.5,
-			"attributes": ["all"]
+			"attributes": ["All"]
 		},
 		"description": "All attribute cards ATK x3, RCV x1.5 on the turn a skill is used. ( Multiple skills will not stack )"
 	}]
@@ -1020,16 +1021,16 @@
 		"skill_type": "hp_conditional",
 		"effect": {
 			"atk": 6,
-			"hp_condition": ">",
+			"hp_conditional_type": ">",
 			"hp_threshold": 80
 		},
-		"description": "ll attribute cards ATK x6 when HP is greater than 80%"
+		"description": "All attribute cards ATK x6 when HP is greater than 80%"
 	},
 	{
 		"skill_type": "hp_conditional",
 		"effect": {
 			"atk": 2.5,
-			"hp_condition": "<",
+			"hp_conditional_type": "<",
 			"hp_threshold": 80
 		},
 		"description": "ATK x2.5 when HP is less than 80%"
@@ -1064,7 +1065,7 @@
 		"skill_type": "color_match",
 		"effect": {
 			"shield": 25,
-			"attributes": ["all"],
+			"attributes": ["All"],
 			"orb_types": ["Fire",
 			"Water",
 			"Dark"],
@@ -1150,7 +1151,7 @@
 	{
 		"skill_type": "move_time",
 		"effect": {
-			"move_time_type": "increase",
+			"move_time_type": "Increases",
 			"time": 1
 		},
 		"description": "Increases time limit of orb movement by 1 seconds"
@@ -1360,9 +1361,9 @@
 	"name": "Paulownia Protective Crest",
 	"description": "Can no longer clear 3 connected orbs. Water attribute cards ATK x4. All attribute cards ATK x4, 25% all damage reduction when attacking with Water and Water combos at the same time.",
 	"skills": [{
-		"skill_type": "minimum_connected",
+		"skill_type": "min_connected",
 		"effect": {
-			"minimum_connected": 4
+			"min_connected": 4
 		},
 		"description": "Can no longer clear 3 connected orbs"
 	},
@@ -1453,8 +1454,8 @@
 		"skill_type": "counter",
 		"effect": {
 			"chance": 50,
-			"attribute": "Light",
-			"multi": 5
+			"damage_multi": 5,
+			"attribute": "Light"
 		},
 		"description": "50% chance to deal counter Light damage of 5x damage taken"
 	}]
@@ -1662,7 +1663,7 @@
 			"max_atk": 2.5,
 			"min_match": 3
 		},
-		"description": "ll attribute cards ATK x2.5 when attacking with Fire, Water & Wood orb types at the same time"
+		"description": "All attribute cards ATK x2.5 when attacking with Fire, Water & Wood orb types at the same time"
 	}]
 },
 {
@@ -1716,9 +1717,9 @@
 	"name": "Anryu Hiha",
 	"description": "No skyfall matches. Dark attribute cards ATK x5. Deal ATK x30 damage to all enemies after every orbs elimination. Ignores enemy element, but can be reduced by enemy defense down to 0 damage.",
 	"skills": [{
-		"skill_type": "skyfall",
+		"skill_type": "skyfall_matches",
 		"effect": {
-			"skyfall": "none"
+			"skyfall_matches": "none"
 		},
 		"description": "No skyfall matches"
 	},
@@ -1733,8 +1734,8 @@
 	{
 		"skill_type": "after_match",
 		"effect": {
-			"after_match_type": "damage",
-			"atk": 30
+			"atk": 30,
+			"after_match_type": "damage"
 		},
 		"description": "Deal ATK x30 damage to all enemies after every orbs elimination. Ignores enemy element, but can be reduced by enemy defense down to 0 damage"
 	}]
@@ -1782,7 +1783,7 @@
 		"effect": {
 			"atk": 2.5,
 			"rcv": 1.5,
-			"attributes": ["all"]
+			"attributes": ["All"]
 		},
 		"description": "All attribute cards ATK x2.5, RCV x1.5 on the turn a skill is used. ( Multiple skills will not stack )"
 	}]
@@ -1791,9 +1792,9 @@
 	"name": "Spirit of the Miko Goddess",
 	"description": "No skyfall matches. Healer attribute cards HP x1.5, ATK x1.5. ATK x2 at 5 combos. ATK x2 for each additional combo, up to ATK x12 at 10 combos.",
 	"skills": [{
-		"skill_type": "skyfall",
+		"skill_type": "skyfall_matches",
 		"effect": {
-			"skyfall": "none"
+			"skyfall_matches": "none"
 		},
 		"description": "No skyfall matches"
 	},
@@ -1835,9 +1836,7 @@
 	{
 		"skill_type": "resolve",
 		"effect": {
-			"hp_condition": ">=",
-			"hp_threshold": 50,
-			"resolve": 1
+			"hp_threshold": 50
 		},
 		"description": "While your HP is 50% or above, a single hit that normally kills you will instead leave you with 1 HP. For the consecutive hits, this skill will only affect the first hit"
 	}]
@@ -1860,7 +1859,7 @@
 			"max_atk": 4,
 			"min_match": 4
 		},
-		"description": "ll attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart"
+		"description": "All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light, Dark & Heart"
 	},
 	{
 		"skill_type": "connected",
@@ -1882,7 +1881,7 @@
 	"skills": [{
 		"skill_type": "move_time",
 		"effect": {
-			"move_time_type": "increase",
+			"move_time_type": "Increases",
 			"time": 13
 		},
 		"description": "Increases time limit of orb movement by 13 seconds"
@@ -1894,7 +1893,7 @@
 	"skills": [{
 		"skill_type": "move_time",
 		"effect": {
-			"move_time_type": "fixed",
+			"move_time_type": "Fixed",
 			"time": 4
 		},
 		"description": "Fixed orb movement time at 4 seconds"
@@ -1998,7 +1997,7 @@
 	"skills": [{
 		"skill_type": "move_time",
 		"effect": {
-			"move_time_type": "fixed",
+			"move_time_type": "Fixed",
 			"time": 4
 		},
 		"description": "Fixed orb movement time at 4 seconds"

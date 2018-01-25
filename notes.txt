@@ -67,8 +67,8 @@ ORDER
     Cooperation
         hp, atk, rcv
         
-    minimum_connected
-        minimum_connected
+    min_connected
+        min_connected
         
     board_size
         cols
@@ -86,8 +86,8 @@ ORDER
         boost_type: experience, coins
         boost
         
-    skyfall
-        skyfall:none
+    skyfall_matches
+        skyfall_matches:none
         
     hp_conditional
         NOTE: PADX probably incorrect. GZL incorrect w/ proof
@@ -108,7 +108,7 @@ ORDER
         types
         
     move_time
-        move_time_type: fixed, increase
+        move_time_type: fixed, increases
         time
         time_multi
         

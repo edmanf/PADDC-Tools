@@ -217,7 +217,7 @@ color_scale_extra_pattern = r'''
     ^''' + active_multi_pattern + '''
     [ ]for[ ]each[ ]additional[ ]orb[ ]type,[ ]
     up[ ]to[ ]''' + active_multi_pattern + '''
-    for[ ]all[ ](\d+)[ ]matches\.?$
+    [ ]for[ ]all[ ](\d+)[ ]matches\.?$
 '''
 
 # For skills that activate when two specific sets of different orb types are matched
@@ -301,9 +301,8 @@ move_time_pattern = r'''
 post_orb_clear_pattern = r'''
     (?:
     (?:Deal[ ]ATK[ ]x(\d+(?:\.\d+)?)[ ]damage[ ]to[ ]all[ ]enemies[ ])|
-    (?:Heal[ ]RCV[ ]x(\d+(?:\.\d+)?)[ ]as[ ]HP[ ])
+    (?:Heal[ ]RCV[ ]x(\d+(?:\.\d+)?)[ ]as[ ]HP[ ]))
     after[ ]every[ ]orbs[ ]elimination
-    )
 '''
 
 # For extra text in post orb clear skills
@@ -528,15 +527,15 @@ def format_skill(skill_type, description, hp=0, atk=0, rcv=0, shield=0,
         result += "\"hp_conditional_type\":\"" + hp_conditional_type + "\","
     if hp_threshold:
         result += "\"hp_threshold\":" + str(hp_threshold) + ","
-    
+
+    if cols:
+        result += "\"cols\":" + str(cols) + ","        
     if rows:
         result += "\"rows\":" + str(rows) + ","
-    if cols:
-        result += "\"cols\":" + str(cols) + ","
+
         
     if teammate:
         result += "\"teammate\":\"" + teammate + "\","
-        print(teammate)
     
     if skyfall_matches:
         result += "\"skyfall_matches\":\"" + skyfall_matches + "\","
@@ -706,8 +705,6 @@ def get_combo_skill(base_matches, scale_matches):
         rcv_scale = 0
 
     if scale_matches:
-        print(scale_matches)
-        print(scale_matches[2])
         description += ". " + scale_matches[0]
         atk_scale = scale_matches[1]
         rcv_scale = scale_matches[2]
@@ -781,8 +778,48 @@ def get_color_match_skill(match, extra):
                         atk_scale=atk_scale, min_atk=min_atk, max_atk=max_atk,
                         rcv_scale_type=rcv_scale_type, rcv_scale=rcv_scale,
                         min_rcv=min_rcv, max_rcv=max_rcv, orb_types=orb_types,
-                        min_match=min_match)
+                        min_match=min_match, shield=shield)
     
+def get_color_scale_skill(match, extra):
+    """ Returns a json string describing a color match leaderskill
+        match is an array in the format:
+            [atk multi, rcv multi, shield, min_match, orb_type string]
+        extra is an array with format:
+            [atk scale, rcv scale, atk max, rcv max, max matches]
+    """
+    atk_scale = None
+    atk_scale_type = None
+    rcv_scale = None
+    rcv_scale_type = None
+    des = match[0]
+    min_atk = max_atk = match[1]
+    min_rcv = max_rcv = match[2]
+    shield = match[3]
+    min_match = match[4]
+    
+    if min_atk:
+        atk_scale = 0
+        atk_scale_type = "additive"
+        
+    if min_rcv:
+        rcv_scale = 0
+        rcv_scale_type = "additive"
+    
+    orb_types = re.compile(orb_type_pattern, re.I|re.VERBOSE).findall(match[5])
+    if extra:
+        des += ". " + extra[0]
+        if extra[1]:
+            atk_scale = extra[1]
+            max_atk = extra[3]
+        if extra[2]:
+            rcv_scale = extra[2]
+            max_rcv = extra[4]
+        
+    return format_skill("color_match", des, atk_scale_type=atk_scale_type,
+                        atk_scale=atk_scale, min_atk=min_atk, max_atk=max_atk,
+                        rcv_scale_type=rcv_scale_type, rcv_scale=rcv_scale,
+                        min_rcv=min_rcv, max_rcv=max_rcv, shield=shield,
+                        min_match=min_match, orb_types=orb_types)
                         
 def get_enhanced_match(match):
     des = match[0]
@@ -878,61 +915,6 @@ def get_skill_use_skill(match, extra):
     return format_skill("skill_use", des, atk=atk, rcv=rcv,
                         attributes=attributes, types=types)
 
-
-
-'''  
-
- 
-
-
-def get_color_match_skills(match):
-    skill_type = "color_match"
-    des = match[0]
-    atk = match[1]
-    rcv = match[2]
-    shield = match[3]
-    orbString = match[4]
-    orb_type_re = re.compile(orb_type_pattern, re.IGNORECASE|re.VERBOSE)
-    orb_types = orb_type_re.findall(orbString)
-    return format_skill(skill_type, des, orb_types=orb_types, atk=atk, rcv=rcv, shield=shield)
-
-def get_scaling_color_match_skills(match, scale_match):
-    des = match[0]
-    min_atk = match[1]
-    rcv = match[2]
-    min_count = match[3]
-    shield = match[4]
-    atk_scale_type = "additive"
-    atk_scale = 0
-    max_count = min_count
-    max_atk = min_atk
-    orb_type_re = re.compile(orb_type_pattern, re.IGNORECASE|re.VERBOSE)
-    orb_types = orb_type_re.findall(match[5])
-    if scale_match:
-        des += ". " + scale_match[0]
-        atk_scale = scale_match[1]
-        max_atk = scale_match[2]
-        max_count = scale_match[3]
-    
-    return format_skill("color_match", des, orb_types=orb_types, min_atk=min_atk,
-                        max_atk=max_atk, atk_scale_type=atk_scale_type,
-                        min_orb_type_count=min_count, max_orb_type_count=max_count,
-                        atk_scale=atk_scale, rcv=rcv, shield=shield)
-  
-def get_two_color_match_skills(match):
-    des = match[0]
-    atk = match[1]
-    rcv = match[2]
-    shield = match[3]
-    orb_types = [match[4], match[5]]
-    return format_skill("color_match", des, orb_types=orb_types, atk=atk,
-                        rcv=rcv, shield=shield)
-
-
-    
-   
-  
-  '''
   
 def get_skills(leader_json):
     unfinished = 0
@@ -1172,62 +1154,19 @@ def get_skills(leader_json):
                 result += format_skill("color_match2", color_match2_m[0])
                 continue
                 
-            """                 
-                
-            orb_type_combo_re = re.compile(orb_type_combo_pattern, re.IGNORECASE|re.VERBOSE)
-            orb_type_combo_m = orb_type_combo_re.search(part)
-            orb_type_combo_scale_m = None
-            if orb_type_combo_m:
-                
+            color_scale_m = (re.compile(color_scale_pattern, re.I|re.VERBOSE)
+                .search(part))
+            if color_scale_m:
                 if i < len(leader_skill_parts):
-                
-                    orb_type_combo_scale_re = re.compile(orb_type_combo_scale_pattern, re.IGNORECASE|re.VERBOSE)
-                
-                
-                    scale_part = leader_skill_parts[i]
-                    orb_type_combo_scale_m = orb_type_combo_scale_re.search(scale_part)
-                    if orb_type_combo_scale_m:
+                    extra_part = leader_skill_parts[i]
+                    extra_m = re.compile(color_scale_extra_pattern, re.I|re.VERBOSE).search(extra_part)
+                    if extra_m:
+                        result += get_color_scale_skill(color_scale_m, extra_m)
                         i += 1
-                    
-                result += get_orb_type_combo_skill(orb_type_combo_m, orb_type_combo_scale_m)
+                        continue
+                result += get_color_scale_skill(color_scale_m, None)
                 continue
-                
             
-            
-            """
-            """
-            
-            
-            
-            two_color_match_re = re.compile(two_color_match_pattern, re.IGNORECASE|re.VERBOSE)
-            two_color_match_m = two_color_match_re.search(part)
-            if two_color_match_m:
-                result += get_two_color_match_skills(two_color_match_m)
-                continue
-
-                
-
-            
-            color_match_re = re.compile(color_match_pattern, re.IGNORECASE|re.VERBOSE)
-            color_match_m = color_match_re.search(part)
-            if color_match_m:
-                result += get_color_match_skills(color_match_m)
-                continue
-                
-            scaling_color_match_re = re.compile(scaling_color_match_pattern, re.IGNORECASE|re.VERBOSE)
-            scaling_color_match_m = scaling_color_match_re.search(part)
-            if scaling_color_match_m:
-                if i < len(leader_skill_parts):
-                    scale_part = leader_skill_parts[i]
-                    scale_re = re.compile(color_match_scale_pattern, re.IGNORECASE|re.VERBOSE)
-                    scale_m = scale_re.search(scale_part)
-                    result += get_scaling_color_match_skills(scaling_color_match_m, scale_m)
-                    if scale_m:
-                        i += 1
-                else:
-                    result += get_scaling_color_match_skills(scaling_color_match_m, None)
-                continue       
-            """
             print("NOT DONE: " + part)
             print(name)
             print()
@@ -1241,13 +1180,13 @@ def get_skills(leader_json):
     return result
   
 def main():
-    file = open("sampleIn\\colormatchSample.json")
+    file = open("sampleIn\\sampleLeaderSkills.json")
     leader_json = json.load(file)
     
     if len(leader_json) is 0:
         return
     
-    out_file = open("sampleOut\\colormatchOut.json", "w", encoding="utf-8")
+    out_file = open("sampleOut\\sampleOut.json", "w", encoding="utf-8")
     out_file.write(get_skills(leader_json))
     out_file.close()
     file.close()
