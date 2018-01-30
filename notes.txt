@@ -116,5 +116,9 @@ ORDER
         chance
         attribute
         multi
+        
+    leftover
+        atk rcv shield
+        min_leftover, max_leftover: #
 
         

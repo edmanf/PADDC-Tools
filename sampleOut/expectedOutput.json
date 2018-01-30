@@ -578,8 +578,8 @@
 	{
 		"skill_type": "after_match",
 		"effect": {
-			"after_match_type": "damage",
-			"atk": 100
+			"atk": 100,
+			"after_match_type": "damage"
 		},
 		"description": "Deal ATK x100 damage to all enemies after every orbs elimination. Ignores enemy element, but can be reduced by enemy defense down to 0 damage"
 	}]
