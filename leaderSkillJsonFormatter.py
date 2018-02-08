@@ -934,11 +934,12 @@ def get_skills(leader_json):
         des = paren_fix_re.sub(paren_fix_pattern, des)
         des = hp_paren_typo_re.sub(hp_paren_fix_pattern, des)
         des = hp_repeat_typo_re.sub("", des)
+        des = re.compile("\[|\]", re.I|re.VERBOSE).sub("", des)
         leader_skill_parts = des.split(". ")
         result += "{"
         result += "\"name\":\"" + name + "\","
         result += "\"description\":\"" + des + "\","
-        result += "\"skills\":["
+        subRes = "\"skills\":["
         i = 0
         while i < len(leader_skill_parts):
             count += 1
@@ -948,19 +949,19 @@ def get_skills(leader_json):
 
             basic_m = re.compile(basic_pattern, re.I|re.VERBOSE).search(part)
             if basic_m:
-                result += get_basic_skill(basic_m)
+                subRes += get_basic_skill(basic_m)
                 continue
             
             basic_type_m = (re.compile(basic_type_pattern, re.I|re.VERBOSE)
                               .search(part))
             if basic_type_m:
-                result += get_basic_type_skill(basic_type_m)
+                subRes += get_basic_type_skill(basic_type_m)
                 continue
                 
             basic_reduction_m = (re.compile(basic_reduction_patter, re.VERBOSE)
                                    .search(part))
             if basic_reduction_m:
-                result += get_basic_reduction_skill(basic_reduction_m)
+                subRes += get_basic_reduction_skill(basic_reduction_m)
                 continue
                 
             connected_m = (re.compile(connected_pattern, re.I|re.VERBOSE)
@@ -973,11 +974,11 @@ def get_skills(leader_json):
                                          .search(scale_part))
                     
                     if connected_scale_m:
-                        result += get_connected_combo(connected_m, connected_scale_m)
+                        subRes += get_connected_combo(connected_m, connected_scale_m)
                         i += 1
                         continue
                 
-                result += get_connected_combo(connected_m, None)
+                subRes += get_connected_combo(connected_m, None)
                 continue
 
             combo_m = (re.compile(combo_pattern, re.I|re.VERBOSE)
@@ -989,23 +990,23 @@ def get_skills(leader_json):
                                        .search(scale_part))
                     
                     if combo_scale_m:
-                        result += get_combo_skill(combo_m, combo_scale_m)
+                        subRes += get_combo_skill(combo_m, combo_scale_m)
                         i += 1
                         continue
                 
-                result += get_combo_skill(combo_m, None)
+                subRes += get_combo_skill(combo_m, None)
                 continue
                 
             combo_exact_m = (re.compile(combo_exact_pattern, re.I|re.VERBOSE)
                                .search(part))
             if combo_exact_m:
-                result += get_combo_exact_skill(combo_exact_m)
+                subRes += get_combo_exact_skill(combo_exact_m)
                 continue
                 
             combo_orb_type_m = (re.compile(combo_orb_type_pattern, re.I|re.VERBOSE)
                                   .search(part))
             if combo_orb_type_m:
-                result += get_combo_skill([combo_orb_type_m[0], 
+                subRes += get_combo_skill([combo_orb_type_m[0], 
                                            combo_orb_type_m[1],
                                            combo_orb_type_m[2],
                                            combo_orb_type_m[3],
@@ -1015,25 +1016,25 @@ def get_skills(leader_json):
             enhanced_match_m = (re.compile(enhanced_match_pattern, re.I|re.VERBOSE)
                                   .search(part))
             if enhanced_match_m:
-                result += get_enhanced_match(enhanced_match_m)
+                subRes += get_enhanced_match(enhanced_match_m)
                 continue
                 
             heart_cross_re = re.compile(heart_cross_pattern, re.IGNORECASE|re.VERBOSE)
             heart_cross_m = heart_cross_re.search(part)
             if heart_cross_m:
-                result += get_heart_cross_skill(heart_cross_m)
+                subRes += get_heart_cross_skill(heart_cross_m)
                 continue
 
 
             cross_m = (re.compile(cross_pattern, re.IGNORECASE|re.VERBOSE)
                          .search(part))
             if cross_m:
-                result += get_cross_skill(cross_m)
+                subRes += get_cross_skill(cross_m)
                 continue
             
             teammate_m = re.compile(teammate_pattern, re.I|re.VERBOSE).search(part)
             if teammate_m:
-                result += format_skill("teammate", teammate_m[0], hp=teammate_m[1],
+                subRes += format_skill("teammate", teammate_m[0], hp=teammate_m[1],
                                        atk=teammate_m[2], rcv=teammate_m[3],
                                        teammate=teammate_m[4])
                 continue
@@ -1041,13 +1042,13 @@ def get_skills(leader_json):
             hp_conditional_m = (re.compile(hp_conditional_pattern, re.VERBOSE)
                                   .search(part))
             if hp_conditional_m:
-                result += get_hp_cond_skill(hp_conditional_m)
+                subRes += get_hp_cond_skill(hp_conditional_m)
                 continue
             
             board_size_m = (re.compile(board_size_pattern, re.VERBOSE)
                               .search(part))
             if board_size_m:
-                result += format_skill("board_size", board_size_m[0],
+                subRes += format_skill("board_size", board_size_m[0],
                                        cols=board_size_m[1],
                                        rows=board_size_m[2])
                 continue
@@ -1055,7 +1056,7 @@ def get_skills(leader_json):
             cooperation_m = (re.compile(cooperation_pattern, re.VERBOSE)
                                .search(part))
             if cooperation_m:
-                result += format_skill("cooperation", cooperation_m[0],
+                subRes += format_skill("cooperation", cooperation_m[0],
                                        hp=cooperation_m[1], atk=cooperation_m[2],
                                        rcv=cooperation_m[3])
                 continue
@@ -1063,21 +1064,21 @@ def get_skills(leader_json):
             minimum_connected_m = (re.compile(minimum_connected_pattern, re.VERBOSE)
                                      .search(part))
             if minimum_connected_m:
-                result += format_skill("min_connected", minimum_connected_m[0],
+                subRes += format_skill("min_connected", minimum_connected_m[0],
                                        min_connected=int(minimum_connected_m[1]) + 1)
                 continue
                 
             skyfall_m = (re.compile(no_skyfall_pattern, re.VERBOSE)
                            .search(part))
             if skyfall_m:
-                result += format_skill("skyfall_matches", skyfall_m[0],
+                subRes += format_skill("skyfall_matches", skyfall_m[0],
                                        skyfall_matches="none")
                 continue
                    
             move_time_m = (re.compile(move_time_pattern, re.VERBOSE)
                              .search(part))
             if move_time_m:
-                result += format_skill("move_time", move_time_m[0],
+                subRes += format_skill("move_time", move_time_m[0],
                                        move_time_type=move_time_m[1],
                                        time=move_time_m[2])
                 continue
@@ -1093,7 +1094,7 @@ def get_skills(leader_json):
                     if extra_m:
                         i += 1
             
-                result += get_post_orb_elim_skill(post_orb_clear_m, extra_m)
+                subRes += get_post_orb_elim_skill(post_orb_clear_m, extra_m)
                 continue
                         
             skill_use_m = re.compile(skill_use_pattern, re.VERBOSE).search(part)
@@ -1107,12 +1108,12 @@ def get_skills(leader_json):
                     if extra_m:
                         i += 1
                         
-                result += get_skill_use_skill(skill_use_m, extra_m)
+                subRes += get_skill_use_skill(skill_use_m, extra_m)
                 continue
                 
             counter_m = re.compile(counter_pattern, re.I|re.VERBOSE).search(part)
             if counter_m:
-                result += format_skill("counter", counter_m[0], chance=counter_m[1],
+                subRes += format_skill("counter", counter_m[0], chance=counter_m[1],
                                        damage_multi=counter_m[3],
                                        damage_attribute=counter_m[2])
                 continue
@@ -1125,33 +1126,33 @@ def get_skills(leader_json):
                                  .search(extra_part))
                     if extra_m:
                         i += 1
-                        result += format_skill("resolve", resolve_m[0] + ". " + extra_m[0],
+                        subRes += format_skill("resolve", resolve_m[0] + ". " + extra_m[0],
                                                hp_threshold=resolve_m[1])
                     else:
-                        result += format_skill("resolve", resolve_m[0],
+                        subRes += format_skill("resolve", resolve_m[0],
                                                hp_threshold=resolve_m[1])
                 continue
                 
             boost_m = re.compile(boost_pattern, re.VERBOSE).search(part)
             if boost_m:
-                result += format_skill("boost", boost_m[0],
+                subRes += format_skill("boost", boost_m[0],
                                        boost=boost_m[1], boost_type=boost_m[2])
                 continue
             
             color_two_match_m = (re.compile(color_two_match_pattern, re.I|re.VERBOSE)
                                    .search(part))
             if color_two_match_m:
-                result += get_color_two_match_skill(color_two_match_m)
+                subRes += get_color_two_match_skill(color_two_match_m)
                 continue
                 
             color_match_m = re.compile(color_match_pattern, re.VERBOSE).search(part)
             if color_match_m:
-                result += get_color_match_skill(color_match_m, None)
+                subRes += get_color_match_skill(color_match_m, None)
                 continue
                 
             color_match2_m = re.compile(color_two_match_pattern, re.I|re.VERBOSE).search(part)
             if color_match2_m:
-                result += format_skill("color_match2", color_match2_m[0])
+                subRes += format_skill("color_match2", color_match2_m[0])
                 continue
                 
             color_scale_m = (re.compile(color_scale_pattern, re.I|re.VERBOSE)
@@ -1161,18 +1162,21 @@ def get_skills(leader_json):
                     extra_part = leader_skill_parts[i]
                     extra_m = re.compile(color_scale_extra_pattern, re.I|re.VERBOSE).search(extra_part)
                     if extra_m:
-                        result += get_color_scale_skill(color_scale_m, extra_m)
+                        subRes += get_color_scale_skill(color_scale_m, extra_m)
                         i += 1
                         continue
-                result += get_color_scale_skill(color_scale_m, None)
+                subRes += get_color_scale_skill(color_scale_m, None)
                 continue
             
             print("NOT DONE: " + part)
             print(name)
             print()
             unfinished += 1
-        result = result.strip(",") # fencepost problem
-        result += "]},"
+        if subRes == "\"skills\":[":
+            result = result.strip(",") + "},"
+        else:
+            result = result + subRes.strip(",") # fencepost problem
+            result += "]},"
     result = result.strip(",")
     result += "]"
     
@@ -1186,7 +1190,7 @@ def main():
     if len(leader_json) is 0:
         return
     
-    out_file = open("sampleOut\\out.json", "w", encoding="utf-8")
+    out_file = open("formattedLeaderSkills.json", "w", encoding="utf-8")
     out_file.write(get_skills(leader_json))
     out_file.close()
     file.close()

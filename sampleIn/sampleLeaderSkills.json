@@ -1,5 +1,16 @@
 [
 {
+	"data": [1,
+	6,
+	1],
+	"effect": "All attribute cards ATK x3.5 when reaching Light, Light & Fire or Light & Fire & Fire combos. ATK x2.5 for each additional combo, up to ATK x6 when reaching Light, Light, Fire & Fire 4 combos combination.",
+	"name": "Sorcerous Obsession"
+},
+{
+	"effect": "No skyfall combos. ATK x6 when there are 4 or less orbs on the board after matching. All attribute cards ATK x4 when attacking with 4 of following orb types: Fire, Water, Wood, Light & Dark.",
+	"name": "Radiant Angel's Divine Will"
+},
+{
 	"effect": "Water attribute & God type cards ATK x2.5, RCV x2.5. ATK x2.5 when simultaneously clearing 6+ connected Water orbs.",
 	"name": "Sight of Mimir"
 },

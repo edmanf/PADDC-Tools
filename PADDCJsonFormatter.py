@@ -3,16 +3,99 @@ import io
 import argparse
 
 def replaceArray(jsonString):
-    curr = 1        # first character should be [
-    last = 1
+    if jsonString[0] != "[" or jsonString[-1] != "]":
+        # return None if its not a valid json array
+        return None
+        
+    origIndex = 1
+    resIndex = 1
     res = "{"
     itemCount = 0
-    while curr < jsonString:
-        c = jsonString[curr]
-        res += str(itemCount) + ":"
-        while c != "," or "[":
+    bracketCount = 0
+    
+    
+    
+    # check if its an object array or string array
+    isJsonObjectArray = jsonString[origIndex] == "{"
+    
+    if not isJsonObjectArray:
+        res += "\"" + str(itemCount) + "\":"
+        resIndex += len(str(itemCount)) + 3
+        
+    while origIndex < len(jsonString):
+        c = jsonString[origIndex]
+        if c == "]":
+            # because we recurse everytime we see "[", "]" is always a return
+            res += "}"
+            resIndex += 1
+            origIndex += 1
+            return (res, origIndex, resIndex)
+        elif c == "[":
+            subRes = replaceArray(jsonString[origIndex:])
+            origIndex += subRes[1]
+            resIndex += subRes[2]
+            res += subRes[0]
+        elif c == "{" and isJsonObjectArray:
+            if bracketCount == 0:
+                res += "\"" + str(itemCount) + "\":"
+                resIndex += len(str(itemCount)) + 3
+            bracketCount += 1
             res += c
-            curr += 1
+            resIndex += 1
+            origIndex += 1
+        elif c == "}" and isJsonObjectArray and bracketCount == 1:
+            # end of object in array reached
+            res += c
+            resIndex += 1
+            origIndex += 1
+            itemCount += 1
+            bracketCount -= 1
+        elif c == "}" and isJsonObjectArray:
+            res += c
+            resIndex += 1
+            origIndex += 1
+            bracketCount -= 1
+        elif c == "," and jsonString[origIndex - 1] == "\"" and not isJsonObjectArray:
+            # no arrays of mixed type so ", means you're in an array of strings
+            itemCount += 1
+            res += c + "\"" + str(itemCount) + "\":"
+            resIndex += 2 + len(str(itemCount))
+            origIndex += 1
+            
+        else:
+            res += c
+            resIndex += 1
+            origIndex += 1
+        
+        """if c == "," and jsonString[origIndex - 1] == "\"":
+            print("DEBUG ,")
+            itemCount += 1
+            res += c
+            resIndex += 1
+            origIndex += 1
+            break
+        elif c == "[":
+            # replace sub array
+            print("DEBUG [")
+            bracketCount += 1
+            subRes = replaceArray(jsonString[origIndex:])
+            origIndex += subRes[1]
+            resIndex += subRes[2]
+            res += subRes[0]
+        elif c == "]":
+            res += "},"
+            origIndex += 1
+            resIndex += 2
+            return (res, origIndex, resIndex)
+        else:
+            res += c
+            origIndex += 1
+            resIndex += 1"""
+
+    print("DEBUG: WHY AM I HERE")
+    return (res, origIndex)     # should not happen because string should always end in "]"
+                
+            
             
         
             
@@ -28,7 +111,9 @@ def removeJsonArrays(jsonString):
         if jsonString[curr] == "[":
             res += jsonString[last:curr]
             last = curr
-            res += replaceArray(jsonString[curr:])
+            (subRes, curr, __ignore__) = replaceArray(jsonString[curr:])
+            print(subRes)
+            res += subRes.strip(",")
         curr += 1
     return res
 
@@ -73,14 +158,12 @@ def addMonster(monster):
 	
 	
 def leaderJsonToFirebase(leaderJson):
-    res = "\"leader_skills\":{"
-    
-    for leader in leaderJson:
-        res += addLeader(leader) + ","
-        
-    return res[:-1] + "}"
+    res = "\"leader_skills\":"
+    res += removeJsonArrays(leaderJson)
+    return res
     
 def addLeader(leader):
+    print(leader)
     mName = leader["name"]
     mDescription = leader["description"]
     mSkills =  str(leader["skills"])[1:-1]
@@ -100,22 +183,22 @@ def main():
     parser.add_argument("-o", required=True, help="Output file name")
     args = parser.parse_args()
     
-    monsterFile = open(args.m)
+    monsterFile = open(args.m, encoding="utf-8")
     monsterJson = json.load(monsterFile)
     monsterFile.close()
     
-    leaderFile = open(args.l)
+    leaderFile = open(args.l, encoding="utf-8")
     leaderJsonString = leaderFile.read()
     leaderFile.close()
-    leaderJsonString = removeJsonArrays(leaderJsonString)
-    leaderJson = json.loads(leaderJsonString)
+    
     
     
     res = "{"
     res += monsterListToFirebase(monsterJson) + ","
-    res += leaderJsonToFirebase(leaderJson)
+    res += leaderJsonToFirebase(leaderJsonString)
     res += "}"
-    outFile = open("firebaseJson.json", "w", encoding="utf-8")
+
+    outFile = open(args.o, "w", encoding="utf-8")
     outFile.write(res)
     outFile.close()
     
