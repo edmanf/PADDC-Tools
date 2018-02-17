@@ -3,6 +3,10 @@ import io
 import argparse
 
 def replaceArray(jsonString):
+    """
+        Replaces json arrays with pseudo arrays for firebaseStr
+        Example: ["Foo", "Bar"] -> {"0": "Foo", "1": "Bar"}
+    """
     if jsonString[0] != "[" or jsonString[-1] != "]":
         # return None if its not a valid json array
         return None
@@ -67,38 +71,10 @@ def replaceArray(jsonString):
             resIndex += 1
             origIndex += 1
         
-        """if c == "," and jsonString[origIndex - 1] == "\"":
-            print("DEBUG ,")
-            itemCount += 1
-            res += c
-            resIndex += 1
-            origIndex += 1
-            break
-        elif c == "[":
-            # replace sub array
-            print("DEBUG [")
-            bracketCount += 1
-            subRes = replaceArray(jsonString[origIndex:])
-            origIndex += subRes[1]
-            resIndex += subRes[2]
-            res += subRes[0]
-        elif c == "]":
-            res += "},"
-            origIndex += 1
-            resIndex += 2
-            return (res, origIndex, resIndex)
-        else:
-            res += c
-            origIndex += 1
-            resIndex += 1"""
 
     print("DEBUG: WHY AM I HERE")
     return (res, origIndex)     # should not happen because string should always end in "]"
-                
-            
-            
-        
-            
+                 
 
 def removeJsonArrays(jsonString):
     """ Takes a json string and returns a json string that is accetable
@@ -156,23 +132,32 @@ def addMonster(monster):
                       element=mElement, element2=mElement2,
                       leaderSkill=mLeaderSkill)
 	
-	
+def indexByName(leaderJson):
+    res = "{"
+    leaderArray = json.loads(leaderJson)
+    for i in leaderArray:
+        skill = leaderArray[i]
+        
+        name = skill["name"]
+        description = skill["description"]
+        
+        res += "\"" + name + "\": {"
+        res += "\"description\":\"" + description + "\","
+        if "skills" in skill:
+            res += "\"skills\":" + json.dumps(skill["skills"])
+        res = res.strip(",") + "},"
+    res = res.strip(",") + "}"
+    return res
+        
+        
+    
+    
 def leaderJsonToFirebase(leaderJson):
     res = "\"leader_skills\":"
-    res += removeJsonArrays(leaderJson)
+    res += indexByName(removeJsonArrays(leaderJson))
+    
+    
     return res
-    
-def addLeader(leader):
-    print(leader)
-    mName = leader["name"]
-    mDescription = leader["description"]
-    mSkills =  str(leader["skills"])[1:-1]
-    
-    res = "\"{name}\":{{"
-    res += "\"description\":\"{description}\","
-    res += "\"skills\":{skills}"
-    res += "}}"
-    return res.format(name=mName, description=mDescription, skills=mSkills)
 
 def main():
     parser = argparse.ArgumentParser(description="Reformats json for Firebase")

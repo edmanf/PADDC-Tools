@@ -1,400 +1,9 @@
 import json
 import re
+import patterns
 # TODO: Fix issues with ignore case: see mini zhao yun
 
 
-# match 1: attribute
-attribute_pattern = r'''
-    (Fire|Water|Wood|Light|Dark|All)
-'''
-attribute_re = re.compile(attribute_pattern, re.IGNORECASE|re.VERBOSE)
-
-# match 1: type
-# TODO: make sure removing "all" didn't break anything
-type_pattern = r'''
-    (
-    god|balanced|attacker|physical
-    |devil|healer|dragon|machine
-    |evo[ ]material|awaken[ ]material
-    |enhance[ ]material|redeemable[ ]material
-    )
-'''
-type_re = re.compile(type_pattern, re.IGNORECASE|re.VERBOSE)
-
-# match 1: orb type
-orb_type_pattern = r'''
-    (?P<orb_type>fire|water|wood|light|dark|heal
-    |heart|jammer|mortal[ ]poison|poison|all)
-'''
-
-# captures common temporary multipliers
-# match 1: atk multi
-# match 2: rcv multi
-# TODO: fix double space typos in preproccessing so [ ]+ isn't neccessary
-active_multi_pattern = r'''
-    (?:ATK[ ]x(\d+(?:\.\d+)?))?
-    (?:,[ ]+)?
-    (?:RCV[ ]x(\d+(?:\.\d+)?))?
-'''
-
-# match 1: hp multi
-# match 2: atk multi
-# match 3: rcv multi
-all_stat_pattern = r'''
-    (?:HP[ ]x(\d+(?:[.]\d+)?))?
-    (?:,[ ])?''' + active_multi_pattern
-
-
-# match 1: atk multi
-# match 2: rcv multi
-# match 3: shield
-active_multi_shield_pattern = active_multi_pattern + r'''
-    (?:,[ ])?
-    (?:(\d+)%[ ]all[ ]damage[ ]reduction)?
-'''
-
-# match 1: attributes and types (requires further processing)
-# match 2: all multi
-# match 3: hp multi
-# match 4: atk multi
-# match 5: rcv multi
-basic_pattern = r'''
-    (.*)(?:attribute|type)[ ]cards[ ]
-    (?:
-    (?:all[ ]stats[ ]x(\d+(?:[.]\d+)?))|''' + all_stat_pattern + '''
-    [.]?)$
-'''
-
-# match 1: hp multi
-# match 2: atk multi
-# match 3: rcv multi
-# match 4: type
-# for ".... to ___ type cards"
-basic_type_pattern = all_stat_pattern + r'''
-    [ ]to[ ] ''' + type_pattern + '''
-    [ ]type[ ]cards
-'''
-
-# For skills that reduce something
-# match 1: reduction %
-# match 2: reduction target
-basic_reduction_patter = r'''
-    ^(\d+(?:\.\d+)?)%[ ](HP|(?:all[ ]damage))[ ]reduction\.?$
-'''
-
-# match 1: min atk multi
-# match 2: min rcv multi
-# match 3: simultaneously or exactly
-# match 4: min connected orbs
-connected_pattern = active_multi_pattern + r'''
-    [ ]when[ ]
-    ((?:simultaneously[ ]clearing[ ])|(?:matching[ ]exactly[ ]))
-    (\d+)[+]?[ ]connected[ ]\w+(?:[ ]or[ ].+?)?[ ]orbs
-'''
-
-# match 1: atk scale
-# match 2: rcv scale
-# match 3: atk max
-# match 4: rcv max
-# match 5: max connected orb
-connected_scale_pattern = active_multi_pattern + r'''
-    [ ]for[ ]each[ ]additional[ ]orb,
-    [ ]up[ ]to[ ]''' + active_multi_pattern + r'''
-    [ ]at[ ](\d+)[ ]connected[ ]orb
-'''
-
-# match 1: atk multi
-# match 2: rcv multi
-# match 3: shield
-# match 4: min combo
-# match 5: orb type
-combo_pattern = r'''
-    ^(?:all[ ]attribute[ ]cards[ ])?''' + active_multi_shield_pattern + r'''
-    [ ](?:when[ ]reaching|at)[ ]
-    (\d+)[ ](?:or[ ]more[ ])?
-    (?:set[ ]of[ ](\w+)[ ])?
-    combo(?:s)?(?:[ ]or[ ]above)?
-'''
-
-# match 1: atk multi
-# match 2: rcv multi
-# match 3: atk max
-# match 4: rcv max
-# match 5: max combo
-combo_scale_pattern = active_multi_pattern + r'''
-    [ ]for[ ]each[ ]additional[ ]combo,
-    [ ]up[ ]to[ ]''' + active_multi_pattern + r'''
-    [ ](?:at|(?:when[ ]reaching))[ ]
-    (\d+)[ ]combos                        # max combos can be inferred
-'''
-
-# match 1: atk
-# match 2: combos
-combo_exact_pattern = r'''
-    all[ ]attribute[ ]cards[ ]
-    (?:atk[ ]x(\d+(?:\.\d+)?))
-    [ ]when[ ]reaching[ ]exactly[ ]
-    (\d+)[ ]combos
-'''
-
-# For "attacking with x and/& x"
-# match 1: atk multi
-# match 2: rcv multi
-# match 3: shield
-# match 4: orb type
-combo_orb_type_pattern = r'''
-    all[ ]attribute[ ]cards[ ]''' + active_multi_shield_pattern + r'''
-    [ ]when[ ](?:(?:attacking[ ]with)|reaching)[ ](''' + orb_type_pattern + '''
-    )[ ](?:and|&)[ ](?P=orb_type)
-    [ ]combos(?:at[ ]the[ ]same[ ]time)?
-'''
-
-# For skills that give an atk multiplier for matching exactly 5 orbs with
-# at least 1 enhanced
-# match 1: atk multiplier
-# match 2: number of connected orbs
-# match 3: min number of enhanced orbs required
-enhanced_match_pattern = r'''
-    matched[ ]attribute[ ]
-    atk[ ]x(\d+(?:\.\d+)?)
-    [ ]when[ ]matching[ ]exactly[ ]
-    (\d+)[ ]connected[ ]orbs
-    [ ]with[ ]at[ ]least[ ]
-    (\d+)[ ]enhanced[ ](?:orbs|orb)
-'''
-
-# For skills that happen after matching heal orbs in a cross formation
-# match 1: atk multi
-# match 2: shield
-heart_cross_pattern = r'''
-    (?:atk[ ]x(\d+(?:\.\d+)?))?
-    (?:,[ ])?
-    (?:reduce[ ]damage[ ]taken[ ]by[ ](\d+)%)?
-    [ ]after[ ]matching[ ](?:heal|heart)[ ]orbs[ ]in[ ]a[ ]cross[ ]formation
-'''
-
-# For skills that activate when matching crosses of non-heart orbs
-# match 1: atk multi
-cross_pattern = r'''
-    atk[ ]x(\d+(?:\.\d+)?)
-    [ ]for[ ]clearing[ ](?:\w+[ ])+?
-    orbs[ ]in[ ]a[ ]cross[ ]formation
-'''
-
-# For skills that activate when clearing a number of orb types that dont scale
-# match 1: atk
-# match 2: rcv
-# match 3: shield
-# match 4: number of cleared orb types needed
-# match 5: possible orb types to match
-color_match_pattern = r'''
-    All[ ]attribute[ ]cards[ ]''' + active_multi_shield_pattern + '''
-    [ ]when[ ]attacking[ ]with[ ]
-    (?:(\d+)[ ]of[ ])?(.*)[ ]
-    orb[ ]types[ ]at[ ]the[ ]same[ ]time
-'''
-
-# For color match skills that can scale
-# match 1: atk multi
-# match 2: rcv multi
-# match 3: shield
-# match 4: number of matches needed to activate skill
-# match 5: string containing the orb types that count towards the skill
-color_scale_pattern = r'''
-    ^All[ ]attribute[ ]cards[ ]''' + active_multi_shield_pattern + '''
-    [ ]when[ ]attacking[ ]with[ ]
-    (\d+)[ ]of[ ]following[ ]orb[ ]types:[ ]
-    (.*)$
-'''
-
-# The scaling portion of a color match skill
-# match 1: atk scale
-# match 2: rcv scale
-# match 3: atk max
-# match 4: rcv max
-# match 5: number of matches that the skill with scale up to
-color_scale_extra_pattern = r'''
-    ^''' + active_multi_pattern + '''
-    [ ]for[ ]each[ ]additional[ ]orb[ ]type,[ ]
-    up[ ]to[ ]''' + active_multi_pattern + '''
-    [ ]for[ ]all[ ](\d+)[ ]matches\.?$
-'''
-
-# For skills that activate when two specific sets of different orb types are matched
-# match 1: atk
-# match 2: rcv
-# match 3: shield
-# match 4: first orb type
-# match 5: second orb type
-color_two_match_pattern = r'''
-    ^All[ ]attribute[ ]cards[ ]''' + active_multi_shield_pattern + '''
-    [ ]when[ ](?:(?:attacking[ ]with)|reaching)[ ]
-    ''' + orb_type_pattern + '''[ ]
-    (?:and|&)[ ](?!(?P=orb_type))(\w+)
-    [ ]combos(?:[ ]at[ ]the[ ]same[ ]time)?\.?$
-'''
-
-
-# For skills that activate when a specific unit is in the team
-# match 1: hp multi
-# match 2: atk multi
-# match 3: rcv multi
-# match 4: teammate name
-teammate_pattern = r'''
-All[ ]attribute[ ]cards[ ]''' + all_stat_pattern + '''
-[ ]when[ ](.*)
-[ ]in[ ]the[ ]same[ ]team
-'''
-
-# For skills that activate based on remaining HP%
-# match 1: attributes
-# match 2: atk multi
-# match 3: rcv multi
-# match 4: hp threshold type
-# match 5: hp threshold value (greater than or less than)
-# match 6: hp threshold value/type: full (or = 1)
-hp_conditional_pattern = r'''
-    (?:(.*)[ ]attribute[ ]cards[ ])?''' + active_multi_pattern + '''
-    [ ]when[ ]HP[ ]is[ ]
-    (?:
-    (?:((?:less[ ]than)|(?:greater[ ]than))[ ](\d+)%)
-    |(full))
-'''
-
-# For skills that change board size
-# match 1: cols
-# match 2: rows
-board_size_pattern = r'''
-    Change[ ]the[ ]board[ ]to[ ]
-    (\d+)x(\d+)[ ]size        
-'''
-
-# For skill that activate in cooperation mode
-cooperation_pattern = all_stat_pattern + r'''
-    [ ]in[ ]cooperation[ ]mode
-'''
-
-# For skills that change the number of orbs required for a match
-# match 1: minimum number of orbs required for a match
-minimum_connected_pattern = r'''
-    Can[ ]no[ ]longer[ ]clear[ ](\d+)[ ](?:or[ ]less[ ])?connected[ ]orbs
-'''
-
-# For skills that prevent matches from skyfall
-no_skyfall_pattern = r'''
-    No[ ]skyfall[ ]matches
-'''
-
-# For skills that change orb movement time
-# match 1: either "Fixed" or "Increases"
-# match 2: time in seconds that movement is fixed to or increased by
-move_time_pattern = r'''
-    (Fixed|Increases)[ ]                            
-    (?:(?:orb[ ]movement[ ]time[ ]at)
-    |(?:time[ ]limit[ ]of[ ]orb[ ]movement[ ]by))[ ]
-    (\d+(?:\.\d+)?)[ ]seconds
-'''
-
-# For skills that activate after orbs are cleared
-# match 1: atk multi for dealing damage
-# match 2: rcv multi for heal
-post_orb_clear_pattern = r'''
-    (?:
-    (?:Deal[ ]ATK[ ]x(\d+(?:\.\d+)?)[ ]damage[ ]to[ ]all[ ]enemies[ ])|
-    (?:Heal[ ]RCV[ ]x(\d+(?:\.\d+)?)[ ]as[ ]HP[ ]))
-    after[ ]every[ ]orbs[ ]elimination
-'''
-
-# For extra text in post orb clear skills
-post_orb_clear_extra_pattern = r'''
-    Ignores[ ]enemy[ ]element,
-    [ ]but[ ]can[ ]be[ ]reduced[ ]
-    by[ ]enemy[ ]defense[ ]down[ ]to[ ]0[ ]damage
-'''
-
-# For skills that activate after a skill is used
-skill_use_pattern = r'''
-    (.*)?[ ]attribute[ ]cards[ ]''' + active_multi_pattern + '''
-    [ ]on[ ]the[ ]turn[ ]a[ ]skill[ ]is[ ]used
-'''
-
-skill_use_extra_pattern = r'''
-    \([ ]Multiple[ ]skills[ ]will[ ]not[ ]stack[ ]\)
-'''
-
-# For skills that deal counter damage after taking damage
-# match 1: chance
-# match 2: damage attribute
-# match 3: damage multi
-counter_pattern = r'''
-    (\d+)%[ ]chance[ ]to[ ]deal[ ]counter[ ]
-    (\w+)[ ]damage[ ]of[ ]
-    (\d+(?:\.\d+)?)x[ ]damage[ ]taken
-'''
-
-# For skills that allow you to survive a lethal hit when above a certain hp
-# match 1: hp threshold
-resolve_pattern = r'''
-    While[ ]your[ ]HP[ ]is[ ](\d+(?:\.\d+)?)%[ ]or[ ]above,[ ]a[ ]single[ ]
-    hit[ ]that[ ]normally[ ]kills[ ]you[ ]will[ ]
-    instead[ ]leave[ ]you[ ]with[ ]1[ ]HP
-'''
-
-resolve_extra_pattern = r'''
-    For[ ]the[ ]consecutive[ ]hits,[ ]this[ ]skill[ ]
-    will[ ]only[ ]affect[ ]the[ ]first[ ]hit
-'''
-
-# For skills that boost rewards after battle
-# match 1: boost multiplier
-# match 2: boost type
-boost_pattern = r'''
-    Get[ ]x(\d+(?:\.\d+)?)[ ]
-    (experience|coins)[ ]after[ ]a[ ]battle
-'''
-
-
-
-"""
-
-scaling_color_match_pattern = r'''
-    (?:all[ ]attribute[ ]cards[ ])?
-    (?:atk[ ]x(\d+(?:\.\d+)?))?
-    ,?[ ]?
-    (?:rcv[ ]x(\d+(?:\.\d+)?))?
-    (?:,[ ])?
-    (?:(\d+)%[ ]all[ ]damage[ ]reduction)?
-    [ ]when[ ]attacking[ ]with[ ]
-    (\d+)[ ]of(.*)
-'''
-
-color_match_scale_pattern = r'''
-    atk[ ]x(\d+(?:\.\d+)?)
-    [ ]for[ ]each[ ]additional[ ]orb[ ]type,[ ]up[ ]to[ ]
-    atk[ ]x(\d+(?:\.\d+)?)
-    [ ]for[ ]all[ ](\d+)[ ]matches
-'''
-
-"""
-
-
-# some descriptions have a type where a period is not followed by a space
-period_type_pattern = r'''seconds\.([a-zA-Z])'''
-period_fix_pattern = r'''seconds. \1'''
-
-paren_orig_pattern = r'''will not stack \) '''
-paren_fix_pattern = r'''will not stack \). '''
-
-# fix for some bikkuriman collab skills
-hp_paren_orig_pattern = r'''%[ ]\('''
-hp_paren_fix_pattern = r'''%. ('''
-
-double_space_orig_pattern = r'''[ ]{2}'''
-double_space_fix_pattern = r'''[ ]'''
-
-hp_repeat_typo_pattern = r'''
-    \.[ ][ ]when[ ]hp[ ]is[ ]less[ ]than[ ]50%\.
-'''
 
 
 """ Returns a json string representing a leader skill
@@ -573,8 +182,8 @@ def get_basic_skill(regex_matches):
     #basic_str = regex_matches.group().strip(" ")
     description = regex_matches[0]
     
-    attributes = attribute_re.findall(regex_matches[1])
-    types = type_re.findall(regex_matches[1])
+    attributes = re.compile(patterns.attributes, re.I|re.VERBOSE).findall(regex_matches[1])
+    types = re.compile(patterns.types, re.I|re.VERBOSE).findall(regex_matches[1])
 
     hp = None
     atk = None
@@ -646,7 +255,7 @@ def get_connected_combo(base_matches, scale_matches):
     max_atk = min_atk
     max_rcv = min_rcv
     
-    orb_type_re = re.compile(orb_type_pattern, re.IGNORECASE|re.VERBOSE)
+    orb_type_re = re.compile(patterns.orb_types, re.IGNORECASE|re.VERBOSE)
     orb_type_m = orb_type_re.findall(base_matches[0])
     
     end_count = None
@@ -771,7 +380,7 @@ def get_color_match_skill(match, extra):
         rcv_scale_type = "additive"
     shield = match[3]
     
-    orb_types = re.compile(orb_type_pattern, re.I|re.VERBOSE).findall(match[5])
+    orb_types = re.compile(patterns.orb_types, re.I|re.VERBOSE).findall(match[5])
     min_match = match[4] if match[4] else len(orb_types)
     
     return format_skill("color_match", des, atk_scale_type=atk_scale_type,
@@ -805,7 +414,7 @@ def get_color_scale_skill(match, extra):
         rcv_scale = 0
         rcv_scale_type = "additive"
     
-    orb_types = re.compile(orb_type_pattern, re.I|re.VERBOSE).findall(match[5])
+    orb_types = re.compile(patterns.orb_types, re.I|re.VERBOSE).findall(match[5])
     if extra:
         des += ". " + extra[0]
         if extra[1]:
@@ -843,7 +452,7 @@ def get_cross_skill(match):
     atk_scale = match[1]
     description = match[0]
     
-    orb_type_re = re.compile(orb_type_pattern, re.IGNORECASE|re.VERBOSE)
+    orb_type_re = re.compile(patterns.orb_types, re.IGNORECASE|re.VERBOSE)
     orb_types = orb_type_re.findall(description)
     
     atk_scale_type="multiplicative"
@@ -870,7 +479,7 @@ def get_hp_cond_skill(match):
     des = match[0]
     attributes = None
     if match[1]:
-        attributes = attribute_re.findall(match[1])
+        attributes = re.compile(patterns.attributes, re.I|re.VERBOSE).findall(match[1])
     atk = match[2]
     rcv = match[3]
     condition = None
@@ -910,8 +519,8 @@ def get_skill_use_skill(match, extra):
     rcv = match[3]
     
 
-    attributes = re.compile(attribute_pattern, re.I|re.VERBOSE).findall(match[1])
-    types = re.compile(type_pattern, re.I|re.VERBOSE).findall(match[1])
+    attributes = re.compile(patterns.attributes, re.I|re.VERBOSE).findall(match[1])
+    types = re.compile(patterns.types, re.I|re.VERBOSE).findall(match[1])
     return format_skill("skill_use", des, atk=atk, rcv=rcv,
                         attributes=attributes, types=types)
 
@@ -919,10 +528,10 @@ def get_skill_use_skill(match, extra):
 def get_skills(leader_json):
     unfinished = 0
     count = 0
-    paren_fix_re = re.compile(paren_orig_pattern, re.I|re.VERBOSE)
-    period_typo_re = re.compile(period_type_pattern, re.IGNORECASE|re.VERBOSE)
-    hp_paren_typo_re = re.compile(hp_paren_orig_pattern, re.I|re.VERBOSE)
-    hp_repeat_typo_re = re.compile(hp_repeat_typo_pattern, re.I|re.VERBOSE)
+    paren_fix_re = re.compile(patterns.paren_orig_pattern, re.I|re.VERBOSE)
+    period_typo_re = re.compile(patterns.period_type_pattern, re.IGNORECASE|re.VERBOSE)
+    hp_paren_typo_re = re.compile(patterns.hp_paren_orig_pattern, re.I|re.VERBOSE)
+    hp_repeat_typo_re = re.compile(patterns.hp_repeat_typo_pattern, re.I|re.VERBOSE)
     
     result = "["
     for skill_json in leader_json:
@@ -930,9 +539,9 @@ def get_skills(leader_json):
         name = skill_json["name"]
         if name == "N/A":
             continue
-        des = period_typo_re.sub(period_fix_pattern, skill_json["effect"])
-        des = paren_fix_re.sub(paren_fix_pattern, des)
-        des = hp_paren_typo_re.sub(hp_paren_fix_pattern, des)
+        des = period_typo_re.sub(patterns.period_fix_pattern, skill_json["effect"])
+        des = paren_fix_re.sub(patterns.paren_fix_pattern, des)
+        des = hp_paren_typo_re.sub(patterns.hp_paren_fix_pattern, des)
         des = hp_repeat_typo_re.sub("", des)
         des = re.compile("\[|\]", re.I|re.VERBOSE).sub("", des)
         leader_skill_parts = des.split(". ")
@@ -947,30 +556,30 @@ def get_skills(leader_json):
             i += 1
             
 
-            basic_m = re.compile(basic_pattern, re.I|re.VERBOSE).search(part)
+            basic_m = re.compile(patterns.leader_basic, re.I|re.VERBOSE).search(part)
             if basic_m:
                 subRes += get_basic_skill(basic_m)
                 continue
             
-            basic_type_m = (re.compile(basic_type_pattern, re.I|re.VERBOSE)
+            basic_type_m = (re.compile(patterns.leader_basic_type, re.I|re.VERBOSE)
                               .search(part))
             if basic_type_m:
                 subRes += get_basic_type_skill(basic_type_m)
                 continue
                 
-            basic_reduction_m = (re.compile(basic_reduction_patter, re.VERBOSE)
+            basic_reduction_m = (re.compile(patterns.leader_basic_reduction, re.VERBOSE)
                                    .search(part))
             if basic_reduction_m:
                 subRes += get_basic_reduction_skill(basic_reduction_m)
                 continue
                 
-            connected_m = (re.compile(connected_pattern, re.I|re.VERBOSE)
+            connected_m = (re.compile(patterns.leader_connected, re.I|re.VERBOSE)
                              .search(part))
             if connected_m:
                 scale_part = (leader_skill_parts[i] 
                               if i < len(leader_skill_parts) else None)
                 if i < len(leader_skill_parts):
-                    connected_scale_m = (re.compile(connected_scale_pattern, re.I|re.VERBOSE)
+                    connected_scale_m = (re.compile(patterns.leader_connected_scale, re.I|re.VERBOSE)
                                          .search(scale_part))
                     
                     if connected_scale_m:
@@ -981,12 +590,12 @@ def get_skills(leader_json):
                 subRes += get_connected_combo(connected_m, None)
                 continue
 
-            combo_m = (re.compile(combo_pattern, re.I|re.VERBOSE)
+            combo_m = (re.compile(patterns.leader_combo, re.I|re.VERBOSE)
                          .search(part))
             if combo_m:
                 if i < len(leader_skill_parts):
                     scale_part = leader_skill_parts[i]
-                    combo_scale_m = (re.compile(combo_scale_pattern, re.I|re.VERBOSE)
+                    combo_scale_m = (re.compile(patterns.leader_combo_scale, re.I|re.VERBOSE)
                                        .search(scale_part))
                     
                     if combo_scale_m:
@@ -997,13 +606,13 @@ def get_skills(leader_json):
                 subRes += get_combo_skill(combo_m, None)
                 continue
                 
-            combo_exact_m = (re.compile(combo_exact_pattern, re.I|re.VERBOSE)
+            combo_exact_m = (re.compile(patterns.leader_combo_exact, re.I|re.VERBOSE)
                                .search(part))
             if combo_exact_m:
                 subRes += get_combo_exact_skill(combo_exact_m)
                 continue
                 
-            combo_orb_type_m = (re.compile(combo_orb_type_pattern, re.I|re.VERBOSE)
+            combo_orb_type_m = (re.compile(patterns.leader_combo_orb_type, re.I|re.VERBOSE)
                                   .search(part))
             if combo_orb_type_m:
                 subRes += get_combo_skill([combo_orb_type_m[0], 
@@ -1013,39 +622,39 @@ def get_skills(leader_json):
                                            2, combo_orb_type_m[4]], None)
                 continue
 
-            enhanced_match_m = (re.compile(enhanced_match_pattern, re.I|re.VERBOSE)
+            enhanced_match_m = (re.compile(patterns.leader_enhanced_match, re.I|re.VERBOSE)
                                   .search(part))
             if enhanced_match_m:
                 subRes += get_enhanced_match(enhanced_match_m)
                 continue
                 
-            heart_cross_re = re.compile(heart_cross_pattern, re.IGNORECASE|re.VERBOSE)
+            heart_cross_re = re.compile(patterns.leader_heart_cross, re.IGNORECASE|re.VERBOSE)
             heart_cross_m = heart_cross_re.search(part)
             if heart_cross_m:
                 subRes += get_heart_cross_skill(heart_cross_m)
                 continue
 
 
-            cross_m = (re.compile(cross_pattern, re.IGNORECASE|re.VERBOSE)
+            cross_m = (re.compile(patterns.leader_cross, re.IGNORECASE|re.VERBOSE)
                          .search(part))
             if cross_m:
                 subRes += get_cross_skill(cross_m)
                 continue
             
-            teammate_m = re.compile(teammate_pattern, re.I|re.VERBOSE).search(part)
+            teammate_m = re.compile(patterns.leader_teammate, re.I|re.VERBOSE).search(part)
             if teammate_m:
                 subRes += format_skill("teammate", teammate_m[0], hp=teammate_m[1],
                                        atk=teammate_m[2], rcv=teammate_m[3],
                                        teammate=teammate_m[4])
                 continue
             
-            hp_conditional_m = (re.compile(hp_conditional_pattern, re.VERBOSE)
+            hp_conditional_m = (re.compile(patterns.leader_hp_conditional, re.VERBOSE)
                                   .search(part))
             if hp_conditional_m:
                 subRes += get_hp_cond_skill(hp_conditional_m)
                 continue
             
-            board_size_m = (re.compile(board_size_pattern, re.VERBOSE)
+            board_size_m = (re.compile(patterns.leader_board_size, re.VERBOSE)
                               .search(part))
             if board_size_m:
                 subRes += format_skill("board_size", board_size_m[0],
@@ -1053,7 +662,7 @@ def get_skills(leader_json):
                                        rows=board_size_m[2])
                 continue
                 
-            cooperation_m = (re.compile(cooperation_pattern, re.VERBOSE)
+            cooperation_m = (re.compile(patterns.leader_cooperation, re.VERBOSE)
                                .search(part))
             if cooperation_m:
                 subRes += format_skill("cooperation", cooperation_m[0],
@@ -1061,21 +670,21 @@ def get_skills(leader_json):
                                        rcv=cooperation_m[3])
                 continue
               
-            minimum_connected_m = (re.compile(minimum_connected_pattern, re.VERBOSE)
+            minimum_connected_m = (re.compile(patterns.leader_minimum_connected, re.VERBOSE)
                                      .search(part))
             if minimum_connected_m:
                 subRes += format_skill("min_connected", minimum_connected_m[0],
                                        min_connected=int(minimum_connected_m[1]) + 1)
                 continue
                 
-            skyfall_m = (re.compile(no_skyfall_pattern, re.VERBOSE)
+            skyfall_m = (re.compile(patterns.leader_no_skyfall, re.VERBOSE)
                            .search(part))
             if skyfall_m:
                 subRes += format_skill("skyfall_matches", skyfall_m[0],
                                        skyfall_matches="none")
                 continue
                    
-            move_time_m = (re.compile(move_time_pattern, re.VERBOSE)
+            move_time_m = (re.compile(patterns.leader_move_time, re.VERBOSE)
                              .search(part))
             if move_time_m:
                 subRes += format_skill("move_time", move_time_m[0],
@@ -1083,13 +692,13 @@ def get_skills(leader_json):
                                        time=move_time_m[2])
                 continue
                 
-            post_orb_clear_m = (re.compile(post_orb_clear_pattern, re.VERBOSE)
+            post_orb_clear_m = (re.compile(patterns.leader_post_orb_clear, re.VERBOSE)
                                   .search(part))
             extra_m = None
             if post_orb_clear_m:
                 if i < len(leader_skill_parts):
                     extra_part = leader_skill_parts[i]
-                    extra_m = (re.compile(post_orb_clear_extra_pattern, re.VERBOSE)
+                    extra_m = (re.compile(patterns.leader_post_orb_extra_clear, re.VERBOSE)
                                  .search(extra_part))
                     if extra_m:
                         i += 1
@@ -1097,13 +706,13 @@ def get_skills(leader_json):
                 subRes += get_post_orb_elim_skill(post_orb_clear_m, extra_m)
                 continue
                         
-            skill_use_m = re.compile(skill_use_pattern, re.VERBOSE).search(part)
+            skill_use_m = re.compile(patterns.leader_skill_use_pattern, re.VERBOSE).search(part)
             if skill_use_m:
                 extra_m = None
                 # TODO: extra part has typo, no period after ), need to fix
                 if i < len(leader_skill_parts) and False:
                     extra_part = leader_skill_parts[i]
-                    extra_m = (re.compile(skill_use_extra_pattern, re.VERBOSE)
+                    extra_m = (re.compile(patterns.leader_skill_use_extra_pattern, re.VERBOSE)
                                  .search(extra_part))
                     if extra_m:
                         i += 1
@@ -1111,18 +720,18 @@ def get_skills(leader_json):
                 subRes += get_skill_use_skill(skill_use_m, extra_m)
                 continue
                 
-            counter_m = re.compile(counter_pattern, re.I|re.VERBOSE).search(part)
+            counter_m = re.compile(patterns.leader_counter, re.I|re.VERBOSE).search(part)
             if counter_m:
                 subRes += format_skill("counter", counter_m[0], chance=counter_m[1],
                                        damage_multi=counter_m[3],
                                        damage_attribute=counter_m[2])
                 continue
                 
-            resolve_m = re.compile(resolve_pattern, re.VERBOSE).search(part)
+            resolve_m = re.compile(patterns.leader_resolve, re.VERBOSE).search(part)
             if resolve_m:
                 if i < len(leader_skill_parts):
                     extra_part = leader_skill_parts[i]
-                    extra_m = (re.compile(resolve_extra_pattern, re.I|re.VERBOSE)
+                    extra_m = (re.compile(patterns.leader_resolve_extra, re.I|re.VERBOSE)
                                  .search(extra_part))
                     if extra_m:
                         i += 1
@@ -1133,34 +742,34 @@ def get_skills(leader_json):
                                                hp_threshold=resolve_m[1])
                 continue
                 
-            boost_m = re.compile(boost_pattern, re.VERBOSE).search(part)
+            boost_m = re.compile(patterns.leader_boost, re.VERBOSE).search(part)
             if boost_m:
                 subRes += format_skill("boost", boost_m[0],
                                        boost=boost_m[1], boost_type=boost_m[2])
                 continue
             
-            color_two_match_m = (re.compile(color_two_match_pattern, re.I|re.VERBOSE)
+            color_two_match_m = (re.compile(patterns.leader_color_two_match, re.I|re.VERBOSE)
                                    .search(part))
             if color_two_match_m:
                 subRes += get_color_two_match_skill(color_two_match_m)
                 continue
                 
-            color_match_m = re.compile(color_match_pattern, re.VERBOSE).search(part)
+            color_match_m = re.compile(patterns.leader_color_match, re.VERBOSE).search(part)
             if color_match_m:
                 subRes += get_color_match_skill(color_match_m, None)
                 continue
                 
-            color_match2_m = re.compile(color_two_match_pattern, re.I|re.VERBOSE).search(part)
+            color_match2_m = re.compile(patterns.leader_color_two_match, re.I|re.VERBOSE).search(part)
             if color_match2_m:
                 subRes += format_skill("color_match2", color_match2_m[0])
                 continue
                 
-            color_scale_m = (re.compile(color_scale_pattern, re.I|re.VERBOSE)
+            color_scale_m = (re.compile(patterns.leader_color_scale, re.I|re.VERBOSE)
                 .search(part))
             if color_scale_m:
                 if i < len(leader_skill_parts):
                     extra_part = leader_skill_parts[i]
-                    extra_m = re.compile(color_scale_extra_pattern, re.I|re.VERBOSE).search(extra_part)
+                    extra_m = re.compile(patterns.leader_color_scale_extra, re.I|re.VERBOSE).search(extra_part)
                     if extra_m:
                         subRes += get_color_scale_skill(color_scale_m, extra_m)
                         i += 1
@@ -1190,7 +799,7 @@ def main():
     if len(leader_json) is 0:
         return
     
-    out_file = open("formattedLeaderSkills.json", "w", encoding="utf-8")
+    out_file = open("testLeader.json", "w", encoding="utf-8")
     out_file.write(get_skills(leader_json))
     out_file.close()
     file.close()
